@@ -44,6 +44,7 @@ public class CurrenciesListFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
+        // use your own key for result
         mViewModel.loadCurrenciesList("RUBEUR,RUBPLN,RUBTRY,RUBUSD,RUBCNH,RUBXAG,RUBXAU,RUBMXN", "");
     }
 }
