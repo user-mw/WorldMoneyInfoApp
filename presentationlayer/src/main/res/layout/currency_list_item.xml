@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class="CurrencyBinding">
+        <variable
+            name="currentViewModel"
+            type="ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrencyViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/currency_symbol"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:text="@{currentViewModel.currencySign}"/>
+        <TextView
+            android:id="@+id/currency_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@{currentViewModel.currencyValue}"/>
+
+    </LinearLayout>
+
+</layout>

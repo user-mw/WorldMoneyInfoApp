@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data class="CurrenciesListBinding">
+        <variable
+            name="currentViewModel"
+            type="ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListViewModel"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/currencies_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            bind:items="@{currentViewModel.currencies}"/>
+
+    </FrameLayout>
+</layout>
