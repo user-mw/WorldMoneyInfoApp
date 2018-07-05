@@ -10,4 +10,4 @@
 .externalNativeBuild
 /.idea
 .idea
-/presentationlayer/**/IApiData.java
+**/IApiData.java
