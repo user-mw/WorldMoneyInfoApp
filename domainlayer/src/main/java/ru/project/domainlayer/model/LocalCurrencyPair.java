@@ -1,17 +1,23 @@
 package ru.project.domainlayer.model;
 
-import com.google.gson.annotations.SerializedName;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
-public class RemoteCurrencyPair {
-    @SerializedName("symbol")
+@Entity(tableName = "currencies")
+public class LocalCurrencyPair {
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "symbol")
     private String mSymbol;
-    @SerializedName("price")
+    @ColumnInfo(name = "price")
     private double mPrice;
-    @SerializedName("bid")
+    @ColumnInfo(name = "bid")
     private double mBid;
-    @SerializedName("ask")
+    @ColumnInfo(name = "ask")
     private double mAsk;
-    @SerializedName("timestamp")
+    @ColumnInfo(name = "timestamp")
     private int mTimestamp;
 
     public String getSymbol() {
@@ -54,8 +60,8 @@ public class RemoteCurrencyPair {
         mTimestamp = timestamp;
     }
 
-    public LocalCurrencyPair toLocalCurrency() {
-        LocalCurrencyPair pair = new LocalCurrencyPair();
+    public RemoteCurrencyPair toRemoteCurrency() {
+        RemoteCurrencyPair pair = new RemoteCurrencyPair();
         pair.setSymbol(mSymbol);
         pair.setPrice(mPrice);
         pair.setAsk(mAsk);

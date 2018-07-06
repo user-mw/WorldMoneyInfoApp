@@ -16,9 +16,9 @@ public class CurrenciesServiceImpl implements ICurrenciesService {
     @Named(ICurrenciesRepository.REMOTE_REPOSITORY)
     ICurrenciesRepository mRemoteRepository;
 
-//    @Inject
-//    @Named(ICurrenciesRepository.LOCAL_REPOSITORY)
-//    ICurrenciesRepository mLocalRepository;
+    @Inject
+    @Named(ICurrenciesRepository.LOCAL_REPOSITORY)
+    ICurrenciesRepository mLocalRepository;
 
     @Inject
     public CurrenciesServiceImpl() {
@@ -28,11 +28,13 @@ public class CurrenciesServiceImpl implements ICurrenciesService {
     @Override
     public Single<List<RemoteCurrencyPair>> getCurrencies(String pairs, String key) {
         return mRemoteRepository.getCurrencies(pairs, key)
-                .subscribeOn(Schedulers.io());
+                .subscribeOn(Schedulers.io())
+                .doOnSuccess(response -> mLocalRepository.insertCurrencies(response))
+                .onErrorReturn(throwable -> mLocalRepository.getCurrencies(pairs, key).blockingGet());
     }
 
     @Override
     public void insertCurrencies(List<RemoteCurrencyPair> currencies) {
-        //mLocalRepository.insertCurrencies(currencies);
+        mLocalRepository.insertCurrencies(currencies);
     }
 }
