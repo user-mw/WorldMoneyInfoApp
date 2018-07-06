@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
+import ru.project.worldmoneyinfo.IApiData;
 import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.databinding.CurrenciesListBinding;
 import ru.project.worldmoneyinfo.dependency.RepositoryModule;
@@ -45,6 +46,6 @@ public class CurrenciesListFragment extends BaseFragment {
     @Override
     protected void loadData() {
         // use your own key for result
-        mViewModel.loadCurrenciesList("RUBEUR,RUBPLN,RUBTRY,RUBUSD,RUBCNH,RUBXAG,RUBXAU,RUBMXN", "");
+        mViewModel.loadCurrenciesList("RUBEUR,RUBPLN,RUBGBP,RUBUSD,RUBCNH,RUBXAG,RUBXAU,RUBZAR", "");
     }
 }
