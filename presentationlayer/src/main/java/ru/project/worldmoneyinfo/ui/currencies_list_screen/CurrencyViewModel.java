@@ -12,7 +12,7 @@ public class CurrencyViewModel {
     public CurrencyViewModel(RemoteCurrencyPair pair) {
         mCurrencySign = pair.getSymbol();
         mCurrencyValue = String.valueOf(pair.getPrice());
-        mCurrencyBid = pair.getBid() + " /";
+        mCurrencyBid = pair.getBid() + " / ";
         mCurrencyAsk = String.valueOf(pair.getAsk());
     }
 
