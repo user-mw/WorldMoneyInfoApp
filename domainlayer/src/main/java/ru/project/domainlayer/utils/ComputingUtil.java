@@ -1,4 +1,4 @@
-package ru.project.worldmoneyinfo.utils;
+package ru.project.domainlayer.utils;
 
 import java.math.BigDecimal;
 
