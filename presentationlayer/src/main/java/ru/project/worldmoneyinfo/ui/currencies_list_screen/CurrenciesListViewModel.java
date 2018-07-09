@@ -1,6 +1,7 @@
 package ru.project.worldmoneyinfo.ui.currencies_list_screen;
 
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableBoolean;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class CurrenciesListViewModel {
     ICurrenciesService mService;
 
     private ObservableArrayList<RemoteCurrencyPair> mCurrencies = new ObservableArrayList<>();
+    private ObservableBoolean mIsErrorOccurred = new ObservableBoolean(false);
 
     @Inject
     public CurrenciesListViewModel() {
@@ -44,12 +46,16 @@ public class CurrenciesListViewModel {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        mIsErrorOccurred.set(true);
                     }
                 });
     }
 
     public ObservableArrayList<RemoteCurrencyPair> getCurrencies() {
         return mCurrencies;
+    }
+
+    public ObservableBoolean getIsErrorOccurred() {
+        return mIsErrorOccurred;
     }
 }

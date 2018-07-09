@@ -4,6 +4,9 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data class="CurrenciesListBinding">
+        <import type="android.view.View"
+            alias="currentView"/>
+
         <variable
             name="currentViewModel"
             type="ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListViewModel"/>
@@ -17,7 +20,17 @@
             android:id="@+id/currencies_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            bind:items="@{currentViewModel.currencies}"/>
+            bind:items="@{currentViewModel.currencies}"
+            android:visibility="@{currentViewModel.isErrorOccurred ? currentView.GONE : currentView.VISIBLE}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="32sp"
+            android:textColor="@color/textColorRed"
+            android:text="@string/default_error_text"
+            android:visibility="@{currentViewModel.isErrorOccurred ? currentView.VISIBLE : currentView.GONE}" />
 
     </FrameLayout>
 </layout>
