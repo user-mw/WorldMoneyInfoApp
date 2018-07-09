@@ -1,6 +1,7 @@
 package ru.project.worldmoneyinfo.ui.currencies_list_screen;
 
 import ru.project.domainlayer.model.RemoteCurrencyPair;
+import ru.project.worldmoneyinfo.utils.ComputingUtil;
 
 public class CurrencyViewModel {
 
@@ -8,12 +9,15 @@ public class CurrencyViewModel {
     private String mCurrencyValue;
     private String mCurrencyBid;
     private String mCurrencyAsk;
+    private boolean mIsBidMoreThanAsk;
 
     public CurrencyViewModel(RemoteCurrencyPair pair) {
         mCurrencySign = pair.getSymbol();
-        mCurrencyValue = String.valueOf(pair.getPrice());
+        mCurrencyValue = pair.getPrice();
         mCurrencyBid = pair.getBid() + " / ";
-        mCurrencyAsk = String.valueOf(pair.getAsk());
+        mCurrencyAsk = pair.getAsk();
+
+        mIsBidMoreThanAsk = new ComputingUtil().isBidMoreThanAsk(pair.getBid(), pair.getAsk());
     }
 
     public String getCurrencySign() {
@@ -30,5 +34,9 @@ public class CurrencyViewModel {
 
     public String getCurrencyAsk() {
         return mCurrencyAsk;
+    }
+
+    public boolean isBidMoreThanAsk() {
+        return mIsBidMoreThanAsk;
     }
 }
