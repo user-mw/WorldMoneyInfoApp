@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WorldMoneyInfo</string>
+    <string name="default_error_text">Some error occurred</string>
 </resources>

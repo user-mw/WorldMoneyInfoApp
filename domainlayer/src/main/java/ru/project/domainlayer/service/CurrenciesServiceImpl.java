@@ -30,7 +30,13 @@ public class CurrenciesServiceImpl implements ICurrenciesService {
         return mRemoteRepository.getCurrencies(pairs, key)
                 .subscribeOn(Schedulers.io())
                 .doOnSuccess(response -> mLocalRepository.insertCurrencies(response))
-                .onErrorReturn(throwable -> mLocalRepository.getCurrencies(pairs, key).blockingGet());
+                .onErrorReturn(throwable -> {
+                    List<RemoteCurrencyPair> currencyPairList = mLocalRepository.getCurrencies(pairs, key).blockingGet();
+                    if(currencyPairList.size() > 0) {
+                        return currencyPairList;
+                    }
+                    return null;
+                });
     }
 
     @Override
