@@ -46,6 +46,6 @@ public class CurrenciesListFragment extends BaseFragment {
     @Override
     protected void loadData() {
         // use your own key for result
-        mViewModel.loadCurrenciesList("EURRUB,PLNRUB,GBPRUB,USDRUB,CNHRUB,XAGRUB,XAURUB,ZARRUB", IApiData.KEY);
+        mViewModel.loadCurrenciesList("EURRUB,PLNRUB,GBPRUB,USDRUB,CNHRUB,ZARRUB,XAGRUB,XAURUB", IApiData.KEY);
     }
 }
