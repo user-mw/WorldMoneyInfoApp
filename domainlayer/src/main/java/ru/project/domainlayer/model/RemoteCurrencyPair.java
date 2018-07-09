@@ -2,15 +2,17 @@ package ru.project.domainlayer.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.math.BigDecimal;
+
 public class RemoteCurrencyPair {
     @SerializedName("symbol")
     private String mSymbol;
     @SerializedName("price")
-    private double mPrice;
+    private String mPrice;
     @SerializedName("bid")
-    private double mBid;
+    private String mBid;
     @SerializedName("ask")
-    private double mAsk;
+    private String mAsk;
     @SerializedName("timestamp")
     private int mTimestamp;
 
@@ -22,27 +24,27 @@ public class RemoteCurrencyPair {
         mSymbol = symbol;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return mPrice;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         mPrice = price;
     }
 
-    public double getBid() {
+    public String getBid() {
         return mBid;
     }
 
-    public void setBid(double bid) {
+    public void setBid(String bid) {
         mBid = bid;
     }
 
-    public double getAsk() {
+    public String getAsk() {
         return mAsk;
     }
 
-    public void setAsk(double ask) {
+    public void setAsk(String ask) {
         mAsk = ask;
     }
 

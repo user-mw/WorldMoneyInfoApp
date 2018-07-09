@@ -5,6 +5,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.math.BigDecimal;
+
 @Entity(tableName = "currencies")
 public class LocalCurrencyPair {
     @PrimaryKey
@@ -12,11 +14,11 @@ public class LocalCurrencyPair {
     @ColumnInfo(name = "symbol")
     private String mSymbol;
     @ColumnInfo(name = "price")
-    private double mPrice;
+    private String mPrice;
     @ColumnInfo(name = "bid")
-    private double mBid;
+    private String mBid;
     @ColumnInfo(name = "ask")
-    private double mAsk;
+    private String mAsk;
     @ColumnInfo(name = "timestamp")
     private int mTimestamp;
 
@@ -28,27 +30,27 @@ public class LocalCurrencyPair {
         mSymbol = symbol;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return mPrice;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         mPrice = price;
     }
 
-    public double getBid() {
+    public String getBid() {
         return mBid;
     }
 
-    public void setBid(double bid) {
+    public void setBid(String bid) {
         mBid = bid;
     }
 
-    public double getAsk() {
+    public String getAsk() {
         return mAsk;
     }
 
-    public void setAsk(double ask) {
+    public void setAsk(String ask) {
         mAsk = ask;
     }
 
