@@ -3,9 +3,12 @@ package ru.project.domainlayer.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 public class CurrencyNamingUtil {
     private Map<String, String> mCurrenciesNames = new HashMap<>();
 
+    @Inject
     public CurrencyNamingUtil() {
         setCurrenciesNames();
     }
