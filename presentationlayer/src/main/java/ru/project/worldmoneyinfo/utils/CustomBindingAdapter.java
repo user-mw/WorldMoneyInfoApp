@@ -1,6 +1,7 @@
 package ru.project.worldmoneyinfo.utils;
 
 import android.databinding.BindingAdapter;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -15,5 +16,11 @@ public class CustomBindingAdapter {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         CurrenciesAdapter adapter = new CurrenciesAdapter(items);
         recyclerView.setAdapter(adapter);
+    }
+
+    @BindingAdapter({"bind:loadingState", "bind:refreshListener"})
+    public static void setRefreshing(SwipeRefreshLayout refreshLayout, boolean isLoading, SwipeRefreshLayout.OnRefreshListener listener) {
+        refreshLayout.setOnRefreshListener(listener);
+        refreshLayout.post(() -> refreshLayout.setRefreshing(isLoading));
     }
 }
