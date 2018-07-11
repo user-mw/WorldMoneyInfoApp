@@ -9,6 +9,4 @@ import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrencyViewModel;
 @Component(modules = {DatabaseModule.class, ApiModule.class})
 public interface IApplicationComponent {
     IScreenComponent plusScreenComponent(RepositoryModule repositoryModule, ServiceModule serviceModule, AppDataModule appDataModule);
-
-    void injectUtils(CurrencyViewModel viewModel);
 }

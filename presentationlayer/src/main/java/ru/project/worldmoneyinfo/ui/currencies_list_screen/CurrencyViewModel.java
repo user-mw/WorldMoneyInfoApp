@@ -6,6 +6,7 @@ import ru.project.domainlayer.model.RemoteCurrencyPair;
 import ru.project.domainlayer.utils.ComputingUtil;
 import ru.project.domainlayer.utils.CurrencyNamingUtil;
 import ru.project.worldmoneyinfo.MainApplication;
+import ru.project.worldmoneyinfo.dependency.DaggerIUtilsComponent;
 
 public class CurrencyViewModel {
 
@@ -22,7 +23,7 @@ public class CurrencyViewModel {
     CurrencyNamingUtil mNamingUtil;
 
     public CurrencyViewModel(RemoteCurrencyPair pair) {
-        MainApplication.getApplicationComponent().injectUtils(this);
+        DaggerIUtilsComponent.builder().build().inject(this);
         setCurrencyData(pair);
     }
 
