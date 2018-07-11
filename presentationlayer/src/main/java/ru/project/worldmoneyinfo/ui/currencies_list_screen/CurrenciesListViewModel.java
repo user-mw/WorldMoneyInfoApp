@@ -2,33 +2,48 @@ package ru.project.worldmoneyinfo.ui.currencies_list_screen;
 
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import ru.project.domainlayer.model.RemoteCurrencyPair;
 import ru.project.domainlayer.service.ICurrenciesService;
+import ru.project.worldmoneyinfo.dependency.AppDataModule;
 
 public class CurrenciesListViewModel {
 
     @Inject
     ICurrenciesService mService;
 
+    @Inject
+    @Named(AppDataModule.PAIRS_KEY)
+    String mCurrenciesPairs;
+
+    @Inject
+    @Named(AppDataModule.API_KEY)
+    String mApiKey;
+
     private ObservableArrayList<RemoteCurrencyPair> mCurrencies = new ObservableArrayList<>();
     private ObservableBoolean mIsErrorOccurred = new ObservableBoolean(false);
+    private ObservableBoolean mIsLoading = new ObservableBoolean(false);
+    private SwipeRefreshLayout.OnRefreshListener mRefreshListener = () -> loadCurrenciesList();
 
     @Inject
     public CurrenciesListViewModel() {
 
     }
 
-    public void loadCurrenciesList(String pairs, String key) {
-        mService.getCurrencies(pairs, key)
+    public void loadCurrenciesList() {
+        mService.getCurrencies(mCurrenciesPairs, mApiKey)
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> mIsLoading.set(true))
+                .doFinally(() -> mIsLoading.set(false))
                 .subscribe(new SingleObserver<List<RemoteCurrencyPair>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -57,5 +72,13 @@ public class CurrenciesListViewModel {
 
     public ObservableBoolean getIsErrorOccurred() {
         return mIsErrorOccurred;
+    }
+
+    public ObservableBoolean getIsLoading() {
+        return mIsLoading;
+    }
+
+    public SwipeRefreshLayout.OnRefreshListener getRefreshListener() {
+        return mRefreshListener;
     }
 }
