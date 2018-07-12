@@ -14,6 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ru.project.worldmoneyinfo.MainApplication;
+import ru.project.worldmoneyinfo.R;
 import ru.project.worldmoneyinfo.databinding.ContainerFragmentBinding;
 import ru.project.worldmoneyinfo.ui.BaseFragment;
 import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListFragment;
@@ -24,6 +25,7 @@ public class ContainerFragment extends BaseFragment {
     ContainerFragmentViewModel mViewModel;
 
     private List<Fragment> mFragmentList = new ArrayList<>();
+    private List<String> mTitles = new ArrayList<>();
 
     public static ContainerFragment newInstance() {
         Bundle args = new Bundle();
@@ -37,7 +39,11 @@ public class ContainerFragment extends BaseFragment {
     protected void prepareViewModel() {
         mFragmentList.add(CurrenciesListFragment.newInstance());
 
-        MainApplication.getMainContainerComponent(mFragmentList).inject(this);
+        if(getActivity() != null) {
+            mTitles.add(getActivity().getString(R.string.rates_title));
+        }
+
+        MainApplication.getMainContainerComponent(mFragmentList, mTitles).inject(this);
     }
 
     @Override

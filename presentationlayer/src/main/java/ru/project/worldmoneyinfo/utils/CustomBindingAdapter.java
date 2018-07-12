@@ -1,6 +1,7 @@
 package ru.project.worldmoneyinfo.utils;
 
 import android.databinding.BindingAdapter;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -29,13 +30,19 @@ public class CustomBindingAdapter {
         refreshLayout.post(() -> refreshLayout.setRefreshing(isLoading));
     }
 
-    @BindingAdapter("bind:fragments")
-    public static void setViewPager(ViewPager pager, List<Fragment> fragments) {
+    @BindingAdapter({"bind:fragments", "bind:titles"})
+    public static void setViewPager(ViewPager pager, List<Fragment> fragments, List<String> titles) {
         FragmentManager fragmentManager = ((MainActivity)pager.getContext()).getSupportFragmentManager();
 
         ContainerFragmentPagerAdapter adapter = new ContainerFragmentPagerAdapter(fragmentManager);
         adapter.addAll(fragments);
+        adapter.setTabsTitles(titles);
 
         pager.setAdapter(adapter);
+    }
+
+    @BindingAdapter("bind:currentPager")
+    public static void setTabLayout(TabLayout layout, ViewPager pager) {
+        layout.setupWithViewPager(pager);
     }
 }

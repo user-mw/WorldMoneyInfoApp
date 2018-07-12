@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">WorldMoneyInfo</string>
+    <string name="app_name">World Money Info</string>
     <string name="default_error_text">Some error occurred</string>
+    <string name="rates_title">Rates</string>
+    <string name="settings_title">Settings</string>
+    <string name="converter_title">Converter</string>
 </resources>

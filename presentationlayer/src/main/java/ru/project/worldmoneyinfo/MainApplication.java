@@ -31,10 +31,10 @@ public class MainApplication extends Application {
         return sApplicationComponent;
     }
 
-    public static IMainContainerComponent getMainContainerComponent(List<Fragment> fragmentList) {
+    public static IMainContainerComponent getMainContainerComponent(List<Fragment> fragmentList, List<String> titles) {
         if(sMainContainerComponent == null) {
             sMainContainerComponent = DaggerIMainContainerComponent.builder()
-                    .mainContainerModule(new MainContainerModule(fragmentList))
+                    .mainContainerModule(new MainContainerModule(fragmentList, titles))
                     .build();
         }
 

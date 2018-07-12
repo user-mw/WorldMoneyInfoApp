@@ -12,11 +12,18 @@ public class ContainerFragmentViewModel {
     List<Fragment> mFragments;
 
     @Inject
+    List<String> mTitles;
+
+    @Inject
     public ContainerFragmentViewModel() {
 
     }
 
     public List<Fragment> getFragments() {
         return mFragments;
+    }
+
+    public List<String> getTitles() {
+        return mTitles;
     }
 }
