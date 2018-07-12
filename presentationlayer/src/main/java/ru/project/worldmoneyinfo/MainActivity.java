@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListFragment;
+import ru.project.worldmoneyinfo.ui.main_fragment_container.ContainerFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if(savedInstanceState == null) {
-            changeFragment(CurrenciesListFragment.newInstance());
+            changeFragment(ContainerFragment.newInstance());
         }
     }
 
