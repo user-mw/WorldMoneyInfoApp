@@ -10,12 +10,18 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.databinding.SettingsBinding;
+import ru.project.worldmoneyinfo.dependency.SettingsAdditionalModule;
 import ru.project.worldmoneyinfo.ui.BaseFragment;
 
 public class SettingsFragment extends BaseFragment {
 
-    private SettingsViewModel mViewModel;
+    @Inject
+    SettingsViewModel mViewModel;
+
     private List<String> mCurrenciesList = new ArrayList<>();
 
     public static SettingsFragment newInstance() {
@@ -37,7 +43,9 @@ public class SettingsFragment extends BaseFragment {
             mCurrenciesList.add("PLN");
         }
 
-        mViewModel = new SettingsViewModel(mCurrenciesList);
+        MainApplication.getSettingsComponent()
+                .plusAdditionalComponent(new SettingsAdditionalModule(mCurrenciesList))
+                .inject(this);
     }
 
     @Override

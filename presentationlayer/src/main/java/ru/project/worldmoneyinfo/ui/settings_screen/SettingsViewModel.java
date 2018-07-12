@@ -2,12 +2,16 @@ package ru.project.worldmoneyinfo.ui.settings_screen;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class SettingsViewModel {
 
-    private List<String> mCurrenciesList;
+    @Inject
+    List<String> mCurrenciesList;
 
-    public SettingsViewModel(List<String> currenciesList) {
-        mCurrenciesList = currenciesList;
+    @Inject
+    public SettingsViewModel() {
+
     }
 
     public List<String> getCurrenciesList() {
