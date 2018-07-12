@@ -8,12 +8,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContainerFragmentPagerAdapter extends FragmentPagerAdapter {
+public class ContainerPagerAdapter extends FragmentPagerAdapter {
 
     private List<Fragment> mFragmentList = new ArrayList<>();
     private List<String> mTabsTitles = new ArrayList<>();
 
-    public ContainerFragmentPagerAdapter(FragmentManager fragmentManager) {
+    public ContainerPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
 

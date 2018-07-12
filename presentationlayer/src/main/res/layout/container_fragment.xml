@@ -3,10 +3,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <data class="ContainerFragmentBinding">
+    <data class="ContainerBinding">
         <variable
             name="currentViewModel"
-            type="ru.project.worldmoneyinfo.ui.main_fragment_container.ContainerFragmentViewModel"/>
+            type="ru.project.worldmoneyinfo.ui.main_fragment_container.ContainerViewModel"/>
     </data>
 
     <LinearLayout

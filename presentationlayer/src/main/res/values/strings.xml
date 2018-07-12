@@ -4,4 +4,5 @@
     <string name="rates_title">Rates</string>
     <string name="settings_title">Settings</string>
     <string name="converter_title">Converter</string>
+    <string name="settings_currency_action">Select main currency</string>
 </resources>

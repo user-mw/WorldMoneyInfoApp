@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ContainerFragmentViewModel {
+public class ContainerViewModel {
 
     @Inject
     List<Fragment> mFragments;
@@ -15,7 +15,7 @@ public class ContainerFragmentViewModel {
     List<String> mTitles;
 
     @Inject
-    public ContainerFragmentViewModel() {
+    public ContainerViewModel() {
 
     }
 
