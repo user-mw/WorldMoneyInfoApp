@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data class="SettingsBinding">
+
+        <variable
+            name="currentViewModel"
+            type="ru.project.worldmoneyinfo.ui.settings_screen.SettingsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginBottom="32dp"
+            android:textSize="32sp"
+            android:text="@string/settings_currency_action" />
+
+        <Spinner
+            android:id="@+id/currencies_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            bind:currenciesItems="@{currentViewModel.currenciesList}"/>
+
+    </LinearLayout>
+
+</layout>

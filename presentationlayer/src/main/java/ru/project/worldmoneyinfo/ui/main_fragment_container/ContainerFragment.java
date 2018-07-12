@@ -15,14 +15,15 @@ import javax.inject.Inject;
 
 import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.R;
-import ru.project.worldmoneyinfo.databinding.ContainerFragmentBinding;
+import ru.project.worldmoneyinfo.databinding.ContainerBinding;
 import ru.project.worldmoneyinfo.ui.BaseFragment;
 import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListFragment;
+import ru.project.worldmoneyinfo.ui.settings_screen.SettingsFragment;
 
 public class ContainerFragment extends BaseFragment {
 
     @Inject
-    ContainerFragmentViewModel mViewModel;
+    ContainerViewModel mViewModel;
 
     private List<Fragment> mFragmentList = new ArrayList<>();
     private List<String> mTitles = new ArrayList<>();
@@ -38,9 +39,11 @@ public class ContainerFragment extends BaseFragment {
     @Override
     protected void prepareViewModel() {
         mFragmentList.add(CurrenciesListFragment.newInstance());
+        mFragmentList.add(SettingsFragment.newInstance());
 
         if(getActivity() != null) {
             mTitles.add(getActivity().getString(R.string.rates_title));
+            mTitles.add(getActivity().getString(R.string.settings_title));
         }
 
         MainApplication.getMainContainerComponent(mFragmentList, mTitles).inject(this);
@@ -48,7 +51,7 @@ public class ContainerFragment extends BaseFragment {
 
     @Override
     protected View retrieveView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
-        ContainerFragmentBinding binding = ContainerFragmentBinding.inflate(inflater, container, false);
+        ContainerBinding binding = ContainerBinding.inflate(inflater, container, false);
         binding.setCurrentViewModel(mViewModel);
 
         return binding.getRoot();
