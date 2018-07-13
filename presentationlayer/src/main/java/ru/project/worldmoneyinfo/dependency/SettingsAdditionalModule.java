@@ -16,6 +16,7 @@ public class SettingsAdditionalModule {
     }
 
     @Provides
+    @IScreenScope
     public List<String> provideCurrenciesNames() {
         return mCurrenciesNames;
     }

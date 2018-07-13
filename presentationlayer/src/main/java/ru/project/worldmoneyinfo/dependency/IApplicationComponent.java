@@ -5,7 +5,13 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {DatabaseModule.class, ApiModule.class})
+@Component(modules = {DatabaseModule.class, ApiModule.class, SettingsModule.class})
 public interface IApplicationComponent {
-    IScreenComponent plusScreenComponent(RepositoryModule repositoryModule, ServiceModule serviceModule, AppDataModule appDataModule);
+    IScreenComponent plusScreenComponent(RepositoryModule repositoryModule,
+                                         ServiceModule serviceModule,
+                                         AppDataModule appDataModule);
+
+    ISettingsComponent plusSettingsComponent(RepositoryModule repositoryModule,
+                                             ServiceModule serviceModule,
+                                             SettingsAdditionalModule settingsAdditionalModule);
 }
