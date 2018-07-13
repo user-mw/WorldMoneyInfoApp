@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -48,8 +49,9 @@ public class CustomBindingAdapter {
         layout.setupWithViewPager(pager);
     }
 
-    @BindingAdapter("bind:currenciesItems")
-    public static void setSettingsSpinner(Spinner spinner, List<String> items) {
+    @BindingAdapter({"bind:currenciesItems", "bind:spinnerListener"})
+    public static void setSettingsSpinner(Spinner spinner, List<String> items, AdapterView.OnItemSelectedListener listener) {
         spinner.setAdapter(new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_item, items));
+        spinner.setOnItemSelectedListener(listener);
     }
 }
