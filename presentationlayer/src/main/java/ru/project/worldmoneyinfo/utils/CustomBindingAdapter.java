@@ -49,9 +49,11 @@ public class CustomBindingAdapter {
         layout.setupWithViewPager(pager);
     }
 
-    @BindingAdapter({"bind:currenciesItems", "bind:spinnerListener"})
-    public static void setSettingsSpinner(Spinner spinner, List<String> items, AdapterView.OnItemSelectedListener listener) {
+    @BindingAdapter({"bind:currenciesItems", "bind:spinnerListener", "bind:selectedItem"})
+    public static void setSettingsSpinner(Spinner spinner, List<String> items, AdapterView.OnItemSelectedListener listener, int selectedItem) {
         spinner.setAdapter(new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_item, items));
         spinner.setOnItemSelectedListener(listener);
+
+        spinner.setSelection(selectedItem);
     }
 }
