@@ -14,6 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import ru.project.domainlayer.model.RemoteCurrencyPair;
 import ru.project.domainlayer.service.ICurrenciesService;
+import ru.project.domainlayer.service.ISettingsService;
 import ru.project.worldmoneyinfo.dependency.AppDataModule;
 
 public class CurrenciesListViewModel {
@@ -28,6 +29,9 @@ public class CurrenciesListViewModel {
     @Inject
     @Named(AppDataModule.API_KEY)
     String mApiKey;
+
+    @Inject
+    ISettingsService mSettingsService;
 
     private ObservableArrayList<RemoteCurrencyPair> mCurrencies = new ObservableArrayList<>();
     private ObservableBoolean mIsErrorOccurred = new ObservableBoolean(false);
@@ -80,5 +84,9 @@ public class CurrenciesListViewModel {
 
     public SwipeRefreshLayout.OnRefreshListener getRefreshListener() {
         return mRefreshListener;
+    }
+
+    public String getMainCurrency() {
+        return mSettingsService.getMainCurrency();
     }
 }

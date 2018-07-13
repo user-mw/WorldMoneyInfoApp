@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             bind:items="@{currentViewModel.currencies}"
+            bind:mainCurrency="@{currentViewModel.mainCurrency}"
             android:visibility="@{currentViewModel.isErrorOccurred ? currentView.GONE : currentView.VISIBLE}"/>
 
         <TextView

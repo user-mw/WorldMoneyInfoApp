@@ -21,6 +21,7 @@ public class SettingsViewModel {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             mSettingsService.setMainCurrencyPosition(position);
+            mSettingsService.setMainCurrency(mCurrenciesList.get(position));
         }
 
         @Override

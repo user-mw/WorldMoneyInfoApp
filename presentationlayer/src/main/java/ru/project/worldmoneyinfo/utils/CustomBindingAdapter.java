@@ -20,10 +20,10 @@ import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesAdapter;
 import ru.project.worldmoneyinfo.ui.main_fragment_container.ContainerPagerAdapter;
 
 public class CustomBindingAdapter {
-    @BindingAdapter({"bind:items"})
-    public static void setRecyclerViewItems(RecyclerView recyclerView, List<RemoteCurrencyPair> items) {
+    @BindingAdapter({"bind:items", "bind:mainCurrency"})
+    public static void setRecyclerViewItems(RecyclerView recyclerView, List<RemoteCurrencyPair> items, String mainCurrency) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        CurrenciesAdapter adapter = new CurrenciesAdapter(items);
+        CurrenciesAdapter adapter = new CurrenciesAdapter(items, mainCurrency);
         recyclerView.setAdapter(adapter);
     }
 

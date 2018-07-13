@@ -21,19 +21,19 @@ public class CurrencyViewModel {
     @Inject
     CurrencyNamingUtil mNamingUtil;
 
-    public CurrencyViewModel(RemoteCurrencyPair pair) {
+    public CurrencyViewModel(RemoteCurrencyPair pair, String mainCurrency) {
         DaggerIUtilsComponent.builder().build().inject(this);
-        setCurrencyData(pair);
+        setCurrencyData(pair, mainCurrency);
     }
 
-    private void setCurrencyData(RemoteCurrencyPair pair) {
+    private void setCurrencyData(RemoteCurrencyPair pair, String mainCurrency) {
         mCurrencySign = pair.getSymbol();
         mCurrencyValue = pair.getPrice();
         mCurrencyBid = pair.getBid() + " / ";
         mCurrencyAsk = pair.getAsk();
 
         mIsBidMoreThanAsk = mComputingUtil.isBidMoreThanAsk(pair.getBid(), pair.getAsk());
-        mCurrencyFullName = mNamingUtil.getNormalName(mCurrencySign, "RUB");
+        mCurrencyFullName = mNamingUtil.getNormalName(mCurrencySign, mainCurrency);
     }
 
     public String getCurrencySign() {

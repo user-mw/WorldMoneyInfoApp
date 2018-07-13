@@ -13,7 +13,7 @@ public class CurrencyViewHolder extends RecyclerView.ViewHolder {
         mBinding = binding;
     }
 
-    public void bindData(RemoteCurrencyPair currencyPair) {
-        mBinding.setCurrentViewModel(new CurrencyViewModel(currencyPair));
+    public void bindData(RemoteCurrencyPair currencyPair, String mainCurrency) {
+        mBinding.setCurrentViewModel(new CurrencyViewModel(currencyPair, mainCurrency));
     }
 }
