@@ -13,9 +13,11 @@ import ru.project.worldmoneyinfo.databinding.CurrencyBinding;
 public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> {
 
     private List<RemoteCurrencyPair> mCurrencyPairs;
+    private String mMainCurrency;
 
-    public CurrenciesAdapter(List<RemoteCurrencyPair> currencyPairs) {
+    public CurrenciesAdapter(List<RemoteCurrencyPair> currencyPairs, String mainCurrency) {
         mCurrencyPairs = currencyPairs;
+        mMainCurrency = mainCurrency;
     }
 
     @NonNull
@@ -28,7 +30,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull CurrencyViewHolder holder, int position) {
-        holder.bindData(mCurrencyPairs.get(position));
+        holder.bindData(mCurrencyPairs.get(position), mMainCurrency);
     }
 
     @Override
