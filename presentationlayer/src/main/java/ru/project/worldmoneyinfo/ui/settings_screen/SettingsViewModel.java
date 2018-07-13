@@ -20,7 +20,7 @@ public class SettingsViewModel {
     private AdapterView.OnItemSelectedListener mSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            mSettingsService.setMainCurrency(mCurrenciesList.get(position));
+            mSettingsService.setMainCurrencyPosition(position);
         }
 
         @Override
@@ -40,5 +40,9 @@ public class SettingsViewModel {
 
     public AdapterView.OnItemSelectedListener getSpinnerListener() {
         return mSpinnerListener;
+    }
+
+    public int getSelectedItem() {
+        return mSettingsService.getMainCurrencyPosition();
     }
 }

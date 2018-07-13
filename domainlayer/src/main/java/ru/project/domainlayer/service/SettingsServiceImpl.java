@@ -15,12 +15,22 @@ public class SettingsServiceImpl implements ISettingsService {
     }
 
     @Override
+    public void setMainCurrencyPosition(int currencyPosition) {
+        mSettingsRepository.setMainCurrencyPosition(currencyPosition);
+    }
+
+    @Override
+    public int getMainCurrencyPosition() {
+        return mSettingsRepository.getMainCurrencyPosition();
+    }
+
+    @Override
     public void setMainCurrency(String currencyValue) {
         mSettingsRepository.setMainCurrency(currencyValue);
     }
 
     @Override
-    public String getMainCurrencyValue() {
-        return mSettingsRepository.getMainCurrencyValue();
+    public String getMainCurrency() {
+        return mSettingsRepository.getMainCurrency();
     }
 }
