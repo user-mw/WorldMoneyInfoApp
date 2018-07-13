@@ -14,6 +14,8 @@ import javax.inject.Inject;
 
 import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.databinding.SettingsBinding;
+import ru.project.worldmoneyinfo.dependency.RepositoryModule;
+import ru.project.worldmoneyinfo.dependency.ServiceModule;
 import ru.project.worldmoneyinfo.dependency.SettingsAdditionalModule;
 import ru.project.worldmoneyinfo.ui.BaseFragment;
 
@@ -43,8 +45,9 @@ public class SettingsFragment extends BaseFragment {
             mCurrenciesList.add("PLN");
         }
 
-        MainApplication.getSettingsComponent()
-                .plusAdditionalComponent(new SettingsAdditionalModule(mCurrenciesList))
+        MainApplication.getApplicationComponent().plusSettingsComponent(new RepositoryModule(),
+                new ServiceModule(),
+                new SettingsAdditionalModule(mCurrenciesList))
                 .inject(this);
     }
 

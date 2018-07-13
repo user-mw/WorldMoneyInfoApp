@@ -1,11 +1,10 @@
 package ru.project.worldmoneyinfo.dependency;
 
-import javax.inject.Singleton;
+import dagger.Subcomponent;
+import ru.project.worldmoneyinfo.ui.settings_screen.SettingsFragment;
 
-import dagger.Component;
-
-@Singleton
-@Component(modules = {SettingsModule.class})
+@IScreenScope
+@Subcomponent(modules = {RepositoryModule.class, ServiceModule.class, SettingsAdditionalModule.class})
 public interface ISettingsComponent {
-    ISettingsAdditionalComponent plusAdditionalComponent(SettingsAdditionalModule module);
+    void inject(SettingsFragment fragment);
 }
