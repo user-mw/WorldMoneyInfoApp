@@ -56,6 +56,8 @@ public class CurrenciesListViewModel {
 
                     @Override
                     public void onSuccess(List<RemoteCurrencyPair> currencyPairs) {
+                        mIsErrorOccurred.set(false);
+
                         if(mCurrencies.size() > 0) {
                             mCurrencies.clear();
                         }

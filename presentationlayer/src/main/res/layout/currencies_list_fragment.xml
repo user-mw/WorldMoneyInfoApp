@@ -18,22 +18,27 @@
         bind:loadingState="@{currentViewModel.isLoading}"
         bind:refreshListener="@{currentViewModel.refreshListener}">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/currencies_list"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            bind:items="@{currentViewModel.currencies}"
-            bind:mainCurrency="@{currentViewModel.mainCurrency}"
-            android:visibility="@{currentViewModel.isErrorOccurred ? currentView.GONE : currentView.VISIBLE}"/>
+            android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="32sp"
-            android:textColor="@color/textColorRed"
-            android:text="@string/default_error_text"
-            android:visibility="@{currentViewModel.isErrorOccurred ? currentView.VISIBLE : currentView.GONE}" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/currencies_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{currentViewModel.isErrorOccurred ? currentView.GONE : currentView.VISIBLE}"
+                bind:items="@{currentViewModel.currencies}"
+                bind:mainCurrency="@{currentViewModel.mainCurrency}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/default_error_text"
+                android:textColor="@color/textColorRed"
+                android:textSize="32sp"
+                android:visibility="@{currentViewModel.isErrorOccurred ? currentView.VISIBLE : currentView.GONE}" />
+        </FrameLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </layout>
