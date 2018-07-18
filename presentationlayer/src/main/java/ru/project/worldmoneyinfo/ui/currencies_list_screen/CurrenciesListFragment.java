@@ -35,7 +35,7 @@ public class CurrenciesListFragment extends BaseFragment {
                 new RepositoryModule(),
                 new ServiceModule(),
                 // use your own key for result
-                new AppDataModule("EURRUB,PLNRUB,GBPRUB,USDRUB,CNHRUB,ZARRUB,XAGRUB,XAURUB", "")
+                new AppDataModule("", "")
         ).inject(this);
     }
 

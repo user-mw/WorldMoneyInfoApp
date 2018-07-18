@@ -1,12 +1,12 @@
 package ru.project.domainlayer.utils;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 public class CurrencyNamingUtil {
-    private Map<String, String> mCurrenciesNames = new HashMap<>();
+    private Map<String, String> mCurrenciesNames = new LinkedHashMap<>();
 
     @Inject
     public CurrencyNamingUtil() {
@@ -26,8 +26,26 @@ public class CurrencyNamingUtil {
         mCurrenciesNames.put("PLN", "Polish Zloty");
         mCurrenciesNames.put("GBP", "Pound sterling");
         mCurrenciesNames.put("CNH", "Chinese yuan");
+        mCurrenciesNames.put("JPY", "Japanese yen");
+        mCurrenciesNames.put("NOK", "Norwegian krone");
+        mCurrenciesNames.put("TRY", "Turkish lira");
         mCurrenciesNames.put("ZAR", "South African Rand");
         mCurrenciesNames.put("XAG", "Silver Ounce");
         mCurrenciesNames.put("XAU", "Gold Ounce");
+    }
+
+    public String getRatesValue(String mainCurrency) {
+        String pair = "";
+
+        for(int step = 0; step < mCurrenciesNames.keySet().size(); step++) {
+            String key = mCurrenciesNames.keySet().toArray()[step].toString();
+
+            if(!key.equals(mainCurrency)) {
+                pair += key + mainCurrency + ",";
+            }
+
+        }
+
+        return pair;
     }
 }
