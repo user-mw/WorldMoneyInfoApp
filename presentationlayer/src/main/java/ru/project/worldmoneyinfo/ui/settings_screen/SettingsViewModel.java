@@ -1,5 +1,6 @@
 package ru.project.worldmoneyinfo.ui.settings_screen;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 
 import ru.project.domainlayer.service.ISettingsService;
 import ru.project.domainlayer.utils.CurrencyUtil;
+import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListFragment;
 
 public class SettingsViewModel {
     @Inject
@@ -22,6 +24,8 @@ public class SettingsViewModel {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             mSettingsService.setMainCurrencyPosition(position);
             mSettingsService.setMainCurrency(mCurrencyUtil.getSettingsCurrenciesList().get(position));
+
+            parent.getContext().sendBroadcast(new Intent(CurrenciesListFragment.UPDATE_DATA_COMMAND));
         }
 
         @Override

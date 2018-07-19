@@ -1,5 +1,9 @@
 package ru.project.worldmoneyinfo.ui.currencies_list_screen;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -17,8 +21,12 @@ import ru.project.worldmoneyinfo.ui.BaseFragment;
 
 public class CurrenciesListFragment extends BaseFragment {
 
+    public static final String UPDATE_DATA_COMMAND = "ru.project.worldmoneyinfo.UpdateDataCommand";
+
     @Inject
     CurrenciesListViewModel mViewModel;
+
+    private DataUpdatingReceiver mReceiver = new DataUpdatingReceiver();
 
     public static CurrenciesListFragment newInstance() {
         Bundle arguments = new Bundle();
@@ -48,5 +56,31 @@ public class CurrenciesListFragment extends BaseFragment {
     @Override
     protected void loadData() {
         mViewModel.loadCurrenciesList();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(getActivity() != null) {
+            getActivity().registerReceiver(mReceiver, new IntentFilter(UPDATE_DATA_COMMAND));
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if(getActivity() != null) {
+            getActivity().unregisterReceiver(mReceiver);
+        }
+    }
+
+    private class DataUpdatingReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            loadData();
+        }
     }
 }
