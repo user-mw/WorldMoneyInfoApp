@@ -5,11 +5,11 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-public class CurrencyNamingUtil {
+public class CurrencyUtil {
     private Map<String, String> mCurrenciesNames = new LinkedHashMap<>();
 
     @Inject
-    public CurrencyNamingUtil() {
+    public CurrencyUtil() {
         setCurrenciesNames();
     }
 

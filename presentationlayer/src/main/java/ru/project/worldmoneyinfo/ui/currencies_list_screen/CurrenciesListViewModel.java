@@ -15,7 +15,7 @@ import io.reactivex.disposables.Disposable;
 import ru.project.domainlayer.model.RemoteCurrencyPair;
 import ru.project.domainlayer.service.ICurrenciesService;
 import ru.project.domainlayer.service.ISettingsService;
-import ru.project.domainlayer.utils.CurrencyNamingUtil;
+import ru.project.domainlayer.utils.CurrencyUtil;
 import ru.project.worldmoneyinfo.dependency.AppDataModule;
 
 public class CurrenciesListViewModel {
@@ -24,18 +24,13 @@ public class CurrenciesListViewModel {
     ICurrenciesService mService;
 
     @Inject
-    @Named(AppDataModule.PAIRS_KEY)
-    String mCurrenciesPairs;
-
-    @Inject
-    @Named(AppDataModule.API_KEY)
     String mApiKey;
 
     @Inject
     ISettingsService mSettingsService;
 
     @Inject
-    CurrencyNamingUtil mUtil;
+    CurrencyUtil mCurrencyUtil;
 
     private ObservableArrayList<RemoteCurrencyPair> mCurrencies = new ObservableArrayList<>();
     private ObservableBoolean mIsErrorOccurred = new ObservableBoolean(false);
@@ -48,7 +43,7 @@ public class CurrenciesListViewModel {
     }
 
     public void loadCurrenciesList() {
-        String pairs = mUtil.getRatesValue(mSettingsService.getMainCurrency());
+        String pairs = mCurrencyUtil.getRatesValue(mSettingsService.getMainCurrency());
 
         mService.getCurrencies(pairs, mApiKey)
                 .observeOn(AndroidSchedulers.mainThread())

@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import ru.project.domainlayer.model.RemoteCurrencyPair;
 import ru.project.domainlayer.utils.ComputingUtil;
-import ru.project.domainlayer.utils.CurrencyNamingUtil;
+import ru.project.domainlayer.utils.CurrencyUtil;
 import ru.project.worldmoneyinfo.dependency.DaggerIUtilsComponent;
 
 public class CurrencyViewModel {
@@ -19,7 +19,7 @@ public class CurrencyViewModel {
     @Inject
     ComputingUtil mComputingUtil;
     @Inject
-    CurrencyNamingUtil mNamingUtil;
+    CurrencyUtil mCurrencyUtil;
 
     public CurrencyViewModel(RemoteCurrencyPair pair, String mainCurrency) {
         DaggerIUtilsComponent.builder().build().inject(this);
@@ -33,7 +33,7 @@ public class CurrencyViewModel {
         mCurrencyAsk = pair.getAsk();
 
         mIsBidMoreThanAsk = mComputingUtil.isBidMoreThanAsk(pair.getBid(), pair.getAsk());
-        mCurrencyFullName = mNamingUtil.getNormalName(mCurrencySign, mainCurrency);
+        mCurrencyFullName = mCurrencyUtil.getNormalName(mCurrencySign, mainCurrency);
     }
 
     public String getCurrencySign() {
