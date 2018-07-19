@@ -1,16 +1,20 @@
 package ru.project.domainlayer.utils;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 public class CurrencyUtil {
     private Map<String, String> mCurrenciesNames = new LinkedHashMap<>();
+    private List<String> mSettingsCurrenciesList = new ArrayList<>();
 
     @Inject
     public CurrencyUtil() {
         setCurrenciesNames();
+        setSettingsCurrencies();
     }
 
     public String getNormalName(String currencyPair, String mainCurrency) {
@@ -34,6 +38,14 @@ public class CurrencyUtil {
         mCurrenciesNames.put("XAU", "Gold Ounce");
     }
 
+    private void setSettingsCurrencies() {
+        mSettingsCurrenciesList.add("RUB");
+        mSettingsCurrenciesList.add("EUR");
+        mSettingsCurrenciesList.add("USD");
+        mSettingsCurrenciesList.add("GBP");
+        mSettingsCurrenciesList.add("PLN");
+    }
+
     public String getRatesValue(String mainCurrency) {
         String pair = "";
 
@@ -47,5 +59,9 @@ public class CurrencyUtil {
         }
 
         return pair;
+    }
+
+    public List<String> getSettingsCurrenciesList() {
+        return mSettingsCurrenciesList;
     }
 }

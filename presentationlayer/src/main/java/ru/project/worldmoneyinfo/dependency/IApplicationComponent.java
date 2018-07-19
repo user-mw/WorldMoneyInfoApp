@@ -12,6 +12,5 @@ public interface IApplicationComponent {
                                          AppDataModule appDataModule);
 
     ISettingsComponent plusSettingsComponent(RepositoryModule repositoryModule,
-                                             ServiceModule serviceModule,
-                                             SettingsAdditionalModule settingsAdditionalModule);
+                                             ServiceModule serviceModule);
 }
