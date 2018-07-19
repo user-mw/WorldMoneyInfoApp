@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 public class CurrencyUtil {
     private Map<String, String> mCurrenciesNames = new LinkedHashMap<>();
-    private List<String> mSettingsCurrenciesList = new ArrayList<>();
+    private List<String> mCurrenciesList = new ArrayList<>();
 
     @Inject
     public CurrencyUtil() {
@@ -39,11 +39,11 @@ public class CurrencyUtil {
     }
 
     private void setSettingsCurrencies() {
-        mSettingsCurrenciesList.add("RUB");
-        mSettingsCurrenciesList.add("EUR");
-        mSettingsCurrenciesList.add("USD");
-        mSettingsCurrenciesList.add("GBP");
-        mSettingsCurrenciesList.add("PLN");
+        mCurrenciesList.add("RUB");
+        mCurrenciesList.add("EUR");
+        mCurrenciesList.add("USD");
+        mCurrenciesList.add("GBP");
+        mCurrenciesList.add("PLN");
     }
 
     public String getRatesValue(String mainCurrency) {
@@ -61,7 +61,7 @@ public class CurrencyUtil {
         return pair;
     }
 
-    public List<String> getSettingsCurrenciesList() {
-        return mSettingsCurrenciesList;
+    public List<String> getCurrenciesList() {
+        return mCurrenciesList;
     }
 }

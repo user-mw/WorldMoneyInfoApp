@@ -23,7 +23,7 @@ public class SettingsViewModel {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             mSettingsService.setMainCurrencyPosition(position);
-            mSettingsService.setMainCurrency(mCurrencyUtil.getSettingsCurrenciesList().get(position));
+            mSettingsService.setMainCurrency(mCurrencyUtil.getCurrenciesList().get(position));
 
             parent.getContext().sendBroadcast(new Intent(CurrenciesListFragment.UPDATE_DATA_COMMAND));
         }
@@ -40,7 +40,7 @@ public class SettingsViewModel {
     }
 
     public List<String> getCurrenciesList() {
-        return mCurrencyUtil.getSettingsCurrenciesList();
+        return mCurrencyUtil.getCurrenciesList();
     }
 
     public AdapterView.OnItemSelectedListener getSpinnerListener() {

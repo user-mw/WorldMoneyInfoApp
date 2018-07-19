@@ -5,4 +5,6 @@
     <string name="settings_title">Settings</string>
     <string name="converter_title">Converter</string>
     <string name="settings_currency_action">Select main currency</string>
+    <string name="currency_amount_hint">Amount</string>
+    <string name="convert_button_text">Convert</string>
 </resources>
