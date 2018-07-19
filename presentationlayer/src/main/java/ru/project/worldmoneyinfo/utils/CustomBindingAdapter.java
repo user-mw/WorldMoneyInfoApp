@@ -56,4 +56,9 @@ public class CustomBindingAdapter {
 
         spinner.setSelection(selectedItem);
     }
+
+    @BindingAdapter({"bind:converterCurrenciesItems"})
+    public static void setConverterSpinner(Spinner spinner, List<String> items) {
+        spinner.setAdapter(new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_item, items));
+    }
 }

@@ -17,6 +17,7 @@ import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.R;
 import ru.project.worldmoneyinfo.databinding.ContainerBinding;
 import ru.project.worldmoneyinfo.ui.BaseFragment;
+import ru.project.worldmoneyinfo.ui.converter_screen.ConverterFragment;
 import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListFragment;
 import ru.project.worldmoneyinfo.ui.settings_screen.SettingsFragment;
 
@@ -39,10 +40,12 @@ public class ContainerFragment extends BaseFragment {
     @Override
     protected void prepareViewModel() {
         mFragmentList.add(CurrenciesListFragment.newInstance());
+        mFragmentList.add(ConverterFragment.newInstance());
         mFragmentList.add(SettingsFragment.newInstance());
 
         if(getActivity() != null) {
             mTitles.add(getActivity().getString(R.string.rates_title));
+            mTitles.add(getActivity().getString(R.string.converter_title));
             mTitles.add(getActivity().getString(R.string.settings_title));
         }
 

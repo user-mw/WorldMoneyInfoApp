@@ -17,4 +17,11 @@ public class ComputingUtil {
 
         return bid.compareTo(ask) > 0;
     }
+
+    public String getTotalAmount(String amount, String price) {
+        BigDecimal digitPrise = BigDecimal.valueOf(Double.valueOf(price));
+        BigDecimal convertedAmount = BigDecimal.valueOf(Double.valueOf(amount));
+
+        return String.valueOf((digitPrise.multiply(convertedAmount)));
+    }
 }
