@@ -7,24 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.databinding.SettingsBinding;
 import ru.project.worldmoneyinfo.dependency.RepositoryModule;
 import ru.project.worldmoneyinfo.dependency.ServiceModule;
-import ru.project.worldmoneyinfo.dependency.SettingsAdditionalModule;
 import ru.project.worldmoneyinfo.ui.BaseFragment;
 
 public class SettingsFragment extends BaseFragment {
 
     @Inject
     SettingsViewModel mViewModel;
-
-    private List<String> mCurrenciesList = new ArrayList<>();
 
     public static SettingsFragment newInstance() {
         Bundle args = new Bundle();
@@ -36,18 +30,8 @@ public class SettingsFragment extends BaseFragment {
 
     @Override
     protected void prepareViewModel() {
-
-        if(mCurrenciesList.size() == 0) {
-            mCurrenciesList.add("RUB");
-            mCurrenciesList.add("EUR");
-            mCurrenciesList.add("USD");
-            mCurrenciesList.add("GBP");
-            mCurrenciesList.add("PLN");
-        }
-
         MainApplication.getApplicationComponent().plusSettingsComponent(new RepositoryModule(),
-                new ServiceModule(),
-                new SettingsAdditionalModule(mCurrenciesList))
+                new ServiceModule())
                 .inject(this);
     }
 
