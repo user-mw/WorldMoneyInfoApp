@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
-import ru.project.worldmoneyinfo.IApiData;
 import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.databinding.CurrenciesListBinding;
 import ru.project.worldmoneyinfo.dependency.AppDataModule;
