@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
+import ru.project.worldmoneyinfo.IApiData;
 import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.databinding.CurrenciesListBinding;
 import ru.project.worldmoneyinfo.dependency.AppDataModule;
@@ -20,13 +21,9 @@ import ru.project.worldmoneyinfo.dependency.ServiceModule;
 import ru.project.worldmoneyinfo.ui.BaseFragment;
 
 public class CurrenciesListFragment extends BaseFragment {
-
-    public static final String UPDATE_DATA_COMMAND = "ru.project.worldmoneyinfo.UpdateDataCommand";
-
+    
     @Inject
     CurrenciesListViewModel mViewModel;
-
-    private DataUpdatingReceiver mReceiver = new DataUpdatingReceiver();
 
     public static CurrenciesListFragment newInstance() {
         Bundle arguments = new Bundle();
@@ -42,7 +39,7 @@ public class CurrenciesListFragment extends BaseFragment {
                 new RepositoryModule(),
                 new ServiceModule(),
                 // use your own key for result
-                new AppDataModule("")
+                new AppDataModule(IApiData.KEY)
         ).inject(this);
     }
 
@@ -56,31 +53,5 @@ public class CurrenciesListFragment extends BaseFragment {
     @Override
     protected void loadData() {
         mViewModel.loadCurrenciesList();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if(getActivity() != null) {
-            getActivity().registerReceiver(mReceiver, new IntentFilter(UPDATE_DATA_COMMAND));
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        if(getActivity() != null) {
-            getActivity().unregisterReceiver(mReceiver);
-        }
-    }
-
-    private class DataUpdatingReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            loadData();
-        }
     }
 }
