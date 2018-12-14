@@ -1,5 +1,7 @@
 package ru.project.worldmoneyinfo.ui.currencies_list_screen;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,7 +20,7 @@ import ru.project.domainlayer.service.ISettingsService;
 import ru.project.domainlayer.utils.CurrencyUtil;
 import ru.project.worldmoneyinfo.dependency.AppDataModule;
 
-public class CurrenciesListViewModel {
+public class CurrenciesListViewModel extends ViewModel {
 
     @Inject
     ICurrenciesService mService;
@@ -32,9 +34,9 @@ public class CurrenciesListViewModel {
     @Inject
     CurrencyUtil mCurrencyUtil;
 
-    private ObservableArrayList<RemoteCurrencyPair> mCurrencies = new ObservableArrayList<>();
-    private ObservableBoolean mIsErrorOccurred = new ObservableBoolean(false);
-    private ObservableBoolean mIsLoading = new ObservableBoolean(false);
+    private MutableLiveData<List<RemoteCurrencyPair>> mCurrencies = new MutableLiveData<>();
+    private MutableLiveData<Boolean> mIsErrorOccurred = new MutableLiveData<>();
+    private MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
     private SwipeRefreshLayout.OnRefreshListener mRefreshListener = () -> loadCurrenciesList();
 
     @Inject
@@ -47,8 +49,8 @@ public class CurrenciesListViewModel {
 
         mService.getCurrencies(pairs, mApiKey)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> mIsLoading.set(true))
-                .doFinally(() -> mIsLoading.set(false))
+                .doOnSubscribe(disposable -> mIsLoading.postValue(true))
+                .doFinally(() -> mIsLoading.postValue(false))
                 .subscribe(new SingleObserver<List<RemoteCurrencyPair>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -57,31 +59,26 @@ public class CurrenciesListViewModel {
 
                     @Override
                     public void onSuccess(List<RemoteCurrencyPair> currencyPairs) {
-                        mIsErrorOccurred.set(false);
-
-                        if(mCurrencies.size() > 0) {
-                            mCurrencies.clear();
-                        }
-
-                        mCurrencies.addAll(currencyPairs);
+                        mIsErrorOccurred.postValue(false);
+                        mCurrencies.postValue(currencyPairs);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mIsErrorOccurred.set(true);
+                        mIsErrorOccurred.postValue(true);
                     }
                 });
     }
 
-    public ObservableArrayList<RemoteCurrencyPair> getCurrencies() {
+    public MutableLiveData<List<RemoteCurrencyPair>> getCurrencies() {
         return mCurrencies;
     }
 
-    public ObservableBoolean getIsErrorOccurred() {
+    public MutableLiveData<Boolean> getIsErrorOccurred() {
         return mIsErrorOccurred;
     }
 
-    public ObservableBoolean getIsLoading() {
+    public MutableLiveData<Boolean> getIsLoading() {
         return mIsLoading;
     }
 
