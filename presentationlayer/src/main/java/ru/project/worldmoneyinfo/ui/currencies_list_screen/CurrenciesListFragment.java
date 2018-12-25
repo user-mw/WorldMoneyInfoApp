@@ -13,12 +13,9 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import ru.project.worldmoneyinfo.IApiData;
 import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.R;
-import ru.project.worldmoneyinfo.dependency.AppDataModule;
-import ru.project.worldmoneyinfo.dependency.RepositoryModule;
-import ru.project.worldmoneyinfo.dependency.ServiceModule;
+import ru.project.worldmoneyinfo.dependency.ViewModelModule;
 import ru.project.worldmoneyinfo.ui.BaseFragment;
 
 public class CurrenciesListFragment extends BaseFragment {
@@ -42,12 +39,9 @@ public class CurrenciesListFragment extends BaseFragment {
     
     @Override
     protected void prepareViewModel() {
-        MainApplication.getApplicationComponent().plusScreenComponent(
-                new RepositoryModule(),
-                new ServiceModule(),
-                // use your own key for result
-                new AppDataModule(IApiData.KEY)
-        ).inject(this);
+        MainApplication.getApplicationComponent()
+                .plusViewModelComponent(new ViewModelModule(this))
+                .inject(this);
     }
 
     @Override
