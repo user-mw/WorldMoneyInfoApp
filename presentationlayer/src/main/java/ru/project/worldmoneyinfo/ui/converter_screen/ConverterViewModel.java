@@ -1,6 +1,8 @@
 package ru.project.worldmoneyinfo.ui.converter_screen;
 
-import android.databinding.ObservableField;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+import android.util.Log;
 
 import java.util.List;
 
@@ -13,42 +15,40 @@ import ru.project.domainlayer.model.RemoteCurrencyPair;
 import ru.project.domainlayer.service.ICurrenciesService;
 import ru.project.domainlayer.utils.ComputingUtil;
 import ru.project.domainlayer.utils.CurrencyUtil;
+import ru.project.worldmoneyinfo.MainApplication;
 
-public class ConverterViewModel {
-
-    private ObservableField<String> mFirstCurrencyAmount = new ObservableField<>();
-    private ObservableField<String> mResultAmount = new ObservableField<>();
-    private ICurrencyConverter mCurrentConverter = (amount, basicCurrency, targetCurrency) ->
-        convertData(amount, basicCurrency, targetCurrency);
-
+public class ConverterViewModel extends ViewModel {
     @Inject
     CurrencyUtil mCurrencyUtil;
-
     @Inject
     ComputingUtil mComputingUtil;
-
-    @Inject
-    ICurrenciesService mCurrenciesService;
-
     @Inject
     String mApiKey;
 
-    @Inject
-    public ConverterViewModel() {
+    private static final String CURRENT_TAG = "ConverterViewModel";
 
+    private MutableLiveData<String> mFirstCurrencyAmount = new MutableLiveData<>();
+    private MutableLiveData<String> mResultAmount = new MutableLiveData<>();
+    private ICurrencyConverter mCurrentConverter = (amount, basicCurrency, targetCurrency) ->
+        convertData(amount, basicCurrency, targetCurrency);
+
+    private ICurrenciesService currenciesService;
+
+    public ConverterViewModel(ICurrenciesService currenciesService) {
+        this.currenciesService = currenciesService;
+        MainApplication.getUtilsComponent().inject(this);
     }
 
     private void convertData(String amount, String basicCurrency, String targetCurrency) {
-
         if(!basicCurrency.equals(targetCurrency)) {
             String pair = basicCurrency + targetCurrency;
 
-            mCurrenciesService.getCurrencies(pair, mApiKey)
+            currenciesService.getCurrencies(pair, mApiKey)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new SingleObserver<List<RemoteCurrencyPair>>() {
                         @Override
                         public void onSubscribe(Disposable d) {
-
+                            Log.d(CURRENT_TAG, "Line 51 - onSubscribe: called");
                         }
 
                         @Override
@@ -56,24 +56,24 @@ public class ConverterViewModel {
                             String prise = currencyPairs.get(0).getPrice();
                             String result = mComputingUtil.getTotalAmount(amount, prise);
 
-                            mResultAmount.set(result);
+                            mResultAmount.postValue(result);
                         }
 
                         @Override
                         public void onError(Throwable e) {
-
+                            Log.w(CURRENT_TAG, "Line 64 - onError: called");
                         }
                     });
         } else {
-            mResultAmount.set(amount);
+            mResultAmount.postValue(amount);
         }
     }
 
-    public ObservableField<String> getFirstCurrencyAmount() {
+    public MutableLiveData<String> getFirstCurrencyAmount() {
         return mFirstCurrencyAmount;
     }
 
-    public ObservableField<String> getResultAmount() {
+    public MutableLiveData<String> getResultAmount() {
         return mResultAmount;
     }
 

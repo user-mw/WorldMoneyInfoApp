@@ -3,10 +3,9 @@ package ru.project.worldmoneyinfo.dependency;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.Fragment;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+import ru.project.worldmoneyinfo.ui.converter_screen.ConverterViewModel;
 import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListViewModel;
 import ru.project.worldmoneyinfo.utils.CustomViewModelFactory;
 
@@ -22,5 +21,10 @@ public class ViewModelModule {
     @Provides
     public CurrenciesListViewModel provideCurrenciesListViewModel() {
         return ViewModelProviders.of(lifeCycleOwner, factory).get(CurrenciesListViewModel.class);
+    }
+
+    @Provides
+    public ConverterViewModel provideConverterViewModel() {
+        return ViewModelProviders.of(lifeCycleOwner, factory).get(ConverterViewModel.class);
     }
 }

@@ -6,20 +6,28 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import ru.project.worldmoneyinfo.MainApplication;
-import ru.project.worldmoneyinfo.databinding.ConverterBinding;
-import ru.project.worldmoneyinfo.dependency.AppDataModule;
-import ru.project.worldmoneyinfo.dependency.RepositoryModule;
-import ru.project.worldmoneyinfo.dependency.ServiceModule;
+import ru.project.worldmoneyinfo.R;
+import ru.project.worldmoneyinfo.dependency.ViewModelModule;
 import ru.project.worldmoneyinfo.ui.BaseFragment;
 
 public class ConverterFragment extends BaseFragment {
-
     @Inject
     ConverterViewModel mViewModel;
+
+    private EditText basicCurrencyAmount;
+    private TextView targetCurrencyAmount;
+    private Spinner basicCurrencyOption;
+    private Spinner targetCurrencyOption;
+    private Button converterButton;
 
     public static ConverterFragment newInstance() {
         Bundle args = new Bundle();
@@ -32,22 +40,52 @@ public class ConverterFragment extends BaseFragment {
     @Override
     protected void prepareViewModel() {
         MainApplication.getApplicationComponent()
-                .plusScreenComponent(
-                        new RepositoryModule(),
-                        new ServiceModule(),
-                        new AppDataModule("")
-                ).inject(this);
+                .plusViewModelComponent(new ViewModelModule(this))
+                .inject(this);
     }
 
     @Override
     protected View retrieveView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
-        ConverterBinding binding = ConverterBinding.inflate(inflater, container, false);
-        binding.setCurrentViewModel(mViewModel);
-        return binding.getRoot();
+        return inflater.inflate(R.layout.converter_fragment, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        basicCurrencyAmount = view.findViewById(R.id.basic_currency_amount);
+        targetCurrencyAmount = view.findViewById(R.id.target_currency_amount);
+        basicCurrencyOption = view.findViewById(R.id.basic_currency_option);
+        targetCurrencyOption = view.findViewById(R.id.target_currency_option);
+        converterButton = view.findViewById(R.id.converter_button);
+    }
+
+    private void configureTextFields() {
+        mViewModel.getFirstCurrencyAmount().observe(this, amount -> basicCurrencyAmount.setText(amount));
+        mViewModel.getResultAmount().observe(this, amount -> targetCurrencyAmount.setText(amount));
+    }
+
+    private void configureSpinners() {
+        if(getActivity() != null) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, mViewModel.getCurrenciesList());
+
+            basicCurrencyOption.setAdapter(adapter);
+            targetCurrencyOption.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        converterButton.setOnClickListener(view -> {
+            String amount = basicCurrencyAmount.getText().toString();
+            String basicCurrency = basicCurrencyOption.getSelectedItem().toString();
+            String targetCurrency = targetCurrencyOption.getSelectedItem().toString();
+            mViewModel.getCurrentConverter().convert(amount, basicCurrency, targetCurrency);
+        });
     }
 
     @Override
     protected void loadData() {
-
+        configureTextFields();
+        configureSpinners();
     }
 }

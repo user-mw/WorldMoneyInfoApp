@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.project.worldmoneyinfo.R;
+import ru.project.worldmoneyinfo.ui.converter_screen.ConverterFragment;
 import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListFragment;
 
 public class ContainerFragment extends Fragment {
@@ -37,12 +38,12 @@ public class ContainerFragment extends Fragment {
         super.onAttach(context);
 
         mFragmentList.add(CurrenciesListFragment.newInstance());
-//        mFragmentList.add(ConverterFragment.newInstance());
+        mFragmentList.add(ConverterFragment.newInstance());
 //        mFragmentList.add(SettingsFragment.newInstance());
 
         if(getActivity() != null) {
             mTitles.add(getActivity().getString(R.string.rates_title));
-//            mTitles.add(getActivity().getString(R.string.converter_title));
+            mTitles.add(getActivity().getString(R.string.converter_title));
 //            titles.add(getActivity().getString(R.string.settings_title));
         }
     }

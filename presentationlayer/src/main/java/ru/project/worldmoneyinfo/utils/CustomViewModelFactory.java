@@ -11,6 +11,7 @@ import ru.project.domainlayer.service.ISettingsService;
 import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.dependency.RepositoryModule;
 import ru.project.worldmoneyinfo.dependency.ServiceModule;
+import ru.project.worldmoneyinfo.ui.converter_screen.ConverterViewModel;
 import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListViewModel;
 
 public class CustomViewModelFactory extends ViewModelProvider.NewInstanceFactory {
@@ -31,6 +32,8 @@ public class CustomViewModelFactory extends ViewModelProvider.NewInstanceFactory
 
         if(modelClass.isAssignableFrom(CurrenciesListViewModel.class)) {
             return (T) new CurrenciesListViewModel(currenciesService, settingsService);
+        } else if(modelClass.isAssignableFrom(ConverterViewModel.class)) {
+            return (T) new ConverterViewModel(currenciesService);
         }
 
         throw new IllegalArgumentException("Wrong ViewModel class");
