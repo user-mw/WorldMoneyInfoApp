@@ -1,13 +1,13 @@
 package ru.project.worldmoneyinfo.ui.currencies_list_screen;
 
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableBoolean;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -16,80 +16,74 @@ import ru.project.domainlayer.model.RemoteCurrencyPair;
 import ru.project.domainlayer.service.ICurrenciesService;
 import ru.project.domainlayer.service.ISettingsService;
 import ru.project.domainlayer.utils.CurrencyUtil;
-import ru.project.worldmoneyinfo.dependency.AppDataModule;
+import ru.project.worldmoneyinfo.MainApplication;
 
-public class CurrenciesListViewModel {
+public class CurrenciesListViewModel extends ViewModel {
 
-    @Inject
-    ICurrenciesService mService;
-
-    @Inject
-    String mApiKey;
+    private static final String CURRENT_TAG = "CurrenciesListViewModel";
 
     @Inject
-    ISettingsService mSettingsService;
-
+    String apiKey;
     @Inject
-    CurrencyUtil mCurrencyUtil;
+    CurrencyUtil currencyUtil;
 
-    private ObservableArrayList<RemoteCurrencyPair> mCurrencies = new ObservableArrayList<>();
-    private ObservableBoolean mIsErrorOccurred = new ObservableBoolean(false);
-    private ObservableBoolean mIsLoading = new ObservableBoolean(false);
-    private SwipeRefreshLayout.OnRefreshListener mRefreshListener = () -> loadCurrenciesList();
+    private ICurrenciesService currenciesService;
+    private ISettingsService settingsService;
 
-    @Inject
-    public CurrenciesListViewModel() {
+    private MutableLiveData<List<RemoteCurrencyPair>> currencies = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isErrorOccurred = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = () -> loadCurrenciesList();
 
+    public CurrenciesListViewModel(ICurrenciesService currenciesService, ISettingsService settingsService) {
+        this.currenciesService = currenciesService;
+        this.settingsService = settingsService;
+        MainApplication.getUtilsComponent().inject(this);
     }
 
     public void loadCurrenciesList() {
-        String pairs = mCurrencyUtil.getRatesValue(mSettingsService.getMainCurrency());
+        String pairs = currencyUtil.getRatesValue(settingsService.getMainCurrency());
 
-        mService.getCurrencies(pairs, mApiKey)
+        currenciesService.getCurrencies(pairs, apiKey)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> mIsLoading.set(true))
-                .doFinally(() -> mIsLoading.set(false))
+                .doOnSubscribe(disposable -> isLoading.postValue(true))
+                .doFinally(() -> isLoading.postValue(false))
                 .subscribe(new SingleObserver<List<RemoteCurrencyPair>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        Log.d(CURRENT_TAG, "Line 54 - onSubscribe: called");
                     }
 
                     @Override
                     public void onSuccess(List<RemoteCurrencyPair> currencyPairs) {
-                        mIsErrorOccurred.set(false);
-
-                        if(mCurrencies.size() > 0) {
-                            mCurrencies.clear();
-                        }
-
-                        mCurrencies.addAll(currencyPairs);
+                        isErrorOccurred.postValue(false);
+                        currencies.postValue(currencyPairs);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mIsErrorOccurred.set(true);
+                        isErrorOccurred.postValue(true);
                     }
                 });
     }
 
-    public ObservableArrayList<RemoteCurrencyPair> getCurrencies() {
-        return mCurrencies;
+    public MutableLiveData<List<RemoteCurrencyPair>> getCurrencies() {
+        return currencies;
     }
 
-    public ObservableBoolean getIsErrorOccurred() {
-        return mIsErrorOccurred;
+    public MutableLiveData<Boolean> getIsErrorOccurred() {
+        return isErrorOccurred;
     }
 
-    public ObservableBoolean getIsLoading() {
-        return mIsLoading;
+    public MutableLiveData<Boolean> getIsLoading() {
+        return isLoading;
     }
 
     public SwipeRefreshLayout.OnRefreshListener getRefreshListener() {
-        return mRefreshListener;
+        return refreshListener;
     }
 
     public String getMainCurrency() {
-        return mSettingsService.getMainCurrency();
+        return settingsService.getMainCurrency();
     }
 }

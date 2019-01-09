@@ -8,9 +8,12 @@ import dagger.Component;
 @Component(modules = {DatabaseModule.class, ApiModule.class, SettingsModule.class})
 public interface IApplicationComponent {
     IScreenComponent plusScreenComponent(RepositoryModule repositoryModule,
-                                         ServiceModule serviceModule,
-                                         AppDataModule appDataModule);
+                                         ServiceModule serviceModule);
 
     ISettingsComponent plusSettingsComponent(RepositoryModule repositoryModule,
                                              ServiceModule serviceModule);
+
+    IViewModelComponent plusViewModelComponent(ViewModelModule viewModelModule);
+
+
 }

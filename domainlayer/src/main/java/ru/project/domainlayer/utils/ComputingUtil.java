@@ -1,16 +1,10 @@
 package ru.project.domainlayer.utils;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-
-import javax.inject.Inject;
 
 public class ComputingUtil {
-
-    @Inject
-    public ComputingUtil() {
-        
-    }
+    private static final int LAST_SYMBOL_OFFSET = 3;
+    private static final String POINT_SYMBOL = ".";
 
     public boolean isBidMoreThanAsk(String bidValue, String askValue) {
         BigDecimal bid = BigDecimal.valueOf(Double.valueOf(bidValue));
@@ -23,9 +17,8 @@ public class ComputingUtil {
         BigDecimal digitPrise = BigDecimal.valueOf(Double.valueOf(price));
         BigDecimal convertedAmount = BigDecimal.valueOf(Double.valueOf(amount));
 
-        digitPrise = digitPrise.setScale(2, RoundingMode.HALF_UP);
-        convertedAmount = convertedAmount.setScale(2, RoundingMode.HALF_UP);
-
-        return String.valueOf((digitPrise.multiply(convertedAmount)));
+        StringBuilder result = new StringBuilder(digitPrise.multiply(convertedAmount).toString());
+        int lastIndex = result.indexOf(POINT_SYMBOL) + LAST_SYMBOL_OFFSET;
+        return result.substring(0, lastIndex);
     }
 }

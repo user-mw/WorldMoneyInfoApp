@@ -3,12 +3,13 @@ package ru.project.worldmoneyinfo.ui.currencies_list_screen;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
 import ru.project.domainlayer.model.RemoteCurrencyPair;
-import ru.project.worldmoneyinfo.databinding.CurrencyBinding;
+import ru.project.worldmoneyinfo.R;
 
 public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> {
 
@@ -24,8 +25,8 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> 
     @Override
     public CurrencyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        CurrencyBinding binding = CurrencyBinding.inflate(inflater, parent, false);
-        return new CurrencyViewHolder(binding);
+        View holderView = inflater.inflate(R.layout.currency_list_item, parent, false);
+        return new CurrencyViewHolder(holderView);
     }
 
     @Override

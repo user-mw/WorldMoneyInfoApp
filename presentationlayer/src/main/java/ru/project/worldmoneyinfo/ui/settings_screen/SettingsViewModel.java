@@ -24,8 +24,6 @@ public class SettingsViewModel {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             mSettingsService.setMainCurrencyPosition(position);
             mSettingsService.setMainCurrency(mCurrencyUtil.getCurrenciesList().get(position));
-
-            parent.getContext().sendBroadcast(new Intent(CurrenciesListFragment.UPDATE_DATA_COMMAND));
         }
 
         @Override
