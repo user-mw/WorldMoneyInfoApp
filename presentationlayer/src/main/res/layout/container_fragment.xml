@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto">-->
 
-    <data class="ContainerBinding">
-        <variable
-            name="currentViewModel"
-            type="ru.project.worldmoneyinfo.ui.main_fragment_container.ContainerViewModel"/>
-    </data>
+    <!--<data class="ContainerBinding">-->
+        <!--<variable-->
+            <!--name="currentViewModel"-->
+            <!--type="ru.project.worldmoneyinfo.ui.main_fragment_container.ContainerViewModel"/>-->
+    <!--</data>-->
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,17 +20,14 @@
             android:id="@+id/container_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            bind:currentPager="@{mainContainer}"
-            bind:tabMaxWidth="0dp"
-            bind:tabGravity="fill"
-            bind:tabMode="fixed"/>
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/main_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            bind:fragments="@{currentViewModel.fragments}"
-            bind:titles="@{currentViewModel.titles}"/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
-</layout>
+<!--</layout>-->
