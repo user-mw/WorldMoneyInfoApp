@@ -3,9 +3,11 @@ package ru.project.worldmoneyinfo.ui.converter_screen;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,11 +25,25 @@ public class ConverterFragment extends BaseFragment {
     @Inject
     ConverterViewModel mViewModel;
 
+    private static final String CURRENT_TAG = "ConverterFragment";
+
     private EditText basicCurrencyAmount;
     private TextView targetCurrencyAmount;
     private Spinner basicCurrencyOption;
     private Spinner targetCurrencyOption;
     private Button converterButton;
+
+    private AdapterView.OnItemSelectedListener onCurrencyChangedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            updateConverterData();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+            Log.d(CURRENT_TAG, "Line 44 - onNothingSelected: called");
+        }
+    };
 
     public static ConverterFragment newInstance() {
         Bundle args = new Bundle();
@@ -75,12 +91,19 @@ public class ConverterFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        converterButton.setOnClickListener(view -> {
-            String amount = basicCurrencyAmount.getText().toString();
-            String basicCurrency = basicCurrencyOption.getSelectedItem().toString();
-            String targetCurrency = targetCurrencyOption.getSelectedItem().toString();
+        converterButton.setOnClickListener(view -> updateConverterData());
+        basicCurrencyOption.setOnItemSelectedListener(onCurrencyChangedListener);
+        targetCurrencyOption.setOnItemSelectedListener(onCurrencyChangedListener);
+    }
+
+    private void updateConverterData() {
+        String amount = basicCurrencyAmount.getText().toString();
+        String basicCurrency = basicCurrencyOption.getSelectedItem().toString();
+        String targetCurrency = targetCurrencyOption.getSelectedItem().toString();
+
+        if(amount.length() > 0) {
             mViewModel.getCurrentConverter().convert(amount, basicCurrency, targetCurrency);
-        });
+        }
     }
 
     @Override

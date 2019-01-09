@@ -26,6 +26,7 @@ public class ConverterViewModel extends ViewModel {
     String mApiKey;
 
     private static final String CURRENT_TAG = "ConverterViewModel";
+    private static final String DEFAULT_AMOUNT = "0";
 
     private MutableLiveData<String> mFirstCurrencyAmount = new MutableLiveData<>();
     private MutableLiveData<String> mResultAmount = new MutableLiveData<>();
@@ -40,7 +41,7 @@ public class ConverterViewModel extends ViewModel {
     }
 
     private void convertData(String amount, String basicCurrency, String targetCurrency) {
-        if(!basicCurrency.equals(targetCurrency)) {
+        if(!basicCurrency.equals(targetCurrency) && !amount.equals(DEFAULT_AMOUNT)) {
             String pair = basicCurrency + targetCurrency;
 
             currenciesService.getCurrencies(pair, mApiKey)
@@ -48,7 +49,7 @@ public class ConverterViewModel extends ViewModel {
                     .subscribe(new SingleObserver<List<RemoteCurrencyPair>>() {
                         @Override
                         public void onSubscribe(Disposable d) {
-                            Log.d(CURRENT_TAG, "Line 51 - onSubscribe: called");
+                            Log.d(CURRENT_TAG, "Line 52 - onSubscribe: called");
                         }
 
                         @Override
@@ -61,7 +62,7 @@ public class ConverterViewModel extends ViewModel {
 
                         @Override
                         public void onError(Throwable e) {
-                            Log.w(CURRENT_TAG, "Line 64 - onError: called");
+                            Log.w(CURRENT_TAG, "Line 65 - onError: called");
                         }
                     });
         } else {
