@@ -32,12 +32,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <!--<TextView-->
+            <!--android:id="@+id/target_currency_amount"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="24sp"-->
+            <!--android:layout_weight="1"/>-->
+
+        <EditText
             android:id="@+id/target_currency_amount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:inputType="numberDecimal"/>
 
         <Spinner
             android:id="@+id/target_currency_option"

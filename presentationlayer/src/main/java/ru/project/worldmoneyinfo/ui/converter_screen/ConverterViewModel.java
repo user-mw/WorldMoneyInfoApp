@@ -19,19 +19,19 @@ import ru.project.worldmoneyinfo.MainApplication;
 
 public class ConverterViewModel extends ViewModel {
     @Inject
-    CurrencyUtil mCurrencyUtil;
+    CurrencyUtil currencyUtil;
     @Inject
-    ComputingUtil mComputingUtil;
+    ComputingUtil computingUtil;
     @Inject
-    String mApiKey;
+    String apiKey;
 
     private static final String CURRENT_TAG = "ConverterViewModel";
     private static final String DEFAULT_AMOUNT = "0";
 
-    private MutableLiveData<String> mFirstCurrencyAmount = new MutableLiveData<>();
-    private MutableLiveData<String> mResultAmount = new MutableLiveData<>();
-    private ICurrencyConverter mCurrentConverter = (amount, basicCurrency, targetCurrency) ->
-        convertData(amount, basicCurrency, targetCurrency);
+    private MutableLiveData<String> basicAmount = new MutableLiveData<>();
+    private MutableLiveData<String> resultAmount = new MutableLiveData<>();
+    private ICurrencyConverter currencyConverter = (amount, basicCurrency, targetCurrency, reverse) ->
+        convertData(amount, basicCurrency, targetCurrency, reverse);
 
     private ICurrenciesService currenciesService;
 
@@ -40,11 +40,15 @@ public class ConverterViewModel extends ViewModel {
         MainApplication.getUtilsComponent().inject(this);
     }
 
-    private void convertData(String amount, String basicCurrency, String targetCurrency) {
+    private void convertData(String amount, String basicCurrency, String targetCurrency, boolean reverse) {
         if(!basicCurrency.equals(targetCurrency) && amount.length() > 0 && !amount.equals(DEFAULT_AMOUNT)) {
             String pair = basicCurrency + targetCurrency;
 
-            currenciesService.getCurrencies(pair, mApiKey)
+            if(reverse) {
+                pair = targetCurrency + basicCurrency;
+            }
+
+            currenciesService.getCurrencies(pair, apiKey)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new SingleObserver<List<RemoteCurrencyPair>>() {
                         @Override
@@ -55,9 +59,13 @@ public class ConverterViewModel extends ViewModel {
                         @Override
                         public void onSuccess(List<RemoteCurrencyPair> currencyPairs) {
                             String prise = currencyPairs.get(0).getPrice();
-                            String result = mComputingUtil.getTotalAmount(amount, prise);
+                            String result = computingUtil.getTotalAmount(amount, prise);
 
-                            mResultAmount.postValue(result);
+                            if(reverse) {
+                                basicAmount.postValue(result);
+                            } else {
+                                resultAmount.postValue(result);
+                            }
                         }
 
                         @Override
@@ -66,27 +74,31 @@ public class ConverterViewModel extends ViewModel {
                         }
                     });
         } else {
-            mResultAmount.postValue(amount);
+            if(reverse) {
+                basicAmount.postValue(amount);
+            } else {
+                resultAmount.postValue(amount);
+            }
         }
     }
 
-    public MutableLiveData<String> getFirstCurrencyAmount() {
-        return mFirstCurrencyAmount;
+    public MutableLiveData<String> getBasicAmount() {
+        return basicAmount;
     }
 
     public MutableLiveData<String> getResultAmount() {
-        return mResultAmount;
+        return resultAmount;
     }
 
-    public ICurrencyConverter getCurrentConverter() {
-        return mCurrentConverter;
+    public ICurrencyConverter getCurrencyConverter() {
+        return currencyConverter;
     }
 
     public List<String> getCurrenciesList() {
-        return mCurrencyUtil.getCurrenciesList();
+        return currencyUtil.getCurrenciesList();
     }
 
     public interface ICurrencyConverter {
-        void convert(String amount, String basicCurrency, String targetCurrency);
+        void convert(String amount, String basicCurrency, String targetCurrency, boolean reverse);
     }
 }
