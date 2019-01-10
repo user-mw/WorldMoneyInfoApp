@@ -14,12 +14,9 @@ import io.reactivex.disposables.Disposable;
 import ru.project.domainlayer.model.RemoteCurrencyPair;
 import ru.project.domainlayer.service.ICurrenciesService;
 import ru.project.domainlayer.utils.ComputingUtil;
-import ru.project.domainlayer.utils.CurrencyUtil;
 import ru.project.worldmoneyinfo.MainApplication;
 
 public class ConverterViewModel extends ViewModel {
-    @Inject
-    CurrencyUtil currencyUtil;
     @Inject
     ComputingUtil computingUtil;
     @Inject
@@ -92,10 +89,6 @@ public class ConverterViewModel extends ViewModel {
 
     public ICurrencyConverter getCurrencyConverter() {
         return currencyConverter;
-    }
-
-    public List<String> getCurrenciesList() {
-        return currencyUtil.getCurrenciesList();
     }
 
     public interface ICurrencyConverter {

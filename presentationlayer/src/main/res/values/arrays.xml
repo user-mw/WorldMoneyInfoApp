@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="currenciesList">
+        <item>RUB</item>;
+        <item>EUR</item>
+        <item>USD</item>
+        <item>PLN</item>
+        <item>GBP</item>
+        <item>CNH</item>
+        <item>JPY</item>
+        <item>NOK</item>
+        <item>TRY</item>
+        <item>ZAR</item>
+    </string-array>
+</resources>
