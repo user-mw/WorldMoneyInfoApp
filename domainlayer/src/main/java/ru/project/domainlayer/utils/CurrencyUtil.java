@@ -42,8 +42,14 @@ public class CurrencyUtil {
         mCurrenciesList.add("RUB");
         mCurrenciesList.add("EUR");
         mCurrenciesList.add("USD");
-        mCurrenciesList.add("GBP");
         mCurrenciesList.add("PLN");
+        mCurrenciesList.add("GBP");
+        mCurrenciesList.add("CNH");
+        mCurrenciesList.add("JPY");
+        mCurrenciesList.add("NOK");
+        mCurrenciesList.add("TRY");
+        mCurrenciesList.add("ZAR");
+
     }
 
     public String getRatesValue(String mainCurrency) {
