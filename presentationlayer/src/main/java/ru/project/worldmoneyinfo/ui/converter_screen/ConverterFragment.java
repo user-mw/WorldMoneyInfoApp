@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -37,6 +36,8 @@ public class ConverterFragment extends BaseFragment {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             updateConverterData();
+            basicAdapter.updateSelectedItem(basicCurrencyOption.getSelectedItem().toString());
+            targetAdapter.updateSelectedItem(targetCurrencyOption.getSelectedItem().toString());
         }
 
         @Override
@@ -61,6 +62,8 @@ public class ConverterFragment extends BaseFragment {
             updateConverterData();
         }
     };
+    private CurrencySpinnerAdapter basicAdapter;
+    private CurrencySpinnerAdapter targetAdapter;
 
     public static ConverterFragment newInstance() {
         Bundle args = new Bundle();
@@ -97,10 +100,13 @@ public class ConverterFragment extends BaseFragment {
 
     private void configureSpinners() {
         if(getActivity() != null) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, viewModel.getCurrenciesList());
+            basicAdapter = new CurrencySpinnerAdapter(getActivity(), android.R.layout.simple_spinner_item);
+            targetAdapter = new CurrencySpinnerAdapter(getActivity(), android.R.layout.simple_spinner_item);
+            basicAdapter.addAll(getActivity().getResources().getStringArray(R.array.currenciesList));
+            targetAdapter.addAll(getActivity().getResources().getStringArray(R.array.currenciesList));
 
-            basicCurrencyOption.setAdapter(adapter);
-            targetCurrencyOption.setAdapter(adapter);
+            basicCurrencyOption.setAdapter(basicAdapter);
+            targetCurrencyOption.setAdapter(targetAdapter);
         }
     }
 
