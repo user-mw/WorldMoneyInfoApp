@@ -41,7 +41,7 @@ public class ConverterViewModel extends ViewModel {
     }
 
     private void convertData(String amount, String basicCurrency, String targetCurrency) {
-        if(!basicCurrency.equals(targetCurrency) && !amount.equals(DEFAULT_AMOUNT)) {
+        if(!basicCurrency.equals(targetCurrency) && amount.length() > 0 && !amount.equals(DEFAULT_AMOUNT)) {
             String pair = basicCurrency + targetCurrency;
 
             currenciesService.getCurrencies(pair, mApiKey)
