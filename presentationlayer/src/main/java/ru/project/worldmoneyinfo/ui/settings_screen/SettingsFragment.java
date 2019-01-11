@@ -2,6 +2,7 @@ package ru.project.worldmoneyinfo.ui.settings_screen;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
@@ -34,11 +35,15 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     private void configureEntriesValues() {
         setValueFor(findPreference(getString(R.string.settings_currency_key)));
+        setValueFor(findPreference(getString(R.string.settings_auto_update_key)));
+        setValueFor(findPreference(getString(R.string.settings_auto_update_period_key)));
     }
 
     private void setValueFor(Preference preference) {
         if(preference instanceof ListPreference) {
             preference.setSummary(((ListPreference) preference).getEntry());
+        } else if(preference instanceof SwitchPreference) {
+            preference.setSummary(preference.getSummary());
         } else {
             Log.w(CURRENT_TAG, "Not suitable preference type");
         }
