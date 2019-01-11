@@ -7,4 +7,8 @@
     <string name="settings_currency_action">Select main currency</string>
     <string name="currency_amount_hint">Amount</string>
     <string name="convert_button_text">Convert</string>
+    <string name="settings_currency_default_value">RUB</string>
+    <string name="settings_currency_dialog_title">Choose main currency</string>
+    <string name="settings_currency_key">MainCurrency</string>
+    <string name="settings_currency_title">Main currency</string>
 </resources>
