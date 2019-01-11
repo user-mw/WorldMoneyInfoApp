@@ -7,4 +7,14 @@
     <string name="settings_currency_action">Select main currency</string>
     <string name="currency_amount_hint">Amount</string>
     <string name="convert_button_text">Convert</string>
+    <string name="settings_currency_default_value">RUB</string>
+    <string name="settings_currency_dialog_title">Choose main currency</string>
+    <string name="settings_currency_key">MainCurrency</string>
+    <string name="settings_currency_title">Main currency</string>
+    <string name="settings_auto_update_title">Enable currencies auto update</string>
+    <string name="settings_auto_update_period_default_value">5</string>
+    <string name="settings_auto_update_period_dialog_title">Choose auto update period</string>
+    <string name="settings_auto_update_key">AutoUpdate</string>
+    <string name="settings_auto_update_period_key">AutoUpdatePeriod</string>
+    <string name="settings_auto_update_period_title">Auto update period</string>
 </resources>

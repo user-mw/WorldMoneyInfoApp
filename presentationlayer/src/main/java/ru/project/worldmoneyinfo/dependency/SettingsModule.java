@@ -1,7 +1,7 @@
 package ru.project.worldmoneyinfo.dependency;
 
-import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.preference.PreferenceManager;
 
 import javax.inject.Singleton;
 
@@ -20,6 +20,6 @@ public class SettingsModule {
     @Provides
     @Singleton
     public SharedPreferences provideSettings() {
-        return mApplication.getSharedPreferences("CurrentAppSettings", Context.MODE_PRIVATE);
+        return PreferenceManager.getDefaultSharedPreferences(mApplication);
     }
 }

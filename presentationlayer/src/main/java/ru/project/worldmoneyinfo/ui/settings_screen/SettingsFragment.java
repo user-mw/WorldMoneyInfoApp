@@ -1,50 +1,68 @@
 package ru.project.worldmoneyinfo.ui.settings_screen;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v14.preference.SwitchPreference;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
+import android.util.Log;
 
-import javax.inject.Inject;
+import ru.project.worldmoneyinfo.R;
 
-import ru.project.worldmoneyinfo.MainApplication;
-import ru.project.worldmoneyinfo.databinding.SettingsBinding;
-import ru.project.worldmoneyinfo.dependency.RepositoryModule;
-import ru.project.worldmoneyinfo.dependency.ServiceModule;
-import ru.project.worldmoneyinfo.ui.BaseFragment;
+public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-public class SettingsFragment extends BaseFragment {
-
-    @Inject
-    SettingsViewModel mViewModel;
+    private static final String CURRENT_TAG = "SettingsFragment";
 
     public static SettingsFragment newInstance() {
         Bundle args = new Bundle();
-        
+
         SettingsFragment fragment = new SettingsFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    protected void prepareViewModel() {
-        MainApplication.getApplicationComponent().plusSettingsComponent(new RepositoryModule(),
-                new ServiceModule())
-                .inject(this);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.settings_preferences, rootKey);
     }
 
     @Override
-    protected View retrieveView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
-        SettingsBinding binding = SettingsBinding.inflate(inflater, container, false);
-        binding.setCurrentViewModel(mViewModel);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        configureEntriesValues();
+    }
 
-        return binding.getRoot();
+    private void configureEntriesValues() {
+        setValueFor(findPreference(getString(R.string.settings_currency_key)));
+        setValueFor(findPreference(getString(R.string.settings_auto_update_key)));
+        setValueFor(findPreference(getString(R.string.settings_auto_update_period_key)));
+    }
+
+    private void setValueFor(Preference preference) {
+        if(preference instanceof ListPreference) {
+            preference.setSummary(((ListPreference) preference).getEntry());
+        } else if(preference instanceof SwitchPreference) {
+            preference.setSummary(preference.getSummary());
+        } else {
+            Log.w(CURRENT_TAG, "Not suitable preference type");
+        }
     }
 
     @Override
-    protected void loadData() {
+    public void onResume() {
+        super.onResume();
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
 
+    @Override
+    public void onPause() {
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        setValueFor(findPreference(key));
     }
 }

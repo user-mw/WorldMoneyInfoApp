@@ -3,11 +3,12 @@ package ru.project.domainlayer.repository;
 public interface ISettingsRepository {
     String MAIN_CURRENCY = "MainCurrency";
     String DEFAULT_CURRENCY = "RUB";
-    String MAIN_CURRENCY_POSITION = "MainCurrencyPosition";
-    int DEFAULT_POSITION = 0;
+    String AUTO_UPDATE = "AutoUpdate";
+    boolean DEFAULT_AUTO_UPDATE_VALUE = false;
+    String AUTO_UPDATE_PERIOD = "AutoUpdatePeriod";
+    int DEFAULT_AUTO_UPDATE_PERIOD_VALUE = 5;
 
-    void setMainCurrencyPosition(int currencyPosition);
-    int getMainCurrencyPosition();
-    void setMainCurrency(String mainCurrencyValue);
     String getMainCurrency();
+    boolean isAutoUpdateEnabled();
+    int getAutoUpdatePeriodValue();
 }

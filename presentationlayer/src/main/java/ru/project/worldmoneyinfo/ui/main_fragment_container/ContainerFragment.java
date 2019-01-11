@@ -8,15 +8,20 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.project.worldmoneyinfo.MainActivity;
 import ru.project.worldmoneyinfo.R;
 import ru.project.worldmoneyinfo.ui.converter_screen.ConverterFragment;
 import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListFragment;
+import ru.project.worldmoneyinfo.ui.settings_screen.SettingsFragment;
 
 public class ContainerFragment extends Fragment {
     private TabLayout tabs;
@@ -46,6 +51,12 @@ public class ContainerFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,9 +73,34 @@ public class ContainerFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.settings_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings: {
+                if(getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).changeFragment(SettingsFragment.newInstance());
+                }
+                return true;
+            }
+            default: break;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
     private boolean configureViewPager() {
         if(getActivity() != null) {
-            ContainerPagerAdapter adapter = new ContainerPagerAdapter(getActivity().getSupportFragmentManager());
+            ContainerPagerAdapter adapter = new ContainerPagerAdapter(getChildFragmentManager());
             adapter.addAll(mFragmentList);
             adapter.setTabsTitles(mTitles);
 

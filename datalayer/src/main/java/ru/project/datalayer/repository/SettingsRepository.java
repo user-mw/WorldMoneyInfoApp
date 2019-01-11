@@ -17,22 +17,17 @@ public class SettingsRepository implements ISettingsRepository {
     }
 
     @Override
-    public void setMainCurrencyPosition(int currencyPosition) {
-        mPreferences.edit().putInt(ISettingsRepository.MAIN_CURRENCY_POSITION, currencyPosition).apply();
-    }
-
-    @Override
-    public int getMainCurrencyPosition() {
-        return mPreferences.getInt(ISettingsRepository.MAIN_CURRENCY_POSITION, ISettingsRepository.DEFAULT_POSITION);
-    }
-
-    @Override
-    public void setMainCurrency(String mainCurrencyValue) {
-        mPreferences.edit().putString(ISettingsRepository.MAIN_CURRENCY, mainCurrencyValue).apply();
-    }
-
-    @Override
     public String getMainCurrency() {
         return mPreferences.getString(ISettingsRepository.MAIN_CURRENCY, ISettingsRepository.DEFAULT_CURRENCY);
+    }
+
+    @Override
+    public boolean isAutoUpdateEnabled() {
+        return mPreferences.getBoolean(ISettingsRepository.AUTO_UPDATE, ISettingsRepository.DEFAULT_AUTO_UPDATE_VALUE);
+    }
+
+    @Override
+    public int getAutoUpdatePeriodValue() {
+        return mPreferences.getInt(ISettingsRepository.AUTO_UPDATE_PERIOD, ISettingsRepository.DEFAULT_AUTO_UPDATE_PERIOD_VALUE);
     }
 }
