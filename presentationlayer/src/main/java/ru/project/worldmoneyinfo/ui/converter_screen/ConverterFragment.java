@@ -32,6 +32,9 @@ public class ConverterFragment extends BaseFragment {
     private Spinner targetCurrencyOption;
     private boolean isBasicCurrencyChanged;
 
+    private CurrencySpinnerAdapter basicAdapter;
+    private CurrencySpinnerAdapter targetAdapter;
+
     private AdapterView.OnItemSelectedListener onCurrencyChangedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -62,8 +65,6 @@ public class ConverterFragment extends BaseFragment {
             updateConverterData();
         }
     };
-    private CurrencySpinnerAdapter basicAdapter;
-    private CurrencySpinnerAdapter targetAdapter;
 
     public static ConverterFragment newInstance() {
         Bundle args = new Bundle();
@@ -113,16 +114,16 @@ public class ConverterFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        basicCurrencyAmount.setOnFocusChangeListener((view, b) -> {
-            if(b) {
+        basicCurrencyAmount.setOnFocusChangeListener((view, hasFocus) -> {
+            if(hasFocus) {
                 isBasicCurrencyChanged = true;
                 targetCurrencyAmount.removeTextChangedListener(amountChangedListener);
                 basicCurrencyAmount.addTextChangedListener(amountChangedListener);
             }
         });
 
-        targetCurrencyAmount.setOnFocusChangeListener((view, b) -> {
-            if(b) {
+        targetCurrencyAmount.setOnFocusChangeListener((view, hasFocus) -> {
+            if(hasFocus) {
                 isBasicCurrencyChanged = false;
                 basicCurrencyAmount.removeTextChangedListener(amountChangedListener);
                 targetCurrencyAmount.addTextChangedListener(amountChangedListener);

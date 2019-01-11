@@ -6,12 +6,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import ru.project.domainlayer.model.RemoteCurrencyPair;
 import ru.project.domainlayer.service.ICurrenciesService;
 import ru.project.domainlayer.service.ISettingsService;
@@ -19,13 +22,12 @@ import ru.project.domainlayer.utils.CurrencyUtil;
 import ru.project.worldmoneyinfo.MainApplication;
 
 public class CurrenciesListViewModel extends ViewModel {
-
-    private static final String CURRENT_TAG = "CurrenciesListViewModel";
-
     @Inject
     String apiKey;
     @Inject
     CurrencyUtil currencyUtil;
+
+    private static final String CURRENT_TAG = "CurrenciesListViewModel";
 
     private ICurrenciesService currenciesService;
     private ISettingsService settingsService;
@@ -34,11 +36,25 @@ public class CurrenciesListViewModel extends ViewModel {
     private MutableLiveData<Boolean> isErrorOccurred = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     private SwipeRefreshLayout.OnRefreshListener refreshListener = () -> loadCurrenciesList();
+    private Disposable intervalDisposable;
 
     public CurrenciesListViewModel(ICurrenciesService currenciesService, ISettingsService settingsService) {
         this.currenciesService = currenciesService;
         this.settingsService = settingsService;
         MainApplication.getUtilsComponent().inject(this);
+        loadCurrenciesList();
+    }
+
+    public void startUpdate() {
+        if(settingsService.isAutoUpdateEnabled()) {
+            int intervalValue = settingsService.getAutoUpdatePeriodValue();
+
+            intervalDisposable = Observable.interval(intervalValue, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(result -> loadCurrenciesList());
+        }
+
     }
 
     public void loadCurrenciesList() {
@@ -51,7 +67,7 @@ public class CurrenciesListViewModel extends ViewModel {
                 .subscribe(new SingleObserver<List<RemoteCurrencyPair>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d(CURRENT_TAG, "Line 54 - onSubscribe: called");
+                        Log.d(CURRENT_TAG, "Line 70 - onSubscribe: called");
                     }
 
                     @Override
@@ -85,5 +101,12 @@ public class CurrenciesListViewModel extends ViewModel {
 
     public String getMainCurrency() {
         return settingsService.getMainCurrency();
+    }
+
+    public void onDetach() {
+        if(intervalDisposable != null) {
+            intervalDisposable.dispose();
+            intervalDisposable = null;
+        }
     }
 }
