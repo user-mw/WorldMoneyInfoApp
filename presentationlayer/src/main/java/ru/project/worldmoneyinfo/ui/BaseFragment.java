@@ -33,10 +33,4 @@ public abstract class BaseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         loadData();
     }
-
-    protected final void changeFragment(Fragment newFragment) {
-        if(getActivity() != null) {
-            ((MainActivity)getActivity()).changeFragment(newFragment);
-        }
-    }
 }
