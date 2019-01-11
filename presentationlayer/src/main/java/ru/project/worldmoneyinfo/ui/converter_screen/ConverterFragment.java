@@ -114,16 +114,16 @@ public class ConverterFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        basicCurrencyAmount.setOnFocusChangeListener((view, b) -> {
-            if(b) {
+        basicCurrencyAmount.setOnFocusChangeListener((view, hasFocus) -> {
+            if(hasFocus) {
                 isBasicCurrencyChanged = true;
                 targetCurrencyAmount.removeTextChangedListener(amountChangedListener);
                 basicCurrencyAmount.addTextChangedListener(amountChangedListener);
             }
         });
 
-        targetCurrencyAmount.setOnFocusChangeListener((view, b) -> {
-            if(b) {
+        targetCurrencyAmount.setOnFocusChangeListener((view, hasFocus) -> {
+            if(hasFocus) {
                 isBasicCurrencyChanged = false;
                 basicCurrencyAmount.removeTextChangedListener(amountChangedListener);
                 targetCurrencyAmount.addTextChangedListener(amountChangedListener);
