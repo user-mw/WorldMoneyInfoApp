@@ -19,15 +19,14 @@ import ru.project.worldmoneyinfo.dependency.ViewModelModule;
 import ru.project.worldmoneyinfo.ui.BaseFragment;
 
 public class CurrenciesListFragment extends BaseFragment {
+    @Inject
+    CurrenciesListViewModel viewModel;
 
     private SwipeRefreshLayout dataUpdater;
     private TextView errorText;
 
     private RecyclerView currenciesList;
     private CurrenciesAdapter currenciesAdapter;
-
-    @Inject
-    CurrenciesListViewModel mViewModel;
 
     public static CurrenciesListFragment newInstance() {
         Bundle arguments = new Bundle();
@@ -57,13 +56,13 @@ public class CurrenciesListFragment extends BaseFragment {
 
         currenciesList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mViewModel.getIsLoading().observe(this, isLoading -> {
+        viewModel.getIsLoading().observe(this, isLoading -> {
             if(isLoading != null) {
                 dataUpdater.post(() -> dataUpdater.setRefreshing(isLoading));
             }
         });
 
-        mViewModel.getIsErrorOccurred().observe(this, isError -> {
+        viewModel.getIsErrorOccurred().observe(this, isError -> {
             if(isError != null) {
                 if(isError) {
                     currenciesList.setVisibility(View.GONE);
@@ -75,10 +74,12 @@ public class CurrenciesListFragment extends BaseFragment {
             }
         });
 
-        mViewModel.getCurrencies().observe(this, currencies -> {
-            if(currencies != null) {
-                currenciesAdapter = new CurrenciesAdapter(currencies, mViewModel.getMainCurrency());
-                currenciesList.setAdapter(currenciesAdapter);
+        currenciesAdapter = new CurrenciesAdapter(viewModel.getMainCurrency());
+        currenciesList.setAdapter(currenciesAdapter);
+
+        viewModel.getCurrencies().observe(this, currencies -> {
+            if(currencies != null && currencies.size() > 0) {
+                currenciesAdapter.addNewData(currencies);
             }
         });
     }
@@ -86,11 +87,17 @@ public class CurrenciesListFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        dataUpdater.setOnRefreshListener(mViewModel.getRefreshListener());
+        dataUpdater.setOnRefreshListener(viewModel.getRefreshListener());
     }
 
     @Override
     protected void loadData() {
-        mViewModel.loadCurrenciesList();
+        viewModel.startUpdate();
+    }
+
+    @Override
+    public void onStop() {
+        viewModel.onDetach();
+        super.onStop();
     }
 }

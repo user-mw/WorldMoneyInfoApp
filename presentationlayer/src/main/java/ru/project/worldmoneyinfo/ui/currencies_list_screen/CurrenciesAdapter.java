@@ -1,6 +1,8 @@
 package ru.project.worldmoneyinfo.ui.currencies_list_screen;
 
 import android.support.annotation.NonNull;
+import android.support.v7.recyclerview.extensions.AsyncListDiffer;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +14,23 @@ import ru.project.domainlayer.model.RemoteCurrencyPair;
 import ru.project.worldmoneyinfo.R;
 
 public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> {
+    private String mainCurrency;
+    private final AsyncListDiffer<RemoteCurrencyPair> differ = new AsyncListDiffer<>(this, DIFF_CALLBACK);
 
-    private List<RemoteCurrencyPair> mCurrencyPairs;
-    private String mMainCurrency;
+    private final static DiffUtil.ItemCallback<RemoteCurrencyPair> DIFF_CALLBACK = new DiffUtil.ItemCallback<RemoteCurrencyPair>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull RemoteCurrencyPair oldCurrencyItem, @NonNull RemoteCurrencyPair newCurrencyItem) {
+            return oldCurrencyItem.getSymbol().equals(newCurrencyItem.getSymbol());
+        }
 
-    public CurrenciesAdapter(List<RemoteCurrencyPair> currencyPairs, String mainCurrency) {
-        mCurrencyPairs = currencyPairs;
-        mMainCurrency = mainCurrency;
+        @Override
+        public boolean areContentsTheSame(@NonNull RemoteCurrencyPair oldCurrencyItem, @NonNull RemoteCurrencyPair newCurrencyItem) {
+            return oldCurrencyItem.getPrice().equals(newCurrencyItem.getPrice());
+        }
+    };
+
+    public CurrenciesAdapter(String mainCurrency) {
+        this.mainCurrency = mainCurrency;
     }
 
     @NonNull
@@ -31,15 +43,15 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull CurrencyViewHolder holder, int position) {
-        holder.bindData(mCurrencyPairs.get(position), mMainCurrency);
+        holder.bindData(differ.getCurrentList().get(position), mainCurrency);
     }
 
     @Override
     public int getItemCount() {
-        if(mCurrencyPairs == null) {
-            return 0;
-        }
+        return differ.getCurrentList().size();
+    }
 
-        return mCurrencyPairs.size();
+    public void addNewData(List<RemoteCurrencyPair> newCurrencyPairs) {
+        differ.submitList(newCurrencyPairs);
     }
 }

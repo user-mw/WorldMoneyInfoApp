@@ -1,19 +1,20 @@
 package ru.project.datalayer.repository;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import javax.inject.Inject;
 
 import ru.project.domainlayer.repository.ISettingsRepository;
 
 public class SettingsRepository implements ISettingsRepository {
-
     @Inject
     SharedPreferences mPreferences;
+    private static final String CURRENT_TAG = "SettingsRepository";
 
     @Inject
     public SettingsRepository() {
-
+        Log.d(CURRENT_TAG, "Line 17 - SettingsRepository constructor: called");
     }
 
     @Override
@@ -28,6 +29,7 @@ public class SettingsRepository implements ISettingsRepository {
 
     @Override
     public int getAutoUpdatePeriodValue() {
-        return mPreferences.getInt(ISettingsRepository.AUTO_UPDATE_PERIOD, ISettingsRepository.DEFAULT_AUTO_UPDATE_PERIOD_VALUE);
+        String periodData = mPreferences.getString(ISettingsRepository.AUTO_UPDATE_PERIOD, ISettingsRepository.DEFAULT_AUTO_UPDATE_PERIOD_VALUE);
+        return Integer.parseInt(periodData);
     }
 }
