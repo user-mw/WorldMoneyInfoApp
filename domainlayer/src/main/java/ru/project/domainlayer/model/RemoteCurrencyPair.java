@@ -66,4 +66,16 @@ public class RemoteCurrencyPair {
 
         return pair;
     }
+
+    public StatisticCurrencyPair toStatisticCurrency() {
+        StatisticCurrencyPair pair = new StatisticCurrencyPair();
+        pair.setId(mTimestamp + "+" + mSymbol);
+        pair.setSymbol(mSymbol);
+        pair.setPrice(mPrice);
+        pair.setAsk(mAsk);
+        pair.setBid(mBid);
+        pair.setTimestamp(mTimestamp);
+
+        return pair;
+    }
 }

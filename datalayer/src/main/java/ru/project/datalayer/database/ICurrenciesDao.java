@@ -8,6 +8,7 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import ru.project.domainlayer.model.LocalCurrencyPair;
+import ru.project.domainlayer.model.StatisticCurrencyPair;
 
 @Dao
 public interface ICurrenciesDao {
@@ -16,4 +17,7 @@ public interface ICurrenciesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCurrencies(List<LocalCurrencyPair> currencies);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertStatistic(List<StatisticCurrencyPair> currencies);
 }
