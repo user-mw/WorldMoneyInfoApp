@@ -4,9 +4,10 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -25,23 +26,20 @@ public class StatisticViewModel extends ViewModel {
     }
 
     public void loadStatistic(String currencyPair) {
-        String timestampStart = String
-                .valueOf(
-                        TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) - 500000
-                );
-
-        String timestampEnd = String
-                .valueOf(
-                        TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
-                );
-
         currenciesService.getStatistic(currencyPair)
+                .flatMap(statisticCurrencyPairs -> {
+                    List<StatisticCurrencyPair> result = new ArrayList<>();
+                    for(int step = statisticCurrencyPairs.size() - 1; step >= 0; step--) {
+                        result.add(statisticCurrencyPairs.get(step));
+                    }
+                    return Observable.fromCallable(() -> result);
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<StatisticCurrencyPair>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d(CURRENT_TAG, "Line 33 - onSubscribe: called");
+                        Log.d(CURRENT_TAG, "Line 42 - onSubscribe: called");
                     }
 
                     @Override
@@ -51,12 +49,12 @@ public class StatisticViewModel extends ViewModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(CURRENT_TAG, "Line 43 - onError: called");
+                        Log.d(CURRENT_TAG, "Line 52 - onError: called");
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.d(CURRENT_TAG, "Line 48 - onComplete: called");
+                        Log.d(CURRENT_TAG, "Line 56 - onComplete: called");
                     }
                 });
     }
