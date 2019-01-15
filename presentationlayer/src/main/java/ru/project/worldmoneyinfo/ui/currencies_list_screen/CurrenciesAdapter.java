@@ -14,6 +14,7 @@ import ru.project.domainlayer.model.RemoteCurrencyPair;
 import ru.project.worldmoneyinfo.R;
 
 public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> {
+    private IOnElementClick onElementClick;
     private String mainCurrency;
     private final AsyncListDiffer<RemoteCurrencyPair> differ = new AsyncListDiffer<>(this, DIFF_CALLBACK);
 
@@ -29,8 +30,9 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> 
         }
     };
 
-    public CurrenciesAdapter(String mainCurrency) {
+    public CurrenciesAdapter(String mainCurrency, IOnElementClick onElementClick) {
         this.mainCurrency = mainCurrency;
+        this.onElementClick = onElementClick;
     }
 
     @NonNull
@@ -43,7 +45,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull CurrencyViewHolder holder, int position) {
-        holder.bindData(differ.getCurrentList().get(position), mainCurrency);
+        holder.bindData(differ.getCurrentList().get(position), mainCurrency, onElementClick);
     }
 
     @Override
@@ -53,5 +55,9 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> 
 
     public void addNewData(List<RemoteCurrencyPair> newCurrencyPairs) {
         differ.submitList(newCurrencyPairs);
+    }
+
+    public interface IOnElementClick {
+        void click(String currencyPair);
     }
 }

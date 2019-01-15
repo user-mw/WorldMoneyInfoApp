@@ -45,7 +45,7 @@ public class CurrencyViewHolder extends RecyclerView.ViewHolder {
         currencyAsk = view.findViewById(R.id.currency_ask);
     }
 
-    public void bindData(RemoteCurrencyPair currencyPair, String mainCurrency) {
+    public void bindData(RemoteCurrencyPair currencyPair, String mainCurrency, CurrenciesAdapter.IOnElementClick onElementClick) {
         currencyFullName.setText(currencyUtil.getNormalName(currencyPair.getSymbol(), mainCurrency));
         currencySymbol.setText(currencyPair.getSymbol());
         currencyValue.setText(currencyPair.getPrice());
@@ -58,6 +58,7 @@ public class CurrencyViewHolder extends RecyclerView.ViewHolder {
         boolean isBidMoreThanAsk = computingUtil.isBidMoreThanAsk(currencyPair.getBid(), currencyPair.getAsk());
 
         setElementsTextColor(isBidMoreThanAsk);
+        mainView.setOnClickListener(view -> onElementClick.click(currencyPair.getSymbol()));
     }
 
     private void setElementsTextColor(boolean isBidMoreThanAsk) {

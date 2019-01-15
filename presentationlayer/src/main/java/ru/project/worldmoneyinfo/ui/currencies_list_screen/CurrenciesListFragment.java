@@ -10,13 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
+import ru.project.worldmoneyinfo.MainActivity;
 import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.R;
 import ru.project.worldmoneyinfo.dependency.ViewModelModule;
 import ru.project.worldmoneyinfo.ui.BaseFragment;
+import ru.project.worldmoneyinfo.ui.statistic_screen.StatisticFragment;
 
 public class CurrenciesListFragment extends BaseFragment {
     @Inject
@@ -27,6 +30,12 @@ public class CurrenciesListFragment extends BaseFragment {
 
     private RecyclerView currenciesList;
     private CurrenciesAdapter currenciesAdapter;
+
+    private CurrenciesAdapter.IOnElementClick onElementClick = currencyPair -> {
+        if(getActivity() != null && getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).changeFragment(StatisticFragment.newInstance(currencyPair));
+        }
+    };
 
     public static CurrenciesListFragment newInstance() {
         Bundle arguments = new Bundle();
@@ -74,7 +83,7 @@ public class CurrenciesListFragment extends BaseFragment {
             }
         });
 
-        currenciesAdapter = new CurrenciesAdapter(viewModel.getMainCurrency());
+        currenciesAdapter = new CurrenciesAdapter(viewModel.getMainCurrency(), onElementClick);
         currenciesList.setAdapter(currenciesAdapter);
 
         viewModel.getCurrencies().observe(this, currencies -> {

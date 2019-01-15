@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import ru.project.datalayer.database.ICurrenciesDao;
 import ru.project.domainlayer.model.LocalCurrencyPair;
@@ -37,6 +38,11 @@ public class CurrenciesDatabaseRepository implements ICurrenciesRepository {
 
             return remoteCurrencyPairList;
         });
+    }
+
+    @Override
+    public Observable<List<StatisticCurrencyPair>> getStatistic(String currencyPair) {
+        return Observable.fromCallable(() -> mDao.getStatistic(currencyPair));
     }
 
     @Override

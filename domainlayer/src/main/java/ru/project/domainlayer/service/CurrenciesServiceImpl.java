@@ -5,9 +5,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import ru.project.domainlayer.model.RemoteCurrencyPair;
+import ru.project.domainlayer.model.StatisticCurrencyPair;
 import ru.project.domainlayer.repository.ICurrenciesRepository;
 
 public class CurrenciesServiceImpl implements ICurrenciesService {
@@ -37,6 +39,11 @@ public class CurrenciesServiceImpl implements ICurrenciesService {
                     }
                     return null;
                 });
+    }
+
+    @Override
+    public Observable<List<StatisticCurrencyPair>> getStatistic(String currencyPair) {
+        return mLocalRepository.getStatistic(currencyPair);
     }
 
     @Override

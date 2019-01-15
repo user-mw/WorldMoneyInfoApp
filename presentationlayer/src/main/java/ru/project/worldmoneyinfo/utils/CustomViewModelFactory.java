@@ -13,6 +13,7 @@ import ru.project.worldmoneyinfo.dependency.RepositoryModule;
 import ru.project.worldmoneyinfo.dependency.ServiceModule;
 import ru.project.worldmoneyinfo.ui.converter_screen.ConverterViewModel;
 import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListViewModel;
+import ru.project.worldmoneyinfo.ui.statistic_screen.StatisticViewModel;
 
 public class CustomViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
@@ -34,6 +35,8 @@ public class CustomViewModelFactory extends ViewModelProvider.NewInstanceFactory
             return (T) new CurrenciesListViewModel(currenciesService, settingsService);
         } else if(modelClass.isAssignableFrom(ConverterViewModel.class)) {
             return (T) new ConverterViewModel(currenciesService);
+        } else if(modelClass.isAssignableFrom(StatisticViewModel.class)) {
+            return (T) new StatisticViewModel(currenciesService);
         }
 
         throw new IllegalArgumentException("Wrong ViewModel class");

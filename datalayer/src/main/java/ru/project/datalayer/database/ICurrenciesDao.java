@@ -15,6 +15,9 @@ public interface ICurrenciesDao {
     @Query("SELECT * FROM currencies WHERE symbol IN (:pairs)")
     List<LocalCurrencyPair> getCurrencies(String[] pairs);
 
+    @Query("SELECT * FROM statistic_currencies WHERE symbol = :currencyPair ORDER BY timestamp DESC LIMIT 100")
+    List<StatisticCurrencyPair> getStatistic(String currencyPair);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCurrencies(List<LocalCurrencyPair> currencies);
 

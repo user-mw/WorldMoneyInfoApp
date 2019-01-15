@@ -7,6 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 import ru.project.worldmoneyinfo.ui.converter_screen.ConverterViewModel;
 import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListViewModel;
+import ru.project.worldmoneyinfo.ui.statistic_screen.StatisticViewModel;
 import ru.project.worldmoneyinfo.utils.CustomViewModelFactory;
 
 @Module
@@ -26,5 +27,10 @@ public class ViewModelModule {
     @Provides
     public ConverterViewModel provideConverterViewModel() {
         return ViewModelProviders.of(lifeCycleOwner, factory).get(ConverterViewModel.class);
+    }
+
+    @Provides
+    StatisticViewModel provideStatisticViewModel() {
+        return ViewModelProviders.of(lifeCycleOwner, factory).get(StatisticViewModel.class);
     }
 }
