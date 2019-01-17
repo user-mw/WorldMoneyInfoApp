@@ -11,15 +11,15 @@ import ru.project.worldmoneyinfo.MainApplication;
 
 @Module
 public class SettingsModule {
-    private MainApplication mApplication;
+    private MainApplication applicationInstance;
 
     public SettingsModule(MainApplication application) {
-        mApplication = application;
+        applicationInstance = application;
     }
 
     @Provides
     @Singleton
     public SharedPreferences provideSettings() {
-        return PreferenceManager.getDefaultSharedPreferences(mApplication);
+        return PreferenceManager.getDefaultSharedPreferences(applicationInstance);
     }
 }
