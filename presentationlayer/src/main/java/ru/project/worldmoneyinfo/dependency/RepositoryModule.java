@@ -1,7 +1,6 @@
 package ru.project.worldmoneyinfo.dependency;
 
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,7 +12,6 @@ import ru.project.domainlayer.repository.ISettingsRepository;
 
 @Module
 public class RepositoryModule {
-
     @Provides
     @IScreenScope
     @Named(ICurrenciesRepository.REMOTE_REPOSITORY)

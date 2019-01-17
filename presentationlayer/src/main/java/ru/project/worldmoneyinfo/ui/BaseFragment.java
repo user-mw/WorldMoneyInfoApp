@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ru.project.worldmoneyinfo.MainActivity;
-
 public abstract class BaseFragment extends Fragment {
     protected abstract void prepareViewModel();
     protected abstract View retrieveView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container);

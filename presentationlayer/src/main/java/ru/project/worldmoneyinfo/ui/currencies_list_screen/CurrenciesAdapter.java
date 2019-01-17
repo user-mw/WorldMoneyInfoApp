@@ -10,22 +10,22 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import ru.project.domainlayer.model.RemoteCurrencyPair;
+import ru.project.domainlayer.model.RemoteCurrencyData;
 import ru.project.worldmoneyinfo.R;
 
 public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> {
     private IOnElementClick onElementClick;
     private String mainCurrency;
-    private final AsyncListDiffer<RemoteCurrencyPair> differ = new AsyncListDiffer<>(this, DIFF_CALLBACK);
+    private final AsyncListDiffer<RemoteCurrencyData> differ = new AsyncListDiffer<>(this, DIFF_CALLBACK);
 
-    private final static DiffUtil.ItemCallback<RemoteCurrencyPair> DIFF_CALLBACK = new DiffUtil.ItemCallback<RemoteCurrencyPair>() {
+    private final static DiffUtil.ItemCallback<RemoteCurrencyData> DIFF_CALLBACK = new DiffUtil.ItemCallback<RemoteCurrencyData>() {
         @Override
-        public boolean areItemsTheSame(@NonNull RemoteCurrencyPair oldCurrencyItem, @NonNull RemoteCurrencyPair newCurrencyItem) {
+        public boolean areItemsTheSame(@NonNull RemoteCurrencyData oldCurrencyItem, @NonNull RemoteCurrencyData newCurrencyItem) {
             return oldCurrencyItem.getSymbol().equals(newCurrencyItem.getSymbol());
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull RemoteCurrencyPair oldCurrencyItem, @NonNull RemoteCurrencyPair newCurrencyItem) {
+        public boolean areContentsTheSame(@NonNull RemoteCurrencyData oldCurrencyItem, @NonNull RemoteCurrencyData newCurrencyItem) {
             return oldCurrencyItem.getPrice().equals(newCurrencyItem.getPrice());
         }
     };
@@ -53,7 +53,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> 
         return differ.getCurrentList().size();
     }
 
-    public void addNewData(List<RemoteCurrencyPair> newCurrencyPairs) {
+    public void addNewData(List<RemoteCurrencyData> newCurrencyPairs) {
         differ.submitList(newCurrencyPairs);
     }
 

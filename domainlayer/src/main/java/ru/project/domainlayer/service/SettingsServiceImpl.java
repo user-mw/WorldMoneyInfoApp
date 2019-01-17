@@ -5,9 +5,8 @@ import javax.inject.Inject;
 import ru.project.domainlayer.repository.ISettingsRepository;
 
 public class SettingsServiceImpl implements ISettingsService {
-
     @Inject
-    ISettingsRepository mSettingsRepository;
+    ISettingsRepository settingsRepository;
 
     @Inject
     public SettingsServiceImpl() {
@@ -16,16 +15,16 @@ public class SettingsServiceImpl implements ISettingsService {
 
     @Override
     public String getMainCurrency() {
-        return mSettingsRepository.getMainCurrency();
+        return settingsRepository.getMainCurrency();
     }
 
     @Override
     public boolean isAutoUpdateEnabled() {
-        return mSettingsRepository.isAutoUpdateEnabled();
+        return settingsRepository.isAutoUpdateEnabled();
     }
 
     @Override
     public int getAutoUpdatePeriodValue() {
-        return mSettingsRepository.getAutoUpdatePeriodValue();
+        return settingsRepository.getAutoUpdatePeriodValue();
     }
 }

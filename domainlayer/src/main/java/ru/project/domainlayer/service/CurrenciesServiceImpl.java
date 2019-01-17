@@ -8,19 +8,18 @@ import javax.inject.Named;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
-import ru.project.domainlayer.model.RemoteCurrencyPair;
-import ru.project.domainlayer.model.StatisticCurrencyPair;
+import ru.project.domainlayer.model.RemoteCurrencyData;
+import ru.project.domainlayer.model.StatisticCurrencyData;
 import ru.project.domainlayer.repository.ICurrenciesRepository;
 
 public class CurrenciesServiceImpl implements ICurrenciesService {
-
     @Inject
     @Named(ICurrenciesRepository.REMOTE_REPOSITORY)
-    ICurrenciesRepository mRemoteRepository;
+    ICurrenciesRepository remoteRepository;
 
     @Inject
     @Named(ICurrenciesRepository.LOCAL_REPOSITORY)
-    ICurrenciesRepository mLocalRepository;
+    ICurrenciesRepository localRepository;
 
     @Inject
     public CurrenciesServiceImpl() {
@@ -28,12 +27,12 @@ public class CurrenciesServiceImpl implements ICurrenciesService {
     }
 
     @Override
-    public Single<List<RemoteCurrencyPair>> getCurrencies(String pairs, String key) {
-        return mRemoteRepository.getCurrencies(pairs, key)
+    public Single<List<RemoteCurrencyData>> getCurrencies(String currencyPairs, String key) {
+        return remoteRepository.getCurrencies(currencyPairs, key)
                 .subscribeOn(Schedulers.io())
-                .doOnSuccess(response -> mLocalRepository.insertCurrencies(response))
+                .doOnSuccess(response -> localRepository.insertCurrencies(response))
                 .onErrorReturn(throwable -> {
-                    List<RemoteCurrencyPair> currencyPairList = mLocalRepository.getCurrencies(pairs, key).blockingGet();
+                    List<RemoteCurrencyData> currencyPairList = localRepository.getCurrencies(currencyPairs, key).blockingGet();
                     if(currencyPairList.size() > 0) {
                         return currencyPairList;
                     }
@@ -42,12 +41,7 @@ public class CurrenciesServiceImpl implements ICurrenciesService {
     }
 
     @Override
-    public Observable<List<StatisticCurrencyPair>> getStatistic(String currencyPair) {
-        return mLocalRepository.getStatistic(currencyPair);
-    }
-
-    @Override
-    public void insertCurrencies(List<RemoteCurrencyPair> currencies) {
-        mLocalRepository.insertCurrencies(currencies);
+    public Observable<List<StatisticCurrencyData>> getStatistic(String currencyPair) {
+        return localRepository.getStatistic(currencyPair);
     }
 }

@@ -10,9 +10,6 @@ public interface IApplicationComponent {
     IScreenComponent plusScreenComponent(RepositoryModule repositoryModule,
                                          ServiceModule serviceModule);
 
-    ISettingsComponent plusSettingsComponent(RepositoryModule repositoryModule,
-                                             ServiceModule serviceModule);
-
     IViewModelComponent plusViewModelComponent(ViewModelModule viewModelModule);
 
 

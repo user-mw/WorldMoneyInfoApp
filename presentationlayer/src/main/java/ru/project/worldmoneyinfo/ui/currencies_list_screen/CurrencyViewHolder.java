@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import ru.project.domainlayer.model.RemoteCurrencyPair;
+import ru.project.domainlayer.model.RemoteCurrencyData;
 import ru.project.domainlayer.utils.ComputingUtil;
-import ru.project.domainlayer.utils.CurrencyUtil;
+import ru.project.worldmoneyinfo.utils.CurrencyUtil;
 import ru.project.worldmoneyinfo.MainApplication;
 
 import ru.project.worldmoneyinfo.R;
@@ -45,7 +45,7 @@ public class CurrencyViewHolder extends RecyclerView.ViewHolder {
         currencyAsk = view.findViewById(R.id.currency_ask);
     }
 
-    public void bindData(RemoteCurrencyPair currencyPair, String mainCurrency, CurrenciesAdapter.IOnElementClick onElementClick) {
+    public void bindData(RemoteCurrencyData currencyPair, String mainCurrency, CurrenciesAdapter.IOnElementClick onElementClick) {
         currencyFullName.setText(currencyUtil.getNormalName(currencyPair.getSymbol(), mainCurrency));
         currencySymbol.setText(currencyPair.getSymbol());
         currencyValue.setText(currencyPair.getPrice());

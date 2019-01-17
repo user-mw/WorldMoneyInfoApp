@@ -4,11 +4,10 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import ru.project.domainlayer.model.RemoteCurrencyPair;
-import ru.project.domainlayer.model.StatisticCurrencyPair;
+import ru.project.domainlayer.model.RemoteCurrencyData;
+import ru.project.domainlayer.model.StatisticCurrencyData;
 
 public interface ICurrenciesService {
-    Single<List<RemoteCurrencyPair>> getCurrencies(String pairs, String key);
-    Observable<List<StatisticCurrencyPair>> getStatistic(String currencyPair);
-    void insertCurrencies(List<RemoteCurrencyPair> currencies);
+    Single<List<RemoteCurrencyData>> getCurrencies(String pairs, String key);
+    Observable<List<StatisticCurrencyData>> getStatistic(String currencyPair);
 }

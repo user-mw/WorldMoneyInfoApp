@@ -15,10 +15,10 @@ import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ru.project.domainlayer.model.RemoteCurrencyPair;
+import ru.project.domainlayer.model.RemoteCurrencyData;
 import ru.project.domainlayer.service.ICurrenciesService;
 import ru.project.domainlayer.service.ISettingsService;
-import ru.project.domainlayer.utils.CurrencyUtil;
+import ru.project.worldmoneyinfo.utils.CurrencyUtil;
 import ru.project.worldmoneyinfo.MainApplication;
 
 public class CurrenciesListViewModel extends ViewModel {
@@ -32,7 +32,7 @@ public class CurrenciesListViewModel extends ViewModel {
     private ICurrenciesService currenciesService;
     private ISettingsService settingsService;
 
-    private MutableLiveData<List<RemoteCurrencyPair>> currencies = new MutableLiveData<>();
+    private MutableLiveData<List<RemoteCurrencyData>> currencies = new MutableLiveData<>();
     private MutableLiveData<Boolean> isErrorOccurred = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     private SwipeRefreshLayout.OnRefreshListener refreshListener = () -> loadCurrenciesList();
@@ -57,21 +57,21 @@ public class CurrenciesListViewModel extends ViewModel {
 
     }
 
-    public void loadCurrenciesList() {
+    private void loadCurrenciesList() {
         String pairs = currencyUtil.getRatesValue(settingsService.getMainCurrency());
 
         currenciesService.getCurrencies(pairs, apiKey)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> isLoading.postValue(true))
                 .doFinally(() -> isLoading.postValue(false))
-                .subscribe(new SingleObserver<List<RemoteCurrencyPair>>() {
+                .subscribe(new SingleObserver<List<RemoteCurrencyData>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         Log.d(CURRENT_TAG, "Line 70 - onSubscribe: called");
                     }
 
                     @Override
-                    public void onSuccess(List<RemoteCurrencyPair> currencyPairs) {
+                    public void onSuccess(List<RemoteCurrencyData> currencyPairs) {
                         isErrorOccurred.postValue(false);
                         currencies.postValue(currencyPairs);
                     }
@@ -83,7 +83,7 @@ public class CurrenciesListViewModel extends ViewModel {
                 });
     }
 
-    public MutableLiveData<List<RemoteCurrencyPair>> getCurrencies() {
+    public MutableLiveData<List<RemoteCurrencyData>> getCurrencies() {
         return currencies;
     }
 

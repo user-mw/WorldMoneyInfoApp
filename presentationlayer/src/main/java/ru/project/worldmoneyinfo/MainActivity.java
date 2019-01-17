@@ -1,11 +1,10 @@
 package ru.project.worldmoneyinfo;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
-import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListFragment;
 import ru.project.worldmoneyinfo.ui.main_fragment_container.ContainerFragment;
 
 public class MainActivity extends AppCompatActivity {

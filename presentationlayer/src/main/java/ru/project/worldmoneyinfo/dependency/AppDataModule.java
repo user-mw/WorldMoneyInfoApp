@@ -5,15 +5,15 @@ import dagger.Provides;
 
 @Module
 public class AppDataModule {
-    private String mApiKey;
+    private String apiKey;
 
     public AppDataModule(String apiKey) {
-        mApiKey = apiKey;
+        this.apiKey = apiKey;
     }
 
     @Provides
     @IScreenScope
     public String provideApiKey() {
-        return mApiKey;
+        return apiKey;
     }
 }

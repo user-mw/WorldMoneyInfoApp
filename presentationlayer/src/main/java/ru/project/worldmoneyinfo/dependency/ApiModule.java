@@ -16,7 +16,6 @@ import ru.project.datalayer.api.IOneForgeApi;
 
 @Module
 public class ApiModule {
-
     @Provides
     public OkHttpClient provideOkHttpClient() {
         OkHttpClient.Builder clientBuilder = new OkHttpClient().newBuilder();

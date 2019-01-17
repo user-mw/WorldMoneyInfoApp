@@ -16,7 +16,6 @@ import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListViewMod
 import ru.project.worldmoneyinfo.ui.statistic_screen.StatisticViewModel;
 
 public class CustomViewModelFactory extends ViewModelProvider.NewInstanceFactory {
-
     @Inject
     ICurrenciesService currenciesService;
 

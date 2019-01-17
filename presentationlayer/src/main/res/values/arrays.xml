@@ -11,6 +11,8 @@
         <item>NOK</item>
         <item>TRY</item>
         <item>ZAR</item>
+        <item>XAG</item>
+        <item>XAU</item>
     </string-array>
 
     <string-array name="autoUpdatePeriodList">
@@ -31,5 +33,20 @@
         <item>120</item>
         <item>180</item>
         <item>300</item>
+    </string-array>
+
+    <string-array name="currenciesFullNames">
+        <item>@string/ruble_full_name</item>
+        <item>@string/euro_full_name</item>
+        <item>@string/dollar_full_name</item>
+        <item>@string/zloty_full_name</item>
+        <item>@string/pound_full_name</item>
+        <item>@string/yuan_full_name</item>
+        <item>@string/yen_full_name</item>
+        <item>@string/krone_full_name</item>
+        <item>@string/lira_full_name</item>
+        <item>@string/rand_full_name</item>
+        <item>@string/silver_full_name</item>
+        <item>@string/gold_full_name</item>
     </string-array>
 </resources>

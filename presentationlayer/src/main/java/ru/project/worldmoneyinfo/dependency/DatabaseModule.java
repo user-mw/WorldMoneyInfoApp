@@ -12,16 +12,16 @@ import ru.project.worldmoneyinfo.MainApplication;
 
 @Module
 public class DatabaseModule {
-    private MainApplication mApplicationInstance;
+    private MainApplication applicationInstance;
 
     public DatabaseModule(MainApplication applicationInstance) {
-        mApplicationInstance = applicationInstance;
+        this.applicationInstance = applicationInstance;
     }
 
     @Provides
     @Singleton
     public CurrenciesDatabase provideDatabase() {
-        return Room.databaseBuilder(mApplicationInstance, CurrenciesDatabase.class, "currencies_database")
+        return Room.databaseBuilder(applicationInstance, CurrenciesDatabase.class, "currencies_database")
                 .build();
     }
 

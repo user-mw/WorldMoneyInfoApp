@@ -21,4 +21,18 @@
     <string name="statistic_of_currency">%s / %s exchange rate statistic</string>
     <string name="statistic_period">From %s\nTo %s</string>
     <string name="statistic_error_text">Not enough data for statistic</string>
+
+    <!-- Currencies full names -->
+    <string name="ruble_full_name">Russian Ruble</string>
+    <string name="euro_full_name">Euro</string>
+    <string name="dollar_full_name">US Dollar</string>
+    <string name="zloty_full_name">Polish Zloty</string>
+    <string name="pound_full_name">Pound Sterling</string>
+    <string name="yuan_full_name">Chinese Yuan</string>
+    <string name="yen_full_name">Japanese Yen</string>
+    <string name="krone_full_name">Norwegian Krone</string>
+    <string name="lira_full_name">Turkish Lira</string>
+    <string name="rand_full_name">RSA Rand</string>
+    <string name="silver_full_name">Silver Ounce</string>
+    <string name="gold_full_name">Gold Ounce</string>
 </resources>

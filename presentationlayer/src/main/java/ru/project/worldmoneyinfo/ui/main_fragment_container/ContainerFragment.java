@@ -27,8 +27,8 @@ public class ContainerFragment extends Fragment {
     private TabLayout tabs;
     private ViewPager mainContainer;
 
-    private List<Fragment> mFragmentList = new ArrayList<>();
-    private List<String> mTitles = new ArrayList<>();
+    private List<Fragment> fragmentList = new ArrayList<>();
+    private List<String> titles = new ArrayList<>();
 
     public static ContainerFragment newInstance() {
         Bundle args = new Bundle();
@@ -42,12 +42,12 @@ public class ContainerFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        mFragmentList.add(CurrenciesListFragment.newInstance());
-        mFragmentList.add(ConverterFragment.newInstance());
+        fragmentList.add(CurrenciesListFragment.newInstance());
+        fragmentList.add(ConverterFragment.newInstance());
 
         if(getActivity() != null) {
-            mTitles.add(getActivity().getString(R.string.rates_title));
-            mTitles.add(getActivity().getString(R.string.converter_title));
+            titles.add(getActivity().getString(R.string.rates_title));
+            titles.add(getActivity().getString(R.string.converter_title));
         }
     }
 
@@ -109,8 +109,8 @@ public class ContainerFragment extends Fragment {
     private boolean configureViewPager() {
         if(getActivity() != null) {
             ContainerPagerAdapter adapter = new ContainerPagerAdapter(getChildFragmentManager());
-            adapter.addAll(mFragmentList);
-            adapter.setTabsTitles(mTitles);
+            adapter.addAll(fragmentList);
+            adapter.setTabsTitles(titles);
 
             mainContainer.setAdapter(adapter);
             return true;

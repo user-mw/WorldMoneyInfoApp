@@ -14,10 +14,10 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ru.project.domainlayer.model.StatisticCurrencyPair;
+import ru.project.domainlayer.model.StatisticCurrencyData;
 import ru.project.domainlayer.service.ICurrenciesService;
 import ru.project.domainlayer.service.ISettingsService;
-import ru.project.domainlayer.utils.CurrencyUtil;
+import ru.project.worldmoneyinfo.utils.CurrencyUtil;
 import ru.project.domainlayer.utils.DateUtil;
 import ru.project.worldmoneyinfo.MainApplication;
 
@@ -31,7 +31,7 @@ public class StatisticViewModel extends ViewModel {
     private static final int MINIMUM_STATISTIC_VALUES_AMOUNT = 25;
     private ICurrenciesService currenciesService;
 
-    private MutableLiveData<List<StatisticCurrencyPair>> currencyStatistic = new MutableLiveData<>();
+    private MutableLiveData<List<StatisticCurrencyData>> currencyStatistic = new MutableLiveData<>();
     private MutableLiveData<String[]> statisticPeriod = new MutableLiveData<>();
     private MutableLiveData<Boolean> isErrorOccurred = new MutableLiveData<>();
     private String mainCurrency;
@@ -46,7 +46,7 @@ public class StatisticViewModel extends ViewModel {
     public void loadStatistic(String currencyPair) {
         currenciesService.getStatistic(currencyPair)
                 .flatMap(statisticCurrencyPairs -> {
-                    List<StatisticCurrencyPair> result = new ArrayList<>();
+                    List<StatisticCurrencyData> result = new ArrayList<>();
                     for(int step = statisticCurrencyPairs.size() - 1; step >= 0; step--) {
                         result.add(statisticCurrencyPairs.get(step));
                     }
@@ -54,14 +54,14 @@ public class StatisticViewModel extends ViewModel {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<StatisticCurrencyPair>>() {
+                .subscribe(new Observer<List<StatisticCurrencyData>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         Log.d(CURRENT_TAG, "Line 60 - onSubscribe: called");
                     }
 
                     @Override
-                    public void onNext(List<StatisticCurrencyPair> statisticCurrencyPairs) {
+                    public void onNext(List<StatisticCurrencyData> statisticCurrencyPairs) {
                         if(statisticCurrencyPairs.size() >= MINIMUM_STATISTIC_VALUES_AMOUNT) {
                             currencyStatistic.postValue(statisticCurrencyPairs);
 
@@ -86,7 +86,7 @@ public class StatisticViewModel extends ViewModel {
                 });
     }
 
-    public MutableLiveData<List<StatisticCurrencyPair>> getCurrencyStatistic() {
+    public MutableLiveData<List<StatisticCurrencyData>> getCurrencyStatistic() {
         return currencyStatistic;
     }
 
