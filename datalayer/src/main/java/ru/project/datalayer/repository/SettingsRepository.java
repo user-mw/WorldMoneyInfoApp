@@ -9,7 +9,7 @@ import ru.project.domainlayer.repository.ISettingsRepository;
 
 public class SettingsRepository implements ISettingsRepository {
     @Inject
-    SharedPreferences mPreferences;
+    SharedPreferences preferences;
     private static final String CURRENT_TAG = "SettingsRepository";
 
     @Inject
@@ -19,17 +19,17 @@ public class SettingsRepository implements ISettingsRepository {
 
     @Override
     public String getMainCurrency() {
-        return mPreferences.getString(ISettingsRepository.MAIN_CURRENCY, ISettingsRepository.DEFAULT_CURRENCY);
+        return preferences.getString(ISettingsRepository.MAIN_CURRENCY, ISettingsRepository.DEFAULT_CURRENCY);
     }
 
     @Override
     public boolean isAutoUpdateEnabled() {
-        return mPreferences.getBoolean(ISettingsRepository.AUTO_UPDATE, ISettingsRepository.DEFAULT_AUTO_UPDATE_VALUE);
+        return preferences.getBoolean(ISettingsRepository.AUTO_UPDATE, ISettingsRepository.DEFAULT_AUTO_UPDATE_VALUE);
     }
 
     @Override
     public int getAutoUpdatePeriodValue() {
-        String periodData = mPreferences.getString(ISettingsRepository.AUTO_UPDATE_PERIOD, ISettingsRepository.DEFAULT_AUTO_UPDATE_PERIOD_VALUE);
+        String periodData = preferences.getString(ISettingsRepository.AUTO_UPDATE_PERIOD, ISettingsRepository.DEFAULT_AUTO_UPDATE_PERIOD_VALUE);
         return Integer.parseInt(periodData);
     }
 }

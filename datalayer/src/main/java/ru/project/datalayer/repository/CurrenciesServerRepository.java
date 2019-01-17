@@ -1,5 +1,7 @@
 package ru.project.datalayer.repository;
 
+import android.util.Log;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -12,18 +14,18 @@ import ru.project.domainlayer.model.StatisticCurrencyPair;
 import ru.project.domainlayer.repository.ICurrenciesRepository;
 
 public class CurrenciesServerRepository implements ICurrenciesRepository {
-
     @Inject
-    IOneForgeApi mApi;
+    IOneForgeApi api;
+    private static final String CURRENT_TAG = "ServerRepository";
 
     @Inject
     public CurrenciesServerRepository() {
-
+        Log.d(CURRENT_TAG, "Line 23 - ServerRepository constructor: called");
     }
 
     @Override
     public Single<List<RemoteCurrencyPair>> getCurrencies(String pairs, String key) {
-        return mApi.getCurrenciesInfo(pairs, key);
+        return api.getCurrenciesInfo(pairs, key);
     }
 
     @Override
