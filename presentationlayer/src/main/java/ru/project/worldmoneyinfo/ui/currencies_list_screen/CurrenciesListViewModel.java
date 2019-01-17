@@ -18,7 +18,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.project.domainlayer.model.RemoteCurrencyData;
 import ru.project.domainlayer.service.ICurrenciesService;
 import ru.project.domainlayer.service.ISettingsService;
-import ru.project.domainlayer.utils.CurrencyUtil;
+import ru.project.worldmoneyinfo.utils.CurrencyUtil;
 import ru.project.worldmoneyinfo.MainApplication;
 
 public class CurrenciesListViewModel extends ViewModel {

@@ -25,7 +25,7 @@ public class MainApplication extends Application {
                 .settingsModule(new SettingsModule(this))
                 .build();
 
-        utilsComponent = DaggerIUtilsComponent.builder().utilsModule(new UtilsModule()).build();
+        utilsComponent = DaggerIUtilsComponent.builder().utilsModule(new UtilsModule(this)).build();
     }
 
     public static IApplicationComponent getApplicationComponent() {

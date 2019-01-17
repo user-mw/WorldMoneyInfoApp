@@ -5,12 +5,19 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import ru.project.domainlayer.utils.ComputingUtil;
-import ru.project.domainlayer.utils.CurrencyUtil;
+import ru.project.worldmoneyinfo.MainApplication;
+import ru.project.worldmoneyinfo.utils.CurrencyUtil;
 import ru.project.domainlayer.utils.DateUtil;
 import ru.project.worldmoneyinfo.IApiData;
 
 @Module
 public class UtilsModule {
+    private MainApplication applicationInstance;
+
+    public UtilsModule(MainApplication application) {
+        applicationInstance = application;
+    }
+
     @Provides
     @Singleton
     public String provideApiKey() {
@@ -21,7 +28,7 @@ public class UtilsModule {
     @Provides
     @Singleton
     public CurrencyUtil provideCurrencyUtil() {
-        return new CurrencyUtil();
+        return new CurrencyUtil(applicationInstance);
     }
 
     @Provides

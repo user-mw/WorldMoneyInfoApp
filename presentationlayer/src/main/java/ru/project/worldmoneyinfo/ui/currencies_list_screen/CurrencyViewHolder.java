@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 import ru.project.domainlayer.model.RemoteCurrencyData;
 import ru.project.domainlayer.utils.ComputingUtil;
-import ru.project.domainlayer.utils.CurrencyUtil;
+import ru.project.worldmoneyinfo.utils.CurrencyUtil;
 import ru.project.worldmoneyinfo.MainApplication;
 
 import ru.project.worldmoneyinfo.R;
