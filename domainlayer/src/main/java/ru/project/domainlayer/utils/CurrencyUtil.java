@@ -5,13 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 public class CurrencyUtil {
-    private Map<String, String> mCurrenciesNames = new LinkedHashMap<>();
-    private List<String> mCurrenciesList = new ArrayList<>();
+    public static final String COMMA_SYMBOL = ",";
+    private Map<String, String> currenciesNames = new LinkedHashMap<>();
+    private List<String> currenciesList = new ArrayList<>();
 
-    @Inject
+//    @Inject
     public CurrencyUtil() {
         setCurrenciesNames();
         setSettingsCurrencies();
@@ -20,7 +19,7 @@ public class CurrencyUtil {
     public String getNormalName(String currencyPair, String mainCurrency) {
         String singleSymbol = currencyPair.replace(mainCurrency, "");
 
-        return mCurrenciesNames.get(singleSymbol);
+        return currenciesNames.get(singleSymbol);
     }
 
     public String getSecondCurrencyFromPair(String currencyPair, String mainCurrency) {
@@ -28,50 +27,49 @@ public class CurrencyUtil {
     }
 
     private void setCurrenciesNames() {
-        mCurrenciesNames.put("RUB", "Russian Ruble");
-        mCurrenciesNames.put("EUR", "Euro");
-        mCurrenciesNames.put("USD", "United States Dollar");
-        mCurrenciesNames.put("PLN", "Polish Zloty");
-        mCurrenciesNames.put("GBP", "Pound sterling");
-        mCurrenciesNames.put("CNH", "Chinese yuan");
-        mCurrenciesNames.put("JPY", "Japanese yen");
-        mCurrenciesNames.put("NOK", "Norwegian krone");
-        mCurrenciesNames.put("TRY", "Turkish lira");
-        mCurrenciesNames.put("ZAR", "South African Rand");
-        mCurrenciesNames.put("XAG", "Silver Ounce");
-        mCurrenciesNames.put("XAU", "Gold Ounce");
+        currenciesNames.put("RUB", "Russian Ruble");
+        currenciesNames.put("EUR", "Euro");
+        currenciesNames.put("USD", "United States Dollar");
+        currenciesNames.put("PLN", "Polish Zloty");
+        currenciesNames.put("GBP", "Pound sterling");
+        currenciesNames.put("CNH", "Chinese yuan");
+        currenciesNames.put("JPY", "Japanese yen");
+        currenciesNames.put("NOK", "Norwegian krone");
+        currenciesNames.put("TRY", "Turkish lira");
+        currenciesNames.put("ZAR", "South African Rand");
+        currenciesNames.put("XAG", "Silver Ounce");
+        currenciesNames.put("XAU", "Gold Ounce");
     }
 
     private void setSettingsCurrencies() {
-        mCurrenciesList.add("RUB");
-        mCurrenciesList.add("EUR");
-        mCurrenciesList.add("USD");
-        mCurrenciesList.add("PLN");
-        mCurrenciesList.add("GBP");
-        mCurrenciesList.add("CNH");
-        mCurrenciesList.add("JPY");
-        mCurrenciesList.add("NOK");
-        mCurrenciesList.add("TRY");
-        mCurrenciesList.add("ZAR");
-
+        currenciesList.add("RUB");
+        currenciesList.add("EUR");
+        currenciesList.add("USD");
+        currenciesList.add("PLN");
+        currenciesList.add("GBP");
+        currenciesList.add("CNH");
+        currenciesList.add("JPY");
+        currenciesList.add("NOK");
+        currenciesList.add("TRY");
+        currenciesList.add("ZAR");
     }
 
     public String getRatesValue(String mainCurrency) {
-        String pair = "";
+        StringBuilder result = new StringBuilder();
 
-        for(int step = 0; step < mCurrenciesNames.keySet().size(); step++) {
-            String key = mCurrenciesNames.keySet().toArray()[step].toString();
+        for(int step = 0; step < currenciesNames.keySet().size(); step++) {
+            String key = currenciesNames.keySet().toArray()[step].toString();
 
             if(!key.equals(mainCurrency)) {
-                pair += key + mainCurrency + ",";
+                result.append(key).append(mainCurrency).append(COMMA_SYMBOL);
             }
 
         }
 
-        return pair;
+        return result.toString();
     }
 
     public List<String> getCurrenciesList() {
-        return mCurrenciesList;
+        return currenciesList;
     }
 }

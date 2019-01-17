@@ -10,9 +10,9 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import ru.project.datalayer.database.ICurrenciesDao;
-import ru.project.domainlayer.model.LocalCurrencyPair;
-import ru.project.domainlayer.model.RemoteCurrencyPair;
-import ru.project.domainlayer.model.StatisticCurrencyPair;
+import ru.project.domainlayer.model.LocalCurrencyData;
+import ru.project.domainlayer.model.RemoteCurrencyData;
+import ru.project.domainlayer.model.StatisticCurrencyData;
 import ru.project.domainlayer.repository.ICurrenciesRepository;
 
 public class CurrenciesDatabaseRepository implements ICurrenciesRepository {
@@ -27,31 +27,31 @@ public class CurrenciesDatabaseRepository implements ICurrenciesRepository {
     }
 
     @Override
-    public Single<List<RemoteCurrencyPair>> getCurrencies(String pairs, String key) {
+    public Single<List<RemoteCurrencyData>> getCurrencies(String pairs, String key) {
         return Single.fromCallable(() -> {
 
             String[] pairsArray = pairs.split(ARRAY_SPLIT_SYMBOL);
 
-            List<LocalCurrencyPair> localCurrencyPairList = dao.getCurrencies(pairsArray);
-            List<RemoteCurrencyPair> remoteCurrencyPairList = new ArrayList<>();
+            List<LocalCurrencyData> localCurrencyPairList = dao.getCurrencies(pairsArray);
+            List<RemoteCurrencyData> remoteCurrencyDataUnitList = new ArrayList<>();
 
             for(int step = 0; step < localCurrencyPairList.size(); step++) {
-                remoteCurrencyPairList.add(localCurrencyPairList.get(step).toRemoteCurrency());
+                remoteCurrencyDataUnitList.add(localCurrencyPairList.get(step).toRemoteCurrency());
             }
 
-            return remoteCurrencyPairList;
+            return remoteCurrencyDataUnitList;
         });
     }
 
     @Override
-    public Observable<List<StatisticCurrencyPair>> getStatistic(String currencyPair) {
+    public Observable<List<StatisticCurrencyData>> getStatistic(String currencyPair) {
         return Observable.fromCallable(() -> dao.getStatistic(currencyPair));
     }
 
     @Override
-    public void insertCurrencies(List<RemoteCurrencyPair> currencies) {
-        List<LocalCurrencyPair> localCurrencies = new ArrayList<>();
-        List<StatisticCurrencyPair> statisticCurrencies = new ArrayList<>();
+    public void insertCurrencies(List<RemoteCurrencyData> currencies) {
+        List<LocalCurrencyData> localCurrencies = new ArrayList<>();
+        List<StatisticCurrencyData> statisticCurrencies = new ArrayList<>();
 
         for(int step = 0; step < currencies.size(); step++) {
             localCurrencies.add(currencies.get(step).toLocalCurrency());
