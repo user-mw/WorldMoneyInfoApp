@@ -5,7 +5,6 @@ import javax.inject.Inject;
 import ru.project.domainlayer.repository.ISettingsRepository;
 
 public class SettingsServiceImpl implements ISettingsService {
-
     @Inject
     ISettingsRepository settingsRepository;
 
