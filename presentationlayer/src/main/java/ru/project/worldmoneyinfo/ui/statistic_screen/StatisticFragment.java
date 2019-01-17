@@ -1,11 +1,14 @@
 package ru.project.worldmoneyinfo.ui.statistic_screen;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -32,8 +35,10 @@ public class StatisticFragment extends BaseFragment {
     private static final float LINE_WIDTH = 4.0f;
     private String currencyPair;
 
+    private LinearLayout statisticLayout;
     private TextView statisticName;
     private TextView statisticPeriod;
+    private TextView statisticErrorMessage;
     private LineChart statisticChart;
 
     public static StatisticFragment newInstance(String currencyPair) {
@@ -63,9 +68,11 @@ public class StatisticFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        statisticLayout = view.findViewById(R.id.statistic_layout);
         statisticChart = view.findViewById(R.id.statistic_chart);
         statisticName = view.findViewById(R.id.statistic_title);
         statisticPeriod = view.findViewById(R.id.statistic_period);
+        statisticErrorMessage = view.findViewById(R.id.statistic_error_message);
         configureTitle();
 
         viewModel.getCurrencyStatistic().observe(this, currencies -> {
@@ -76,8 +83,17 @@ public class StatisticFragment extends BaseFragment {
 
         viewModel.getStatisticPeriod().observe(this, periodData -> {
             if(periodData != null) {
+                statisticLayout.setVisibility(View.VISIBLE);
                 String statisticPeriodText = String.format(getString(R.string.statistic_period), periodData[0], periodData[1]);
                 statisticPeriod.setText(statisticPeriodText);
+                statisticErrorMessage.setVisibility(View.GONE);
+            }
+        });
+
+        viewModel.getIsErrorOccurred().observe(this, isError -> {
+            if(isError != null && isError) {
+                statisticLayout.setVisibility(View.GONE);
+                statisticErrorMessage.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -97,17 +113,28 @@ public class StatisticFragment extends BaseFragment {
 
         String title = getString(R.string.statistic_title);
 
-        LineDataSet dataSet = new LineDataSet(entries, title);
-        dataSet.setLineWidth(LINE_WIDTH);
-        dataSet.setMode(LineDataSet.Mode.STEPPED);
-        dataSet.setDrawCircles(false);
-        dataSet.setDrawCircleHole(false);
-        dataSet.setValueTextSize(0);
+        int lineColor;
 
-        LineData data = new LineData(dataSet);
-        statisticChart.getDescription().setText("");
-        statisticChart.setData(data);
-        statisticChart.invalidate();
+        if(getActivity() != null) {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                lineColor = ContextCompat.getColor(getActivity(), R.color.textColorRed);
+            } else {
+                lineColor = getActivity().getResources().getColor(R.color.textColorRed);
+            }
+
+            LineDataSet dataSet = new LineDataSet(entries, title);
+            dataSet.setLineWidth(LINE_WIDTH);
+            dataSet.setMode(LineDataSet.Mode.STEPPED);
+            dataSet.setDrawCircles(false);
+            dataSet.setDrawCircleHole(false);
+            dataSet.setColor(lineColor);
+            dataSet.setValueTextSize(0);
+
+            LineData data = new LineData(dataSet);
+            statisticChart.getDescription().setText("");
+            statisticChart.setData(data);
+            statisticChart.invalidate();
+        }
     }
 
     @Override

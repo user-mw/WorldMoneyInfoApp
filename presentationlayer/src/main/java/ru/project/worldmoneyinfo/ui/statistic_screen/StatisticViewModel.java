@@ -28,10 +28,12 @@ public class StatisticViewModel extends ViewModel {
     DateUtil dateUtil;
 
     private static final String CURRENT_TAG = "StatisticViewModel";
+    private static final int MINIMUM_STATISTIC_VALUES_AMOUNT = 25;
     private ICurrenciesService currenciesService;
 
     private MutableLiveData<List<StatisticCurrencyPair>> currencyStatistic = new MutableLiveData<>();
     private MutableLiveData<String[]> statisticPeriod = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isErrorOccurred = new MutableLiveData<>();
     private String mainCurrency;
 
     public StatisticViewModel(ICurrenciesService currenciesService, ISettingsService settingsService) {
@@ -55,26 +57,31 @@ public class StatisticViewModel extends ViewModel {
                 .subscribe(new Observer<List<StatisticCurrencyPair>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d(CURRENT_TAG, "Line 42 - onSubscribe: called");
+                        Log.d(CURRENT_TAG, "Line 60 - onSubscribe: called");
                     }
 
                     @Override
                     public void onNext(List<StatisticCurrencyPair> statisticCurrencyPairs) {
-                        currencyStatistic.postValue(statisticCurrencyPairs);
+                        if(statisticCurrencyPairs.size() >= MINIMUM_STATISTIC_VALUES_AMOUNT) {
+                            currencyStatistic.postValue(statisticCurrencyPairs);
 
-                        String statisticStart = dateUtil.getNormalDate(statisticCurrencyPairs.get(0).getTimestamp());
-                        String statisticEnd = dateUtil.getNormalDate(statisticCurrencyPairs.get(statisticCurrencyPairs.size() - 1).getTimestamp());
-                        statisticPeriod.postValue(new String[] {statisticStart, statisticEnd});
+                            String statisticStart = dateUtil.getNormalDate(statisticCurrencyPairs.get(0).getTimestamp());
+                            String statisticEnd = dateUtil.getNormalDate(statisticCurrencyPairs.get(statisticCurrencyPairs.size() - 1).getTimestamp());
+                            statisticPeriod.postValue(new String[] {statisticStart, statisticEnd});
+                            isErrorOccurred.postValue(false);
+                        } else {
+                            isErrorOccurred.postValue(true);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(CURRENT_TAG, "Line 52 - onError: called");
+                        Log.d(CURRENT_TAG, "Line 79 - onError: called");
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.d(CURRENT_TAG, "Line 56 - onComplete: called");
+                        Log.d(CURRENT_TAG, "Line 83 - onComplete: called");
                     }
                 });
     }
@@ -93,5 +100,9 @@ public class StatisticViewModel extends ViewModel {
 
     public String getSecondCurrency(String currencyPair) {
         return currencyUtil.getSecondCurrencyFromPair(currencyPair, mainCurrency);
+    }
+
+    public MutableLiveData<Boolean> getIsErrorOccurred() {
+        return isErrorOccurred;
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/statistic_title"
@@ -12,16 +12,35 @@
         android:textSize="20sp"
         android:textAlignment="center"/>
 
+    <LinearLayout
+        android:id="@+id/statistic_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/statistic_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp"/>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/statistic_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
     <TextView
-        android:id="@+id/statistic_period"
+        android:id="@+id/statistic_error_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textSize="16sp"/>
+        android:text="@string/statistic_error_text"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/textColorRed"
+        android:visibility="gone"/>
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/statistic_chart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-</LinearLayout>
+</FrameLayout>

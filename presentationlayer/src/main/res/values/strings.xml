@@ -20,4 +20,5 @@
     <string name="statistic_title">Statistic</string>
     <string name="statistic_of_currency">%s / %s exchange rate statistic</string>
     <string name="statistic_period">From %s\nTo %s</string>
+    <string name="statistic_error_text">Not enough data for statistic</string>
 </resources>
