@@ -57,6 +57,14 @@ public class ContainerFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(getActivity() != null) {
+            getActivity().setTitle(R.string.app_name);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

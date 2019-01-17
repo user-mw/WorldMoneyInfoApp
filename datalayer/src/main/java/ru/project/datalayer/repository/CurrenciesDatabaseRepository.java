@@ -5,10 +5,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import ru.project.datalayer.database.ICurrenciesDao;
 import ru.project.domainlayer.model.LocalCurrencyPair;
 import ru.project.domainlayer.model.RemoteCurrencyPair;
+import ru.project.domainlayer.model.StatisticCurrencyPair;
 import ru.project.domainlayer.repository.ICurrenciesRepository;
 
 public class CurrenciesDatabaseRepository implements ICurrenciesRepository {
@@ -39,13 +41,21 @@ public class CurrenciesDatabaseRepository implements ICurrenciesRepository {
     }
 
     @Override
+    public Observable<List<StatisticCurrencyPair>> getStatistic(String currencyPair) {
+        return Observable.fromCallable(() -> mDao.getStatistic(currencyPair));
+    }
+
+    @Override
     public void insertCurrencies(List<RemoteCurrencyPair> currencies) {
         List<LocalCurrencyPair> localCurrencies = new ArrayList<>();
+        List<StatisticCurrencyPair> statisticCurrencies = new ArrayList<>();
 
         for(int step = 0; step < currencies.size(); step++) {
             localCurrencies.add(currencies.get(step).toLocalCurrency());
+            statisticCurrencies.add(currencies.get(step).toStatisticCurrency());
         }
 
         mDao.insertCurrencies(localCurrencies);
+        mDao.insertStatistic(statisticCurrencies);
     }
 }

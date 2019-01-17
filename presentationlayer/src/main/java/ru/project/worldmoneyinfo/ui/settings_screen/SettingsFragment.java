@@ -1,5 +1,6 @@
 package ru.project.worldmoneyinfo.ui.settings_screen;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v14.preference.SwitchPreference;
@@ -25,6 +26,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings_preferences, rootKey);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(getActivity() != null) {
+            getActivity().setTitle(R.string.settings_title);
+        }
     }
 
     @Override

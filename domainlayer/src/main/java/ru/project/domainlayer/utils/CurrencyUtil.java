@@ -23,6 +23,10 @@ public class CurrencyUtil {
         return mCurrenciesNames.get(singleSymbol);
     }
 
+    public String getSecondCurrencyFromPair(String currencyPair, String mainCurrency) {
+        return currencyPair.replace(mainCurrency, "");
+    }
+
     private void setCurrenciesNames() {
         mCurrenciesNames.put("RUB", "Russian Ruble");
         mCurrenciesNames.put("EUR", "Euro");
