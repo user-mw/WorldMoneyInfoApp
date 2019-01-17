@@ -7,7 +7,7 @@ import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.R;
 
 public class CurrencyUtil {
-    public static final String COMMA_SYMBOL = ",";
+    private static final String COMMA_SYMBOL = ",";
     private Map<String, String> currenciesNames = new LinkedHashMap<>();
     private String[] symbols;
     private String[] fullNames;
