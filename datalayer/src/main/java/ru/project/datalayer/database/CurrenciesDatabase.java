@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import ru.project.domainlayer.model.LocalCurrencyPair;
 import ru.project.domainlayer.model.StatisticCurrencyPair;
 
-@Database(entities = {LocalCurrencyPair.class, StatisticCurrencyPair.class}, version = 1)
+@Database(entities = {LocalCurrencyPair.class, StatisticCurrencyPair.class}, exportSchema = false, version = 1)
 public abstract class CurrenciesDatabase extends RoomDatabase {
     public abstract ICurrenciesDao getDao();
 }
