@@ -1,6 +1,5 @@
 package ru.project.worldmoneyinfo.ui.settings_screen;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v14.preference.SwitchPreference;
@@ -12,7 +11,6 @@ import android.util.Log;
 import ru.project.worldmoneyinfo.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
-
     private static final String CURRENT_TAG = "SettingsFragment";
 
     public static SettingsFragment newInstance() {

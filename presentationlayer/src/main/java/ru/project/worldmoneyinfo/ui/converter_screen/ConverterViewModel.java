@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import ru.project.domainlayer.model.RemoteCurrencyPair;
+import ru.project.domainlayer.model.RemoteCurrencyData;
 import ru.project.domainlayer.service.ICurrenciesService;
 import ru.project.domainlayer.utils.ComputingUtil;
 import ru.project.worldmoneyinfo.MainApplication;
@@ -47,14 +47,14 @@ public class ConverterViewModel extends ViewModel {
 
             currenciesService.getCurrencies(pair, apiKey)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new SingleObserver<List<RemoteCurrencyPair>>() {
+                    .subscribe(new SingleObserver<List<RemoteCurrencyData>>() {
                         @Override
                         public void onSubscribe(Disposable d) {
                             Log.d(CURRENT_TAG, "Line 52 - onSubscribe: called");
                         }
 
                         @Override
-                        public void onSuccess(List<RemoteCurrencyPair> currencyPairs) {
+                        public void onSuccess(List<RemoteCurrencyData> currencyPairs) {
                             String prise = currencyPairs.get(0).getPrice();
                             String result = computingUtil.getTotalAmount(amount, prise);
 

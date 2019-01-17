@@ -21,7 +21,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ru.project.domainlayer.model.StatisticCurrencyPair;
+import ru.project.domainlayer.model.StatisticCurrencyData;
 import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.R;
 import ru.project.worldmoneyinfo.dependency.ViewModelModule;
@@ -103,7 +103,7 @@ public class StatisticFragment extends BaseFragment {
         statisticName.setText(statisticNameText);
     }
 
-    private void configureStatisticChart(List<StatisticCurrencyPair> statistic) {
+    private void configureStatisticChart(List<StatisticCurrencyData> statistic) {
         List<Entry> entries = new ArrayList<>();
 
         for(int step = 0; step < statistic.size(); step++) {

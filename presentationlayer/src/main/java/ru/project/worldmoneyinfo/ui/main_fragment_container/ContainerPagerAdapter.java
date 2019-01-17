@@ -10,8 +10,8 @@ import java.util.List;
 
 public class ContainerPagerAdapter extends FragmentPagerAdapter {
 
-    private List<Fragment> mFragmentList = new ArrayList<>();
-    private List<String> mTabsTitles = new ArrayList<>();
+    private List<Fragment> fragmentList = new ArrayList<>();
+    private List<String> tabsTitles = new ArrayList<>();
 
     public ContainerPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
@@ -19,25 +19,25 @@ public class ContainerPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return mFragmentList.get(position);
+        return fragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return mFragmentList.size();
+        return fragmentList.size();
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTabsTitles.get(position);
+        return tabsTitles.get(position);
     }
 
     public void addAll(List<Fragment> fragments) {
-        mFragmentList.addAll(fragments);
+        fragmentList.addAll(fragments);
     }
 
     public void setTabsTitles(List<String> tabsTitles) {
-        mTabsTitles = tabsTitles;
+        this.tabsTitles = tabsTitles;
     }
 }
