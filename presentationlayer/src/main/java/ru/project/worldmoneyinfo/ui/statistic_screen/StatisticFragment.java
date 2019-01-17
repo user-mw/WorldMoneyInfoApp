@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -34,6 +33,7 @@ public class StatisticFragment extends BaseFragment {
     private String currencyPair;
 
     private TextView statisticName;
+    private TextView statisticPeriod;
     private LineChart statisticChart;
 
     public static StatisticFragment newInstance(String currencyPair) {
@@ -65,6 +65,7 @@ public class StatisticFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         statisticChart = view.findViewById(R.id.statistic_chart);
         statisticName = view.findViewById(R.id.statistic_title);
+        statisticPeriod = view.findViewById(R.id.statistic_period);
         configureTitle();
 
         viewModel.getCurrencyStatistic().observe(this, currencies -> {
@@ -72,10 +73,17 @@ public class StatisticFragment extends BaseFragment {
                 configureStatisticChart(currencies);
             }
         });
+
+        viewModel.getStatisticPeriod().observe(this, periodData -> {
+            if(periodData != null) {
+                String statisticPeriodText = String.format(getString(R.string.statistic_period), periodData[0], periodData[1]);
+                statisticPeriod.setText(statisticPeriodText);
+            }
+        });
     }
 
     private void configureTitle() {
-        String statisticNameText = String.format(getString(R.string.statistic_of_currency), "RUB", "USD");
+        String statisticNameText = String.format(getString(R.string.statistic_of_currency), viewModel.getMainCurrency(), viewModel.getSecondCurrency(currencyPair));
         statisticName.setText(statisticNameText);
     }
 

@@ -36,7 +36,7 @@ public class CustomViewModelFactory extends ViewModelProvider.NewInstanceFactory
         } else if(modelClass.isAssignableFrom(ConverterViewModel.class)) {
             return (T) new ConverterViewModel(currenciesService);
         } else if(modelClass.isAssignableFrom(StatisticViewModel.class)) {
-            return (T) new StatisticViewModel(currenciesService);
+            return (T) new StatisticViewModel(currenciesService, settingsService);
         }
 
         throw new IllegalArgumentException("Wrong ViewModel class");

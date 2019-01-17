@@ -7,6 +7,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -14,15 +16,29 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.project.domainlayer.model.StatisticCurrencyPair;
 import ru.project.domainlayer.service.ICurrenciesService;
+import ru.project.domainlayer.service.ISettingsService;
+import ru.project.domainlayer.utils.CurrencyUtil;
+import ru.project.domainlayer.utils.DateUtil;
+import ru.project.worldmoneyinfo.MainApplication;
 
 public class StatisticViewModel extends ViewModel {
+    @Inject
+    CurrencyUtil currencyUtil;
+    @Inject
+    DateUtil dateUtil;
+
     private static final String CURRENT_TAG = "StatisticViewModel";
     private ICurrenciesService currenciesService;
 
     private MutableLiveData<List<StatisticCurrencyPair>> currencyStatistic = new MutableLiveData<>();
+    private MutableLiveData<String[]> statisticPeriod = new MutableLiveData<>();
+    private String mainCurrency;
 
-    public StatisticViewModel(ICurrenciesService currenciesService) {
+    public StatisticViewModel(ICurrenciesService currenciesService, ISettingsService settingsService) {
         this.currenciesService = currenciesService;
+        MainApplication.getUtilsComponent().inject(this);
+
+        mainCurrency = settingsService.getMainCurrency();
     }
 
     public void loadStatistic(String currencyPair) {
@@ -45,6 +61,10 @@ public class StatisticViewModel extends ViewModel {
                     @Override
                     public void onNext(List<StatisticCurrencyPair> statisticCurrencyPairs) {
                         currencyStatistic.postValue(statisticCurrencyPairs);
+
+                        String statisticStart = dateUtil.getNormalDate(statisticCurrencyPairs.get(0).getTimestamp());
+                        String statisticEnd = dateUtil.getNormalDate(statisticCurrencyPairs.get(statisticCurrencyPairs.size() - 1).getTimestamp());
+                        statisticPeriod.postValue(new String[] {statisticStart, statisticEnd});
                     }
 
                     @Override
@@ -61,5 +81,17 @@ public class StatisticViewModel extends ViewModel {
 
     public MutableLiveData<List<StatisticCurrencyPair>> getCurrencyStatistic() {
         return currencyStatistic;
+    }
+
+    public MutableLiveData<String[]> getStatisticPeriod() {
+        return statisticPeriod;
+    }
+
+    public String getMainCurrency() {
+        return mainCurrency;
+    }
+
+    public String getSecondCurrency(String currencyPair) {
+        return currencyUtil.getSecondCurrencyFromPair(currencyPair, mainCurrency);
     }
 }

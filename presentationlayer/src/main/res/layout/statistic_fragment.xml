@@ -9,8 +9,15 @@
         android:id="@+id/statistic_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/statistic_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"/>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/statistic_chart"

@@ -19,4 +19,5 @@
     <string name="settings_auto_update_period_title">Auto update period</string>
     <string name="statistic_title">Statistic</string>
     <string name="statistic_of_currency">%s / %s exchange rate statistic</string>
+    <string name="statistic_period">From %s\nTo %s</string>
 </resources>
