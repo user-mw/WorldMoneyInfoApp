@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Курсы мировых валют</string>
+    <string name="default_error_text">Произошла ошибка</string>
+    <string name="rates_title">Курсы валют</string>
+    <string name="settings_title">Настройки</string>
+    <string name="converter_title">Конвертер</string>
+    <string name="settings_currency_action">Выберите основную валюту</string>
+    <string name="currency_amount_hint">Сумма</string>
+    <string name="convert_button_text">Перевести</string>
+    <string name="settings_currency_default_value">RUB</string>
+    <string name="settings_currency_dialog_title">Выберите основную валюту</string>
+    <string name="settings_currency_title">Основная валюта</string>
+    <string name="settings_auto_update_title">Включить автообновление курсов валют</string>
+    <string name="settings_auto_update_period_dialog_title">Выберите период автообновления</string>
+    <string name="settings_auto_update_period_title">Период автообновления</string>
+    <string name="statistic_title">Статистика</string>
+    <string name="statistic_of_currency">%s / %s статистика обменного курса</string>
+    <string name="statistic_period">От %s\nПo %s</string>
+    <string name="statistic_error_text">Недостаточно данных для статистики</string>
+
+    <!-- Currencies full names -->
+    <string name="ruble_full_name">Российский рубль</string>
+    <string name="euro_full_name">Евро</string>
+    <string name="dollar_full_name">Доллар США</string>
+    <string name="zloty_full_name">Польский злотый</string>
+    <string name="pound_full_name">Фунт стерлингов</string>
+    <string name="yuan_full_name">Китайский юань</string>
+    <string name="yen_full_name">Японская иена</string>
+    <string name="krone_full_name">Норвежская крона</string>
+    <string name="lira_full_name">Турецкая лира</string>
+    <string name="rand_full_name">Ранд ЮАР</string>
+    <string name="silver_full_name">Унция серебра</string>
+    <string name="gold_full_name">Унция золота</string>
+</resources>

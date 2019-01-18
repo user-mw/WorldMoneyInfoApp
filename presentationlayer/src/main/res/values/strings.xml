@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">World Money Info</string>
+    <string name="app_name">World Currencies Rates</string>
     <string name="default_error_text">Some error occurred</string>
     <string name="rates_title">Rates</string>
     <string name="settings_title">Settings</string>
@@ -7,15 +7,15 @@
     <string name="settings_currency_action">Select main currency</string>
     <string name="currency_amount_hint">Amount</string>
     <string name="convert_button_text">Convert</string>
-    <string name="settings_currency_default_value">RUB</string>
+    <string name="settings_currency_default_value" translatable="false">RUB</string>
     <string name="settings_currency_dialog_title">Choose main currency</string>
-    <string name="settings_currency_key">MainCurrency</string>
+    <string name="settings_currency_key" translatable="false">MainCurrency</string>
     <string name="settings_currency_title">Main currency</string>
     <string name="settings_auto_update_title">Enable currencies auto update</string>
-    <string name="settings_auto_update_period_default_value">5</string>
+    <string name="settings_auto_update_period_default_value" translatable="false">5</string>
     <string name="settings_auto_update_period_dialog_title">Choose auto update period</string>
-    <string name="settings_auto_update_key">AutoUpdate</string>
-    <string name="settings_auto_update_period_key">AutoUpdatePeriod</string>
+    <string name="settings_auto_update_key" translatable="false">AutoUpdate</string>
+    <string name="settings_auto_update_period_key" translatable="false">AutoUpdatePeriod</string>
     <string name="settings_auto_update_period_title">Auto update period</string>
     <string name="statistic_title">Statistic</string>
     <string name="statistic_of_currency">%s / %s exchange rate statistic</string>
@@ -23,16 +23,16 @@
     <string name="statistic_error_text">Not enough data for statistic</string>
 
     <!-- Currencies full names -->
-    <string name="ruble_full_name">Russian Ruble</string>
+    <string name="ruble_full_name">Russian ruble</string>
     <string name="euro_full_name">Euro</string>
-    <string name="dollar_full_name">US Dollar</string>
-    <string name="zloty_full_name">Polish Zloty</string>
-    <string name="pound_full_name">Pound Sterling</string>
-    <string name="yuan_full_name">Chinese Yuan</string>
-    <string name="yen_full_name">Japanese Yen</string>
-    <string name="krone_full_name">Norwegian Krone</string>
-    <string name="lira_full_name">Turkish Lira</string>
-    <string name="rand_full_name">RSA Rand</string>
-    <string name="silver_full_name">Silver Ounce</string>
-    <string name="gold_full_name">Gold Ounce</string>
+    <string name="dollar_full_name">US dollar</string>
+    <string name="zloty_full_name">Polish zloty</string>
+    <string name="pound_full_name">Pound sterling</string>
+    <string name="yuan_full_name">Chinese yuan</string>
+    <string name="yen_full_name">Japanese yen</string>
+    <string name="krone_full_name">Norwegian krone</string>
+    <string name="lira_full_name">Turkish lira</string>
+    <string name="rand_full_name">RSA rand</string>
+    <string name="silver_full_name">Silver ounce</string>
+    <string name="gold_full_name">Gold ounce</string>
 </resources>
