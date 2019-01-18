@@ -1,8 +1,13 @@
 package ru.project.worldmoneyinfo.ui.currencies_list_screen;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +29,8 @@ public class CurrenciesListFragment extends BaseFragment {
     @Inject
     CurrenciesListViewModel viewModel;
 
+    public static final String UPDATE_ACTION = "ru.project.worldmoneyinfo.UPDATE_ACTION";
+
     private SwipeRefreshLayout dataUpdater;
     private TextView errorText;
 
@@ -33,6 +40,14 @@ public class CurrenciesListFragment extends BaseFragment {
     private CurrenciesAdapter.IOnElementClick onElementClick = currencyPair -> {
         if(getActivity() != null && getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).changeFragment(StatisticFragment.newInstance(currencyPair));
+        }
+    };
+
+    private LocalBroadcastManager localBroadcastManager;
+    private BroadcastReceiver receiverForUpdate = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            viewModel.loadCurrenciesList();
         }
     };
 
@@ -46,6 +61,12 @@ public class CurrenciesListFragment extends BaseFragment {
     
     @Override
     protected void prepareViewModel() {
+        if(getActivity() != null) {
+            IntentFilter filterForReceiver = new IntentFilter(UPDATE_ACTION);
+            localBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
+            localBroadcastManager.registerReceiver(receiverForUpdate, filterForReceiver);
+        }
+
         MainApplication.getApplicationComponent()
                 .plusViewModelComponent(new ViewModelModule(this))
                 .inject(this);
@@ -107,5 +128,11 @@ public class CurrenciesListFragment extends BaseFragment {
     public void onStop() {
         viewModel.onDetach();
         super.onStop();
+    }
+
+    @Override
+    public void onDetach() {
+        localBroadcastManager.unregisterReceiver(receiverForUpdate);
+        super.onDetach();
     }
 }
