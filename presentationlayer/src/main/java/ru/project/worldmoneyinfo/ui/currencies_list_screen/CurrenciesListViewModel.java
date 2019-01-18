@@ -57,7 +57,7 @@ public class CurrenciesListViewModel extends ViewModel {
 
     }
 
-    private void loadCurrenciesList() {
+    public void loadCurrenciesList() {
         String pairs = currencyUtil.getRatesValue(settingsService.getMainCurrency());
 
         currenciesService.getCurrencies(pairs, apiKey)

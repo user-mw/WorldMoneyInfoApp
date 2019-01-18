@@ -1,14 +1,17 @@
 package ru.project.worldmoneyinfo.ui.settings_screen;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v14.preference.SwitchPreference;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.util.Log;
 
 import ru.project.worldmoneyinfo.R;
+import ru.project.worldmoneyinfo.ui.currencies_list_screen.CurrenciesListFragment;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String CURRENT_TAG = "SettingsFragment";
@@ -65,6 +68,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onPause() {
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        if(getActivity() != null) {
+            LocalBroadcastManager.getInstance(getActivity())
+                    .sendBroadcast(new Intent(CurrenciesListFragment.UPDATE_ACTION));
+        }
         super.onPause();
     }
 
