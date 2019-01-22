@@ -2,6 +2,7 @@
     <string name="app_name">World Currencies Rates</string>
     <string name="default_error_text">Some error occurred</string>
     <string name="rates_title">Rates</string>
+    <string name="price_value" translatable="false">%s %s</string>
     <string name="settings_title">Settings</string>
     <string name="converter_title">Converter</string>
     <string name="settings_currency_action">Select main currency</string>

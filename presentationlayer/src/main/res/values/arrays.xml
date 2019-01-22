@@ -49,4 +49,19 @@
         <item>@string/silver_full_name</item>
         <item>@string/gold_full_name</item>
     </string-array>
+
+    <array name="flags">
+        <item>@drawable/flag_rub</item>
+        <item>@drawable/flag_eur</item>
+        <item>@drawable/flag_usd</item>
+        <item>@drawable/flag_pln</item>
+        <item>@drawable/flag_gbp</item>
+        <item>@drawable/flag_cnh</item>
+        <item>@drawable/flag_jpy</item>
+        <item>@drawable/flag_nok</item>
+        <item>@drawable/flag_try</item>
+        <item>@drawable/flag_zar</item>
+        <item>@drawable/ic_xag</item>
+        <item>@drawable/ic_xau</item>
+    </array>
 </resources>

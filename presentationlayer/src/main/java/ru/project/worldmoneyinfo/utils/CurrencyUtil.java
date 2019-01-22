@@ -1,5 +1,9 @@
 package ru.project.worldmoneyinfo.utils;
 
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,11 +15,13 @@ public class CurrencyUtil {
     private Map<String, String> currenciesNames = new LinkedHashMap<>();
     private String[] symbols;
     private String[] fullNames;
+    private LinkedHashMap<String, Drawable> currenciesFlags = new LinkedHashMap<>();
 
     public CurrencyUtil(MainApplication applicationInstance) {
         symbols = applicationInstance.getResources().getStringArray(R.array.currenciesList);
         fullNames = applicationInstance.getResources().getStringArray(R.array.currenciesFullNames);
         setCurrenciesNames();
+        fillFlags(applicationInstance);
     }
 
     public String getNormalName(String currencyPair, String mainCurrency) {
@@ -43,9 +49,23 @@ public class CurrencyUtil {
         return result.toString();
     }
 
+    public Drawable getFlag(String currencySymbol) {
+        return currenciesFlags.get(currencySymbol);
+    }
+
     private void setCurrenciesNames() {
         for(int step = 0; step < symbols.length; step++) {
             currenciesNames.put(symbols[step], fullNames[step]);
         }
+    }
+
+    private void fillFlags(MainApplication applicationInstance) {
+        TypedArray flags = applicationInstance.getResources().obtainTypedArray(R.array.flags);
+
+        for(int step = 0; step < symbols.length; step++) {
+            currenciesFlags.put(symbols[step], flags.getDrawable(step));
+        }
+
+        flags.recycle();
     }
 }
