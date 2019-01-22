@@ -3,8 +3,7 @@ package ru.project.worldmoneyinfo.ui.converter_screen;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.design.button.MaterialButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +29,7 @@ public class ConverterFragment extends BaseFragment {
     private EditText targetCurrencyAmount;
     private Spinner basicCurrencyOption;
     private Spinner targetCurrencyOption;
-    private boolean isBasicCurrencyChanged;
+    private MaterialButton convertButton;
 
     private CurrencySpinnerAdapter basicAdapter;
     private CurrencySpinnerAdapter targetAdapter;
@@ -45,24 +44,7 @@ public class ConverterFragment extends BaseFragment {
 
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
-            Log.d(CURRENT_TAG, "Line 48 - onNothingSelected: called");
-        }
-    };
-
-    private TextWatcher amountChangedListener = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            Log.d(CURRENT_TAG, "Line 55 - beforeTextChanged: called");
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            Log.d(CURRENT_TAG, "Line 60 - onTextChanged: called");
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            updateConverterData();
+            Log.d(CURRENT_TAG, "Line 47 - onNothingSelected: called");
         }
     };
 
@@ -92,10 +74,10 @@ public class ConverterFragment extends BaseFragment {
         targetCurrencyAmount = view.findViewById(R.id.target_currency_amount);
         basicCurrencyOption = view.findViewById(R.id.basic_currency_option);
         targetCurrencyOption = view.findViewById(R.id.target_currency_option);
+        convertButton = view.findViewById(R.id.convert_button);
     }
 
     private void configureTextFields() {
-        viewModel.getBasicAmount().observe(this, amount -> basicCurrencyAmount.setText(amount));
         viewModel.getResultAmount().observe(this, amount -> targetCurrencyAmount.setText(amount));
     }
 
@@ -114,51 +96,23 @@ public class ConverterFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        basicCurrencyAmount.setOnFocusChangeListener((view, hasFocus) -> {
-            if(hasFocus) {
-                isBasicCurrencyChanged = true;
-                targetCurrencyAmount.removeTextChangedListener(amountChangedListener);
-                basicCurrencyAmount.addTextChangedListener(amountChangedListener);
-            }
-        });
 
-        targetCurrencyAmount.setOnFocusChangeListener((view, hasFocus) -> {
-            if(hasFocus) {
-                isBasicCurrencyChanged = false;
-                basicCurrencyAmount.removeTextChangedListener(amountChangedListener);
-                targetCurrencyAmount.addTextChangedListener(amountChangedListener);
-            }
-        });
-
+        convertButton.setOnClickListener((view) -> updateConverterData());
         basicCurrencyOption.setOnItemSelectedListener(onCurrencyChangedListener);
         targetCurrencyOption.setOnItemSelectedListener(onCurrencyChangedListener);
     }
 
     private void updateConverterData() {
-        String amount;
-
-        if(isBasicCurrencyChanged) {
-            amount = basicCurrencyAmount.getText().toString();
-        } else {
-            amount = targetCurrencyAmount.getText().toString();
-        }
-
+        String amount = basicCurrencyAmount.getText().toString();
         String basicCurrency = basicCurrencyOption.getSelectedItem().toString();
         String targetCurrency = targetCurrencyOption.getSelectedItem().toString();
 
-        viewModel.getCurrencyConverter().convert(amount, basicCurrency, targetCurrency, !isBasicCurrencyChanged);
+        viewModel.getCurrencyConverter().convert(amount, basicCurrency, targetCurrency);
     }
 
     @Override
     protected void loadData() {
-        configureTextFields();
         configureSpinners();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        basicCurrencyAmount.removeTextChangedListener(amountChangedListener);
-        targetCurrencyAmount.removeTextChangedListener(amountChangedListener);
+        configureTextFields();
     }
 }

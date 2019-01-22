@@ -25,10 +25,9 @@ public class ConverterViewModel extends ViewModel {
     private static final String CURRENT_TAG = "ConverterViewModel";
     private static final String DEFAULT_AMOUNT = "0";
 
-    private MutableLiveData<String> basicAmount = new MutableLiveData<>();
     private MutableLiveData<String> resultAmount = new MutableLiveData<>();
-    private ICurrencyConverter currencyConverter = (amount, basicCurrency, targetCurrency, reverse) ->
-        convertData(amount, basicCurrency, targetCurrency, reverse);
+    private ICurrencyConverter currencyConverter = (amount, basicCurrency, targetCurrency) ->
+        convertData(amount, basicCurrency, targetCurrency);
 
     private ICurrenciesService currenciesService;
 
@@ -37,50 +36,34 @@ public class ConverterViewModel extends ViewModel {
         MainApplication.getUtilsComponent().inject(this);
     }
 
-    private void convertData(String amount, String basicCurrency, String targetCurrency, boolean reverse) {
+    private void convertData(String amount, String basicCurrency, String targetCurrency) {
         if(!basicCurrency.equals(targetCurrency) && amount.length() > 0 && !amount.equals(DEFAULT_AMOUNT)) {
             String pair = basicCurrency + targetCurrency;
-
-            if(reverse) {
-                pair = targetCurrency + basicCurrency;
-            }
 
             currenciesService.getCurrencies(pair, apiKey)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new SingleObserver<List<RemoteCurrencyData>>() {
                         @Override
                         public void onSubscribe(Disposable d) {
-                            Log.d(CURRENT_TAG, "Line 53 - onSubscribe: called");
+                            Log.d(CURRENT_TAG, "Line 48 - onSubscribe: called");
                         }
 
                         @Override
                         public void onSuccess(List<RemoteCurrencyData> currencyPairs) {
-                            String prise = currencyPairs.get(0).getPrice();
-                            String result = computingUtil.getTotalAmount(amount, prise);
+                            String price = currencyPairs.get(0).getPrice();
+                            String result = computingUtil.getTotalAmount(amount, price);
 
-                            if(reverse) {
-                                basicAmount.postValue(result);
-                            } else {
-                                resultAmount.postValue(result);
-                            }
+                            resultAmount.postValue(result);
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            Log.w(CURRENT_TAG, "Line 70 - onError: called");
+                            Log.w(CURRENT_TAG, "Line 61 - onError: called");
                         }
                     });
         } else {
-            if(reverse) {
-                basicAmount.postValue(amount);
-            } else {
-                resultAmount.postValue(amount);
-            }
+            resultAmount.postValue(amount);
         }
-    }
-
-    public MutableLiveData<String> getBasicAmount() {
-        return basicAmount;
     }
 
     public MutableLiveData<String> getResultAmount() {
@@ -92,6 +75,6 @@ public class ConverterViewModel extends ViewModel {
     }
 
     public interface ICurrencyConverter {
-        void convert(String amount, String basicCurrency, String targetCurrency, boolean reverse);
+        void convert(String amount, String basicCurrency, String targetCurrency);
     }
 }
