@@ -45,19 +45,19 @@ public class ConverterFragment extends BaseFragment {
 
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
-            Log.d(CURRENT_TAG, "Line 44 - onNothingSelected: called");
+            Log.d(CURRENT_TAG, "Line 48 - onNothingSelected: called");
         }
     };
 
     private TextWatcher amountChangedListener = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            Log.d(CURRENT_TAG, "Line 51 - beforeTextChanged: called");
+            Log.d(CURRENT_TAG, "Line 55 - beforeTextChanged: called");
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            Log.d(CURRENT_TAG, "Line 56 - onTextChanged: called");
+            Log.d(CURRENT_TAG, "Line 60 - onTextChanged: called");
         }
 
         @Override

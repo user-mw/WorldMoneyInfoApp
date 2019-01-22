@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="32dp"
+    android:padding="36dp"
     android:orientation="vertical">
 
     <Spinner
@@ -19,7 +19,7 @@
 
     <EditText
         android:id="@+id/basic_currency_amount"
-        android:layout_width="140dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -42,7 +42,7 @@
 
     <EditText
         android:id="@+id/target_currency_amount"
-        android:layout_width="140dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"

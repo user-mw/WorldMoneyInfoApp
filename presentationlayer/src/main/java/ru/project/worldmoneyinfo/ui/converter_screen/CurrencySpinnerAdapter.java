@@ -6,20 +6,29 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatCheckedTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
+import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.R;
+import ru.project.worldmoneyinfo.utils.CurrencyUtil;
 
 public class CurrencySpinnerAdapter extends ArrayAdapter<String> {
+    @Inject
+    CurrencyUtil currencyUtil;
+
     private String[] items;
     private String selectedItem;
 
     public CurrencySpinnerAdapter(@NonNull Context context, int resource) {
         super(context, resource);
+        MainApplication.getUtilsComponent().inject(this);
     }
 
     @Override
@@ -40,10 +49,11 @@ public class CurrencySpinnerAdapter extends ArrayAdapter<String> {
     private View getCustomView(int position, @NonNull ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View mainView = inflater.inflate(R.layout.converter_spinner_item, parent, false);
-        TextView title = mainView.findViewById(R.id.currency_title);
-        title.setText(items[position]);
+        AppCompatCheckedTextView title = mainView.findViewById(R.id.currency_title);
+        title.setText(currencyUtil.getNormalName(items[position]));
 
         if(items[position].equals(selectedItem)) {
+            title.setChecked(true);
             configureSelectedTitle(title);
         }
 
