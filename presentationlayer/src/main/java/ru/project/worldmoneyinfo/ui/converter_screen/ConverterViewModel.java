@@ -50,7 +50,7 @@ public class ConverterViewModel extends ViewModel {
                     .subscribe(new SingleObserver<List<RemoteCurrencyData>>() {
                         @Override
                         public void onSubscribe(Disposable d) {
-                            Log.d(CURRENT_TAG, "Line 52 - onSubscribe: called");
+                            Log.d(CURRENT_TAG, "Line 53 - onSubscribe: called");
                         }
 
                         @Override
@@ -67,7 +67,7 @@ public class ConverterViewModel extends ViewModel {
 
                         @Override
                         public void onError(Throwable e) {
-                            Log.w(CURRENT_TAG, "Line 65 - onError: called");
+                            Log.w(CURRENT_TAG, "Line 70 - onError: called");
                         }
                     });
         } else {
