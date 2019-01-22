@@ -98,6 +98,14 @@ public class StatisticFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(getActivity() != null) {
+            getActivity().setTitle(R.string.statistic_title);
+        }
+    }
+
     private void configureTitle() {
         String statisticNameText = String.format(getString(R.string.statistic_of_currency), viewModel.getMainCurrency(), viewModel.getSecondCurrency(currencyPair));
         statisticName.setText(statisticNameText);
