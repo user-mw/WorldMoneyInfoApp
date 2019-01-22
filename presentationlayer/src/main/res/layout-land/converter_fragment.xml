@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="36dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="36dp"
+    android:paddingRight="36dp"
+    android:paddingTop="20dp"
     android:orientation="vertical">
 
     <Spinner
@@ -46,10 +48,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:enabled="false"
         android:layout_below="@id/basic_currency_amount"
         android:textSize="20sp"
-        android:imeOptions="actionDone"
-        android:hint=""
-        android:inputType="numberDecimal"/>
+        android:textColor="@drawable/converter_disabled_text_color"/>
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/convert_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/target_currency_amount"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="96dp"
+        android:paddingRight="96dp"
+        android:text="@string/convert_button_text"
+        app:cornerRadius="24dp"/>
 
 </RelativeLayout>
