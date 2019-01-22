@@ -30,6 +30,10 @@ public class CurrencyUtil {
         return currenciesNames.get(singleSymbol);
     }
 
+    public String getNormalName(String currencySymbol) {
+        return currenciesNames.get(currencySymbol);
+    }
+
     public String getSecondCurrencyFromPair(String currencyPair, String mainCurrency) {
         return currencyPair.replace(mainCurrency, "");
     }
