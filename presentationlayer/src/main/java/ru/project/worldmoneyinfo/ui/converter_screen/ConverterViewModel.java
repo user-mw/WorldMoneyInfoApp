@@ -38,7 +38,7 @@ public class ConverterViewModel extends ViewModel {
 
     private void convertData(String amount, String basicCurrency, String targetCurrency) {
         if(!basicCurrency.equals(targetCurrency) && amount.length() > 0 && !amount.equals(DEFAULT_AMOUNT)) {
-            String pair = basicCurrency + targetCurrency;
+            String pair = targetCurrency + basicCurrency;
 
             currenciesService.getCurrencies(pair, apiKey)
                     .observeOn(AndroidSchedulers.mainThread())

@@ -12,6 +12,7 @@ public class LocalCurrencyData extends BaseCurrencyData {
     @ColumnInfo(name = "symbol")
     private String symbol;
 
+    @NonNull
     public String getSymbol() {
         return symbol;
     }
@@ -24,8 +25,6 @@ public class LocalCurrencyData extends BaseCurrencyData {
         RemoteCurrencyData currencyData = new RemoteCurrencyData();
         currencyData.setSymbol(symbol);
         currencyData.setPrice(price);
-        currencyData.setAsk(ask);
-        currencyData.setBid(bid);
         currencyData.setTimestamp(timestamp);
 
         return currencyData;
