@@ -3,8 +3,8 @@ package ru.project.domainlayer.utils;
 public class ComputingUtil {
     private static final int LAST_SYMBOL_OFFSET = 3;
     private static final String POINT_SYMBOL = ".";
-    public static final String DEFAULT_RESULT_REPLACEMENT = "1";
-    public static final char ZERO_CHARACTER = '0';
+    private static final String DEFAULT_RESULT_REPLACEMENT = "1";
+    private static final char ZERO_CHARACTER = '0';
 
     public String getTotalAmount(String amount, String price) {
         double digitPrise = Double.valueOf(price);
