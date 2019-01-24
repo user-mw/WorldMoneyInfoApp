@@ -7,10 +7,6 @@ public class RemoteCurrencyData {
     private String symbol;
     @SerializedName("price")
     private String price;
-    @SerializedName("bid")
-    private String bid;
-    @SerializedName("ask")
-    private String ask;
     @SerializedName("timestamp")
     private int timestamp;
 
@@ -30,22 +26,6 @@ public class RemoteCurrencyData {
         this.price = price;
     }
 
-    public String getBid() {
-        return bid;
-    }
-
-    public void setBid(String bid) {
-        this.bid = bid;
-    }
-
-    public String getAsk() {
-        return ask;
-    }
-
-    public void setAsk(String ask) {
-        this.ask = ask;
-    }
-
     public void setTimestamp(int timestamp) {
         this.timestamp = timestamp;
     }
@@ -54,8 +34,6 @@ public class RemoteCurrencyData {
         LocalCurrencyData currencyData = new LocalCurrencyData();
         currencyData.setSymbol(symbol);
         currencyData.setPrice(price);
-        currencyData.setAsk(ask);
-        currencyData.setBid(bid);
         currencyData.setTimestamp(timestamp);
 
         return currencyData;
@@ -66,8 +44,6 @@ public class RemoteCurrencyData {
         currencyData.setId(timestamp + "+" + symbol);
         currencyData.setSymbol(symbol);
         currencyData.setPrice(price);
-        currencyData.setAsk(ask);
-        currencyData.setBid(bid);
         currencyData.setTimestamp(timestamp);
 
         return currencyData;

@@ -28,7 +28,7 @@ public class StatisticViewModel extends ViewModel {
     DateUtil dateUtil;
 
     private static final String CURRENT_TAG = "StatisticViewModel";
-    private static final int MINIMUM_STATISTIC_VALUES_AMOUNT = 25;
+    private static final int MINIMUM_STATISTIC_VALUES_AMOUNT = 5;
     private ICurrenciesService currenciesService;
 
     private MutableLiveData<List<StatisticCurrencyData>> currencyStatistic = new MutableLiveData<>();
