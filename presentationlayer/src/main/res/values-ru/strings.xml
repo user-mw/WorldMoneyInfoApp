@@ -15,7 +15,6 @@
     <string name="settings_auto_update_period_title">Период автообновления</string>
     <string name="statistic_title">Статистика</string>
     <string name="statistic_of_currency">%s / %s статистика обменного курса</string>
-    <string name="statistic_period">От %s\nПo %s</string>
     <string name="statistic_error_text">Недостаточно данных для статистики</string>
 
     <!-- Currencies full names -->

@@ -9,8 +9,5 @@ import dagger.Component;
 public interface IApplicationComponent {
     IScreenComponent plusScreenComponent(RepositoryModule repositoryModule,
                                          ServiceModule serviceModule);
-
     IViewModelComponent plusViewModelComponent(ViewModelModule viewModelModule);
-
-
 }
