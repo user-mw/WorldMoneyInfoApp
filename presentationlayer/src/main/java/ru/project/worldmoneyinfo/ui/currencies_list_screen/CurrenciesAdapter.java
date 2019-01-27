@@ -10,13 +10,20 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import ru.project.domainlayer.model.RemoteCurrencyData;
+import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.R;
+import ru.project.worldmoneyinfo.utils.CurrencyUtil;
 
 public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> {
     private IOnElementClick onElementClick;
     private String mainCurrency;
     private final AsyncListDiffer<RemoteCurrencyData> differ = new AsyncListDiffer<>(this, DIFF_CALLBACK);
+
+    @Inject
+    CurrencyUtil currencyUtil;
 
     private final static DiffUtil.ItemCallback<RemoteCurrencyData> DIFF_CALLBACK = new DiffUtil.ItemCallback<RemoteCurrencyData>() {
         @Override
@@ -33,6 +40,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> 
     public CurrenciesAdapter(String mainCurrency, IOnElementClick onElementClick) {
         this.mainCurrency = mainCurrency;
         this.onElementClick = onElementClick;
+        MainApplication.getUtilsComponent().inject(this);
     }
 
     @NonNull
@@ -45,7 +53,8 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull CurrencyViewHolder holder, int position) {
-        holder.bindData(differ.getCurrentList().get(position), mainCurrency, onElementClick);
+        String fullName = currencyUtil.getNormalName(differ.getCurrentList().get(position).getSymbol(), mainCurrency);
+        holder.bindData(differ.getCurrentList().get(position), mainCurrency, onElementClick, fullName);
     }
 
     @Override

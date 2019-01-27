@@ -26,7 +26,6 @@ public class UtilsModule {
     }
 
     @Provides
-    @Singleton
     public CurrencyUtil provideCurrencyUtil() {
         return new CurrencyUtil(applicationInstance);
     }
