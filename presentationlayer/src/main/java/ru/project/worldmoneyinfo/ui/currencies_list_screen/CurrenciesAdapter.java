@@ -22,9 +22,6 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> 
     private String mainCurrency;
     private final AsyncListDiffer<RemoteCurrencyData> differ = new AsyncListDiffer<>(this, DIFF_CALLBACK);
 
-    @Inject
-    CurrencyUtil currencyUtil;
-
     private final static DiffUtil.ItemCallback<RemoteCurrencyData> DIFF_CALLBACK = new DiffUtil.ItemCallback<RemoteCurrencyData>() {
         @Override
         public boolean areItemsTheSame(@NonNull RemoteCurrencyData oldCurrencyItem, @NonNull RemoteCurrencyData newCurrencyItem) {
@@ -40,7 +37,6 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> 
     public CurrenciesAdapter(String mainCurrency, IOnElementClick onElementClick) {
         this.mainCurrency = mainCurrency;
         this.onElementClick = onElementClick;
-        MainApplication.getUtilsComponent().inject(this);
     }
 
     @NonNull
@@ -53,8 +49,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull CurrencyViewHolder holder, int position) {
-        String fullName = currencyUtil.getNormalName(differ.getCurrentList().get(position).getSymbol(), mainCurrency);
-        holder.bindData(differ.getCurrentList().get(position), mainCurrency, onElementClick, fullName);
+        holder.bindData(differ.getCurrentList().get(position), mainCurrency, onElementClick);
     }
 
     @Override

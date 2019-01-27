@@ -18,5 +18,4 @@ public interface IUtilsComponent {
     void inject(ConverterViewModel converterViewModel);
     void inject(StatisticViewModel statisticViewModel);
     void inject(CurrencySpinnerAdapter currencySpinnerAdapter);
-    void inject(CurrenciesAdapter currenciesAdapter);
 }
