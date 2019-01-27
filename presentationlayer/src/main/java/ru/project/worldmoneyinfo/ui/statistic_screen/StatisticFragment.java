@@ -8,7 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -35,9 +35,10 @@ public class StatisticFragment extends BaseFragment {
     private static final float LINE_WIDTH = 4.0f;
     private String currencyPair;
 
-    private LinearLayout statisticLayout;
+    private RelativeLayout statisticLayout;
     private TextView statisticName;
-    private TextView statisticPeriod;
+    private TextView statisticPeriodStart;
+    private TextView statisticPeriodEnd;
     private TextView statisticErrorMessage;
     private LineChart statisticChart;
 
@@ -71,7 +72,8 @@ public class StatisticFragment extends BaseFragment {
         statisticLayout = view.findViewById(R.id.statistic_layout);
         statisticChart = view.findViewById(R.id.statistic_chart);
         statisticName = view.findViewById(R.id.statistic_title);
-        statisticPeriod = view.findViewById(R.id.statistic_period);
+        statisticPeriodStart = view.findViewById(R.id.statistic_period_start);
+        statisticPeriodEnd = view.findViewById(R.id.statistic_period_end);
         statisticErrorMessage = view.findViewById(R.id.statistic_error_message);
         configureTitle();
 
@@ -84,8 +86,8 @@ public class StatisticFragment extends BaseFragment {
         viewModel.getStatisticPeriod().observe(this, periodData -> {
             if(periodData != null) {
                 statisticLayout.setVisibility(View.VISIBLE);
-                String statisticPeriodText = String.format(getString(R.string.statistic_period), periodData[0], periodData[1]);
-                statisticPeriod.setText(statisticPeriodText);
+                statisticPeriodStart.setText(periodData[0]);
+                statisticPeriodEnd.setText(periodData[1]);
                 statisticErrorMessage.setVisibility(View.GONE);
             }
         });
