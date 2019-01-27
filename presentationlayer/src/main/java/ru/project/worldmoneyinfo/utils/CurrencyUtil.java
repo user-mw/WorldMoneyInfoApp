@@ -12,6 +12,7 @@ import ru.project.worldmoneyinfo.R;
 
 public class CurrencyUtil {
     private static final String COMMA_SYMBOL = ",";
+    private static final String EMPTY_SYMBOL = "";
     private Map<String, String> currenciesNames = new LinkedHashMap<>();
     private String[] symbols;
     private String[] fullNames;
@@ -25,7 +26,7 @@ public class CurrencyUtil {
     }
 
     public String getNormalName(String currencyPair, String mainCurrency) {
-        String singleSymbol = currencyPair.replace(mainCurrency, "");
+        String singleSymbol = currencyPair.replace(mainCurrency, EMPTY_SYMBOL);
 
         return currenciesNames.get(singleSymbol);
     }
@@ -35,7 +36,7 @@ public class CurrencyUtil {
     }
 
     public String getSecondCurrencyFromPair(String currencyPair, String mainCurrency) {
-        return currencyPair.replace(mainCurrency, "");
+        return currencyPair.replace(mainCurrency, EMPTY_SYMBOL);
     }
 
     public String getRatesValue(String mainCurrency) {

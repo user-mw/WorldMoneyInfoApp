@@ -10,8 +10,12 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import ru.project.domainlayer.model.RemoteCurrencyData;
+import ru.project.worldmoneyinfo.MainApplication;
 import ru.project.worldmoneyinfo.R;
+import ru.project.worldmoneyinfo.utils.CurrencyUtil;
 
 public class CurrenciesAdapter extends RecyclerView.Adapter<CurrencyViewHolder> {
     private IOnElementClick onElementClick;

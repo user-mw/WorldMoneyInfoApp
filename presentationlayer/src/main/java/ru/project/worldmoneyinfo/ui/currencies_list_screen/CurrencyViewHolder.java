@@ -46,7 +46,9 @@ public class CurrencyViewHolder extends RecyclerView.ViewHolder {
     public void bindData(RemoteCurrencyData currencyData, String mainCurrency, CurrenciesAdapter.IOnElementClick onElementClick) {
         String symbol = currencyUtil.getSecondCurrencyFromPair(currencyData.getSymbol(), mainCurrency);
 
-        currencyFullName.setText(currencyUtil.getNormalName(currencyData.getSymbol(), mainCurrency));
+        String fullName = currencyUtil.getNormalName(currencyData.getSymbol(), mainCurrency);
+
+        currencyFullName.setText(fullName);
         currencyFlag.setImageDrawable(currencyUtil.getFlag(symbol));
         currencySymbol.setText(symbol);
 
