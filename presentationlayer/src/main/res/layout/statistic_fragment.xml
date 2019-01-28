@@ -52,29 +52,6 @@
 
     </RelativeLayout>
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/statistic_layout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="vertical"-->
-        <!--android:layout_marginTop="25dp">-->
-
-        <!--<com.github.mikephil.charting.charts.LineChart-->
-            <!--android:id="@+id/statistic_chart"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="5"/>-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/statistic_period"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:textSize="16sp" />-->
-
-    <!--</LinearLayout>-->
-
     <TextView
         android:id="@+id/statistic_error_message"
         android:layout_width="wrap_content"
